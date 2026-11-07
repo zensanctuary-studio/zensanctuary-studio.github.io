@@ -1,0 +1,709 @@
+/* ADHD Budget Planner - Harmony Layout & Styles (Edition 3) */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-zen);
+  color: var(--text-zen);
+  font-family: var(--font-zen);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.zen-shell {
+  width: 100%;
+  max-width: 740px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: calc(115px + env(safe-area-inset-bottom, 24px));
+  position: relative;
+  overflow-x: clip;
+}
+
+body.tutorial-active .zen-shell {
+  padding-bottom: calc(250px + env(safe-area-inset-bottom, 24px));
+}
+
+/* Header App Bar */
+.zen-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--bg-header);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-zen);
+  padding: 12px 18px;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-circle-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.brand-text h1 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-zen);
+  line-height: 1.2;
+}
+
+.brand-tagline {
+  font-size: 11px;
+  color: var(--accent-mint);
+  font-weight: 600;
+}
+
+.header-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-zen-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  color: var(--text-zen);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-zen-pill:hover {
+  border-color: var(--border-glow);
+}
+
+.btn-zen-icon {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  color: var(--text-muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Screens */
+.screen {
+  display: none;
+  padding: 18px;
+  animation: fadeIn 0.25s ease;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Concentric Dial Hero Card */
+.radial-hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 20px 18px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: var(--zen-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.dial-track-ring {
+  width: min(184px, 52vw);
+  height: min(184px, 52vw);
+  max-width: 190px;
+  max-height: 190px;
+  margin: 0 auto 12px auto;
+  border-radius: 50%;
+  background: var(--dial-bg);
+  border: 4px solid var(--border-zen);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.dial-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-gold);
+  margin-bottom: 4px;
+}
+
+.dial-number {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-family: var(--font-digits);
+  color: var(--text-zen);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.dial-status-pill {
+  display: inline-block;
+  background: var(--dial-pill-bg);
+  border: 1px solid var(--border-glow);
+  color: var(--dial-pill-text);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+}
+
+.dial-subtext {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+/* Vertical Mindful Spends (Stacked Pill Rows on Mobile, 3-Column Row on Desktop) */
+.zen-quick-spends {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 620px) {
+  .zen-quick-spends {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+}
+
+.zen-chip-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: 14px;
+  padding: 12px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--text-zen);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
+}
+
+.zen-chip-btn:hover {
+  border-color: var(--border-glow);
+  background: var(--bg-chip);
+  transform: translateY(-1px);
+}
+
+.chip-icon { font-size: 20px; flex-shrink: 0; }
+.chip-title { font-size: 13px; font-weight: 700; flex: 1; }
+.chip-price { font-size: 12px; font-weight: 800; font-family: var(--font-digits); color: var(--accent-gold); background: rgba(242, 204, 143, 0.12); padding: 3px 9px; border-radius: 999px; }
+
+/* Item Cards (Bills, Vault, Debt, Today Spends) */
+.harmony-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: var(--transition-smooth);
+}
+
+.harmony-card:hover {
+  border-color: var(--border-glow);
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.card-name {
+  font-size: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-val {
+  font-family: var(--font-digits);
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--accent-gold);
+}
+
+.card-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-harmony-action {
+  background: var(--accent-sage);
+  color: #fff;
+  border: none;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-harmony-action:hover {
+  opacity: 0.9;
+}
+
+.btn-harmony-action.cleared {
+  background: #064e3b;
+  color: #5eead4;
+}
+
+.btn-zen-card-edit {
+  background: rgba(43, 34, 30, 0.7);
+  border: 1px solid rgba(224, 122, 95, 0.3);
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 6px 11px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-zen-card-edit:hover {
+  background: rgba(61, 48, 42, 0.9);
+  color: #ffffff;
+  border-color: var(--accent-gold);
+}
+
+.btn-zen-card-delete {
+  background: rgba(224, 122, 95, 0.14);
+  border: 1px solid rgba(224, 122, 95, 0.35);
+  color: #f28482;
+  font-size: 13px;
+  font-weight: 800;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-zen-card-delete:hover {
+  background: rgba(224, 122, 95, 0.3);
+  color: #ffffff;
+  border-color: #e07a5f;
+}
+
+/* Fullscreen Zombie Mode Overlay */
+.zombie-screen-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000000;
+  z-index: 100;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  text-align: center;
+}
+
+.zombie-screen-overlay.active {
+  display: flex;
+}
+
+.zombie-screen-number {
+  font-size: 58px;
+  font-family: var(--font-digits);
+  font-weight: 900;
+  color: var(--accent-mint);
+  margin-bottom: 24px;
+}
+
+.btn-zombie-return {
+  background: #1c1c1c;
+  color: #a3a3a3;
+  border: 1px solid #333;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Inflow Sanctuary Card */
+.zen-inflow-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 16px 20px;
+  margin-bottom: 18px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+}
+
+.zen-inflow-badge {
+  background: var(--accent-badge-bg);
+  border: 1px solid var(--accent-badge-border);
+  color: var(--accent-badge-text);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.btn-zen-action {
+  background: var(--accent-badge-bg);
+  border: 1px solid var(--border-glow);
+  color: var(--text-zen);
+  font-weight: 700;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-zen-action:hover {
+  background: var(--accent-primary);
+  color: #ffffff;
+}
+
+/* Floating Curved Zen Island Navigation (Unique Bottom-Center Architecture) */
+.zen-floating-island {
+  position: fixed;
+  bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 24px);
+  max-width: 460px;
+  background: var(--bg-island);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1.5px solid var(--border-glow);
+  border-radius: 999px;
+  box-shadow: 0 16px 42px rgba(0, 0, 0, 0.6), var(--zen-shadow);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 10px;
+  z-index: 60;
+}
+
+.island-tab {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-smooth);
+}
+
+.island-glyph {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.island-tab:hover {
+  color: var(--text-zen);
+}
+
+.island-tab.active {
+  color: var(--accent-primary);
+}
+
+.island-tab.active .island-glyph {
+  filter: drop-shadow(0 0 8px var(--border-glow));
+}
+
+/* Center Raised Seed Action FAB */
+.island-seed-fab {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  border: 2px solid var(--border-glow);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transform: translateY(-6px);
+  transition: var(--transition-smooth);
+}
+
+.island-seed-fab:hover {
+  transform: translateY(-9px) scale(1.06);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+}
+
+/* Slide-Up Zen Sanctuary Drawer */
+.zen-drawer-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 80;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.zen-drawer-overlay.active {
+  display: flex;
+}
+
+.zen-drawer-sheet {
+  background: var(--bg-drawer);
+  border-top: 1.5px solid var(--border-glow);
+  border-radius: 28px 28px 0 0;
+  width: 100%;
+  max-width: 540px;
+  padding: 16px 22px 34px;
+  box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.6);
+  animation: slideUpDrawer 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpDrawer {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.drawer-handle-bar {
+  width: 42px;
+  height: 4px;
+  border-radius: 99px;
+  background: var(--border-glow);
+  margin: 0 auto 14px;
+}
+
+.drawer-links-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drawer-link-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-zen);
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition-smooth);
+}
+
+.drawer-link-btn:hover {
+  border-color: var(--border-glow);
+  background: var(--bg-chip);
+}
+
+.drawer-btn-glyph {
+  font-size: 22px;
+}
+
+.drawer-btn-text strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text-zen);
+}
+
+.drawer-btn-text span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Modals */
+.zen-modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+  z-index: 90;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.zen-modal-overlay.open {
+  display: flex;
+}
+
+.zen-modal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  width: 100%;
+  max-width: 440px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 18px 16px;
+}
+
+.zen-form-group {
+  margin-bottom: 12px;
+}
+
+.zen-form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.zen-input, .zen-select {
+  width: 100%;
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+  font-family: inherit;
+  min-height: 44px;
+}
+
+.zen-input:focus, .zen-select:focus {
+  border-color: var(--accent-sage);
+}
+
+/* Mobile Portrait Responsiveness Tweaks */
+@media (max-width: 480px) {
+  .zen-header {
+    padding: 8px 10px;
+  }
+  .brand-group {
+    gap: 6px;
+    min-width: 0;
+  }
+  .brand-circle-icon {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+  }
+  .brand-text h1 {
+    font-size: 11.5px;
+    white-space: nowrap;
+  }
+  .zen-header .zen-help-badge {
+    width: 18px;
+    height: 18px;
+    font-size: 10px;
+  }
+  .brand-tagline {
+    font-size: 9px;
+    white-space: nowrap;
+  }
+  .header-btns {
+    gap: 3px;
+    flex-shrink: 0;
+  }
+  .btn-zen-pill {
+    padding: 4px 6px;
+    font-size: 9.5px;
+    white-space: nowrap;
+  }
+  .btn-zen-icon {
+    width: 26px;
+    height: 26px;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+  .dial-number {
+    font-size: 32px;
+  }
+  .island-tab {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+  .radial-hero-card {
+    padding: 18px 14px;
+  }
+  .screen {
+    padding: 12px 10px;
+  }
+}

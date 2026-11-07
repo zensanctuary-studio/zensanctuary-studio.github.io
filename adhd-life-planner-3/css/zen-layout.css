@@ -1,0 +1,996 @@
+/* ADHD Life Planner 3 — Harmony Layout & Components (Edition 3: Wabi-Sabi Sanctuary) */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--bg-zen);
+  color: var(--text-zen);
+  font-family: var(--font-zen);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.22s ease, color 0.22s ease;
+}
+
+.zen-shell {
+  width: 100%;
+  max-width: 740px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: calc(115px + env(safe-area-inset-bottom, 24px));
+  position: relative;
+}
+
+body.tutorial-active .zen-shell {
+  padding-bottom: calc(250px + env(safe-area-inset-bottom, 24px));
+}
+
+/* Header App Bar */
+.zen-header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: var(--bg-header);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border-zen);
+  padding: 12px 18px;
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-circle-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.brand-circle-icon img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.brand-text h1 {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-zen);
+  line-height: 1.2;
+}
+
+.brand-tagline {
+  font-size: 11px;
+  color: var(--accent-mint);
+  font-weight: 600;
+}
+
+.header-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-zen-pill {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  color: var(--text-zen);
+  padding: 6px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 12px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-zen-pill:hover {
+  border-color: var(--border-glow);
+}
+
+.btn-zen-pill.active {
+  background: var(--accent-primary);
+  color: #161311;
+  border-color: var(--accent-primary);
+}
+
+.btn-zen-icon {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  color: var(--text-muted);
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+/* Screens */
+.screen {
+  display: none;
+  padding: 18px;
+  animation: fadeIn 0.25s ease;
+}
+
+.screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Leo Companion Banner */
+.leo-greeting-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-left: 3px solid var(--accent-primary);
+  border-radius: var(--radius-zen);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.leo-avatar-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-chip);
+  border: 1px solid var(--border-glow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.leo-name-tag {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--accent-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.leo-greeting-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.45;
+}
+
+/* Concentric Radial Momentum Dial */
+.radial-hero-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 20px 18px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: var(--zen-shadow);
+  position: relative;
+  overflow: hidden;
+}
+
+.dial-track-ring {
+  width: min(184px, 52vw);
+  height: min(184px, 52vw);
+  max-width: 190px;
+  max-height: 190px;
+  margin: 0 auto 12px auto;
+  border-radius: 50%;
+  background: var(--dial-bg);
+  border: 4px solid var(--border-zen);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.dial-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent-gold);
+  margin-bottom: 4px;
+}
+
+.dial-number {
+  font-size: 36px;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  font-family: var(--font-digits);
+  color: var(--text-zen);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.dial-status-pill {
+  display: inline-block;
+  background: var(--dial-pill-bg);
+  border: 1px solid var(--border-glow);
+  color: var(--dial-pill-text);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 9px;
+  border-radius: var(--radius-pill);
+}
+
+/* Zen Daily Anchor Card */
+.zen-anchor-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-glow);
+  border-radius: var(--radius-zen);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  box-shadow: var(--zen-shadow);
+}
+
+.zen-anchor-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.zen-anchor-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.zen-input-anchor {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-bottom: 1.5px dashed var(--border-zen);
+  color: var(--text-zen);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 6px 0;
+  outline: none;
+  font-family: inherit;
+}
+
+.zen-input-anchor:focus {
+  border-bottom-color: var(--border-glow);
+}
+
+/* Custom Checkbox */
+.custom-check-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  user-select: none;
+}
+
+.custom-check-label input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.custom-check-box {
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  border: 2px solid var(--border-glow);
+  background: var(--bg-chip);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.18s ease;
+  flex-shrink: 0;
+}
+
+.custom-check-label input:checked ~ .custom-check-box {
+  background: var(--accent-gradient);
+  border-color: var(--accent-primary);
+}
+
+.custom-check-label input:checked ~ .custom-check-box::after {
+  content: '✓';
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+/* Energy Dial Pills */
+.energy-dial-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+
+.energy-pills-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.energy-pill {
+  flex: 1;
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
+  color: var(--text-muted);
+  border-radius: var(--radius-pill);
+  padding: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: center;
+  transition: var(--transition-smooth);
+}
+
+.energy-pill:hover {
+  background: var(--bg-chip-hover);
+  border-color: var(--border-glow);
+}
+
+.energy-pill.active[data-energy="low"] {
+  background: rgba(129, 178, 154, 0.22);
+  border-color: var(--accent-mint);
+  color: var(--accent-mint);
+}
+
+.energy-pill.active[data-energy="normal"] {
+  background: rgba(224, 122, 95, 0.22);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+.energy-pill.active[data-energy="high"] {
+  background: rgba(242, 204, 143, 0.22);
+  border-color: var(--accent-gold);
+  color: var(--accent-gold);
+}
+
+/* Vitals Grounding */
+.zen-vitals-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 14px 18px;
+  margin-bottom: 16px;
+}
+
+.water-pills-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.water-glass-dot {
+  font-size: 17px;
+  opacity: 0.3;
+  transition: opacity 0.15s ease;
+}
+
+.water-glass-dot.filled {
+  opacity: 1;
+}
+
+/* Task Cards & De-chunker */
+.tasks-container-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.task-card {
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
+  border-radius: 14px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+  transition: var(--transition-smooth);
+}
+
+.task-card:hover {
+  border-color: var(--border-glow);
+}
+
+.task-card.completed {
+  opacity: 0.6;
+}
+
+.task-card.completed .task-title-text {
+  text-decoration: line-through;
+  color: var(--text-hint);
+}
+
+.task-card-content {
+  flex: 1;
+}
+
+.task-title-text {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-zen);
+  display: block;
+}
+
+.task-tags-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.badge-energy {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-zen);
+  color: var(--text-muted);
+  border: 1px solid var(--border-zen);
+}
+
+.badge-subtasks {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: rgba(224, 122, 95, 0.15);
+  color: var(--accent-primary);
+  border: 1px solid var(--border-glow);
+}
+
+.task-card-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-icon {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  color: var(--text-zen);
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.subtasks-container {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--border-zen);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.subtask-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12.5px;
+  padding: 3px 0;
+}
+
+.subtask-row.completed .subtask-text {
+  text-decoration: line-through;
+  color: var(--text-hint);
+}
+
+.subtask-duration {
+  font-size: 11px;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+/* 4-Quadrant Dopamine Menu */
+.dopamine-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .dopamine-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dopamine-quadrant-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dopamine-item-card {
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
+  border-radius: 10px;
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+.dopamine-item-pill {
+  font-size: 11px;
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+/* Grace Streaks Card */
+.streak-banner-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-zen);
+  padding: 16px 18px;
+  margin-bottom: 16px;
+}
+
+.streak-metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.streak-metric-item {
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
+  border-radius: 12px;
+  padding: 10px 6px;
+}
+
+.metric-val {
+  display: block;
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--accent-primary);
+}
+
+.metric-lbl {
+  font-size: 11px;
+  color: var(--text-hint);
+  font-weight: 600;
+}
+
+/* Routines */
+.routine-slot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 800;
+  font-size: 14px;
+  color: var(--text-zen);
+  margin-bottom: 10px;
+}
+
+.routine-item-row {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border-zen);
+}
+
+.routine-item-row:last-child {
+  border-bottom: none;
+}
+
+.routine-item-row.completed .routine-text {
+  text-decoration: line-through;
+  color: var(--text-hint);
+}
+
+/* CURVED FLOATING ZEN ISLAND NAV DOCK (Signature Shop 3 Feature) */
+.zen-floating-island {
+  position: fixed;
+  bottom: calc(14px + env(safe-area-inset-bottom, 8px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  max-width: 520px;
+  background: var(--bg-island);
+  border: 1.5px solid var(--border-glow);
+  border-radius: 999px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 20px rgba(224, 122, 95, 0.22);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 6px 12px;
+  z-index: 60;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.island-tab {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  font-size: 10.5px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 5px 8px;
+  border-radius: var(--radius-pill);
+  transition: var(--transition-smooth);
+}
+
+.island-glyph {
+  font-size: 17px;
+  line-height: 1;
+}
+
+.island-tab:hover {
+  color: var(--text-zen);
+}
+
+.island-tab.active {
+  color: var(--accent-primary);
+}
+
+.island-tab.active .island-glyph {
+  filter: drop-shadow(0 0 8px var(--border-glow));
+}
+
+/* Center Raised Seed Action FAB */
+.island-seed-fab {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  border: 2px solid var(--border-glow);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  transform: translateY(-6px);
+  transition: var(--transition-smooth);
+}
+
+.island-seed-fab:hover {
+  transform: translateY(-9px) scale(1.06);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.6);
+}
+
+/* Slide-Up Zen Sanctuary Drawer */
+.zen-drawer-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 80;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.zen-drawer-overlay.active {
+  display: flex;
+}
+
+.zen-drawer-sheet {
+  background: var(--bg-drawer);
+  border-top: 1.5px solid var(--border-glow);
+  border-radius: 28px 28px 0 0;
+  width: 100%;
+  max-width: 540px;
+  padding: 16px 22px 34px;
+  box-shadow: 0 -12px 36px rgba(0, 0, 0, 0.6);
+  animation: slideUpDrawer 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUpDrawer {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+
+.drawer-handle-bar {
+  width: 42px;
+  height: 4px;
+  border-radius: 99px;
+  background: var(--border-glow);
+  margin: 0 auto 14px;
+}
+
+.drawer-links-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.drawer-link-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-zen);
+  border-radius: 16px;
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: var(--text-zen);
+  cursor: pointer;
+  text-align: left;
+  transition: var(--transition-smooth);
+}
+
+.drawer-link-btn:hover {
+  border-color: var(--border-glow);
+  background: var(--bg-chip);
+}
+
+.drawer-btn-glyph {
+  font-size: 22px;
+}
+
+.drawer-btn-text strong {
+  display: block;
+  font-size: 14px;
+  color: var(--text-zen);
+}
+
+.drawer-btn-text span {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* Modals */
+.zen-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  z-index: 90;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.zen-modal-overlay.active {
+  display: flex;
+}
+
+.zen-modal-box {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-glow);
+  border-radius: var(--radius-zen);
+  width: 100%;
+  max-width: 440px;
+  max-height: 88vh;
+  overflow-y: auto;
+  padding: 20px 18px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7);
+}
+
+.zen-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border-zen);
+  padding-bottom: 8px;
+}
+
+.zen-modal-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--text-zen);
+}
+
+.zen-modal-close {
+  background: none;
+  border: none;
+  color: var(--text-hint);
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.zen-form-group {
+  margin-bottom: 12px;
+}
+
+.zen-form-group label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+
+.zen-input, .zen-select, .zen-textarea {
+  width: 100%;
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+  font-family: inherit;
+}
+
+.zen-input:focus, .zen-select:focus, .zen-textarea:focus {
+  border-color: var(--border-glow);
+}
+
+.btn-zen-primary {
+  background: var(--accent-gradient);
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 13.5px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+}
+
+.btn-zen-primary:hover {
+  box-shadow: 0 0 16px rgba(224, 122, 95, 0.4);
+}
+
+.btn-zen-secondary {
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
+  color: var(--text-zen);
+  padding: 10px 18px;
+  border-radius: var(--radius-pill);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* Leo Help Badge */
+.leo-help-badge {
+  background: var(--accent-badge-bg);
+  border: 1px solid var(--accent-badge-border);
+  color: var(--accent-primary);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.leo-help-badge:hover {
+  background: var(--accent-primary);
+  color: #161311;
+}
+
+/* Low-Spoons Fog Mode */
+body.fog-mode-active::before {
+  content: "🌿 Low-Spoons Sanctuary Active — All non-essentials softly resting.";
+  display: block;
+  background: rgba(129, 178, 154, 0.18);
+  border-bottom: 1px solid var(--accent-mint);
+  color: var(--accent-mint);
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 6px 12px;
+}
+
+body.fog-mode-active .zen-vitals-card,
+body.fog-mode-active .streak-metrics-grid {
+  opacity: 0.55;
+}
+
+/* ========================================================
+   VERTICAL MINDFUL DOPAMINE RITUALS (SHOP 3)
+   ======================================================== */
+.zen-rituals-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.zen-ritual-pill {
+  background: var(--bg-chip);
+  border: 1px solid var(--border-zen);
+  border-radius: var(--radius-pill);
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--text-zen);
+  text-decoration: none;
+}
+
+.zen-ritual-pill:hover {
+  border-color: var(--accent-primary);
+  background: rgba(224, 122, 95, 0.12);
+  transform: translateX(4px);
+}
+
+.zen-ritual-pill:active {
+  transform: scale(0.98);
+}
+
+.zen-ritual-lead {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.zen-ritual-glyph {
+  font-size: 16px;
+}
+
+.zen-ritual-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.zen-ritual-dur {
+  font-size: 11px;
+  color: var(--accent-gold);
+  font-weight: 700;
+  background: rgba(244, 241, 222, 0.08);
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
