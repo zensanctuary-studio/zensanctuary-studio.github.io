@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>DEMO: ADHD Life Planner 3 — Wabi-Sabi Sanctuary</title>
+  <meta name="description" content="Interactive demo preview of ADHD Life Planner 3. Explore the daily anchor, dopamine menu, and low-spoons fog mode.">
+  <meta name="theme-color" content="#161311">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="ADHD Life 3 Demo">
+  <link rel="icon" type="image/svg+xml" href="../assets/icon.svg">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="../css/harmony-theme.css">
+  <link rel="stylesheet" href="../css/zen-layout.css">
+  <link rel="stylesheet" href="../css/leo-tour.css">
+  <link rel="stylesheet" href="demo-banner.css">
+</head>
+<body data-theme="sage-harmony">
+
+  <div class="zen-shell">
+
+    <!-- Top Sticky Header -->
+    <header class="zen-header">
+      <div class="header-inner">
+        <div class="brand-group">
+          <div class="brand-circle-icon">
+            <img src="../assets/icon.svg" alt="Sanctuary Logo" />
+          </div>
+          <div class="brand-text">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <h1>ADHD Life Sanctuary</h1>
+              <button type="button" class="leo-help-badge" data-leo-help="privacy.offline" title="Zero-Cloud Privacy Guarantee">?</button>
+            </div>
+            <span class="brand-tagline">Live Sandbox Demo</span>
+          </div>
+        </div>
+        <div class="header-btns">
+          <button type="button" class="btn-zen-pill" id="btn-burnout-shield" title="Low-Spoons Sanctuary (Fog Mode)">🛡️ Shield</button>
+          <button type="button" class="btn-zen-pill" id="btn-launch-tour" title="Leo's Mindful Tour">🌿 Guide</button>
+          <button type="button" class="btn-zen-icon" id="btn-toggle-sound" title="Harmonic Chimes">🔔</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN APP SCREENS -->
+    <main>
+
+      <!-- 1. SCREEN: TODAY (RADIAL HERO, FOCUS ANCHOR & VITALS) -->
+      <section id="screen-today" class="screen active">
+
+        <!-- Leo Mindful Companion Banner -->
+        <div class="leo-greeting-card">
+          <div class="leo-avatar-badge">🌿</div>
+          <div style="flex:1;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span class="leo-name-tag">Leo • Sanctuary Guide</span>
+              <button type="button" class="leo-help-badge" data-leo-help="anchor.focus" title="Single Win Rule">?</button>
+            </div>
+            <p class="leo-greeting-text" id="leo-greeting-text">
+              Welcome to the interactive sandbox! One single anchor wins the day. Try tapping the dial or setting an anchor.
+            </p>
+          </div>
+        </div>
+
+        <!-- Concentric Radial Momentum Dial -->
+        <div class="radial-hero-card">
+          <div class="dial-track-ring">
+            <span class="dial-label">Daily Flow</span>
+            <span class="dial-number" id="dial-number">0%</span>
+            <span class="dial-status-pill" id="dial-status-pill">Ready when you are.</span>
+          </div>
+        </div>
+
+        <!-- Zen Daily Anchor Card -->
+        <div class="zen-anchor-card" id="daily-anchor-card">
+          <div class="zen-anchor-header">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:16px;">🎯</span>
+              <span style="font-weight:800;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent-primary);">Daily Focus Anchor</span>
+            </div>
+            <span style="font-size:11px;color:var(--accent-gold);font-weight:700;">Single Win Rule</span>
+          </div>
+          <div class="zen-anchor-row">
+            <label class="custom-check-label">
+              <input type="checkbox" id="anchor-checkbox" />
+              <span class="custom-check-box"></span>
+            </label>
+            <input type="text" id="anchor-input" class="zen-input-anchor" placeholder="What is your 1 gentle intention today?" />
+          </div>
+        </div>
+
+        <!-- Capacity Battery Dial -->
+        <div class="energy-dial-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span>🔋</span>
+              <span style="font-size:12.5px;font-weight:800;color:var(--text-zen);">Current Biological Battery</span>
+              <button type="button" class="leo-help-badge" data-leo-help="energy.dial" title="Battery Matching">?</button>
+            </div>
+            <span style="font-size:11px;color:var(--text-hint);">Adapts pace</span>
+          </div>
+          <div class="energy-pills-row" id="energy-dial-bar">
+            <button type="button" class="energy-pill" data-energy="low">🌧️ Low Spoons</button>
+            <button type="button" class="energy-pill active" data-energy="normal">🌿 Steady Flow</button>
+            <button type="button" class="energy-pill" data-energy="high">🔥 Deep Spark</button>
+          </div>
+        </div>
+
+        <!-- Grounding Vitals (Water + Meds) -->
+        <div class="zen-vitals-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <span style="font-weight:800;font-size:13px;color:var(--text-zen);">💧 Hydration & Grounding</span>
+            <span style="font-size:12px;font-weight:700;color:var(--accent-mint);" id="water-count-display">3/8 glasses</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="water-pills-wrap" id="water-pills-row"></div>
+            <div style="display:flex;gap:6px;">
+              <button type="button" class="btn-zen-pill" id="btn-water-sub" style="padding:4px 10px;">-</button>
+              <button type="button" class="btn-zen-pill" id="btn-water-add" style="padding:4px 12px;background:var(--accent-mint);color:#101915;">+ Water</button>
+            </div>
+          </div>
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border-zen);display:flex;justify-content:space-between;align-items:center;">
+            <label class="custom-check-label">
+              <input type="checkbox" id="meds-checkbox" />
+              <span class="custom-check-box" style="width:22px;height:22px;border-radius:6px;"></span>
+              <span style="font-size:13px;font-weight:600;margin-left:8px;">Morning Fuel / Meds Taken</span>
+            </label>
+            <span style="font-size:11px;color:var(--text-hint);">Nourish body</span>
+          </div>
+        </div>
+
+        <!-- Vertical Mindful Dopamine Rituals (Shop 3 Signature) -->
+        <div class="tasks-container-card" style="padding:16px 18px;margin-bottom:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:16px;">🍵</span>
+              <span style="font-weight:800;font-size:12.5px;color:var(--text-zen);text-transform:uppercase;letter-spacing:0.05em;">Vertical Mindful Rituals</span>
+            </div>
+            <span style="font-size:11px;color:var(--accent-mint);font-weight:700;">1-Tap Grounding</span>
+          </div>
+          <div class="zen-rituals-stack" id="zen-quick-rituals">
+            <button type="button" class="zen-ritual-pill" data-ritual="tea">
+              <div class="zen-ritual-lead">
+                <span class="zen-ritual-glyph">🍵</span>
+                <span class="zen-ritual-name">Brew Warm Ceremonial Tea</span>
+              </div>
+              <span class="zen-ritual-dur">3 min</span>
+            </button>
+            <button type="button" class="zen-ritual-pill" data-ritual="incense">
+              <div class="zen-ritual-lead">
+                <span class="zen-ritual-glyph">🕯️</span>
+                <span class="zen-ritual-name">Light Cedarwood & Sage Incense</span>
+              </div>
+              <span class="zen-ritual-dur">1 min</span>
+            </button>
+            <button type="button" class="zen-ritual-pill" data-ritual="grounding">
+              <div class="zen-ritual-lead">
+                <span class="zen-ritual-glyph">🌿</span>
+                <span class="zen-ritual-name">Step Barefoot on Cool Earth</span>
+              </div>
+              <span class="zen-ritual-dur">2 min</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Leo Mindful Sanctuary Wisdom Note -->
+        <div style="background:var(--bg-card);border:1px solid var(--border-zen);border-radius:18px;padding:16px;margin-bottom:16px;">
+          <div style="font-size:13px;font-weight:700;color:var(--accent-mint);margin-bottom:6px;">🌿 Leo's Sanctuary Wisdom:</div>
+          <p style="font-size:12px;color:var(--text-muted);line-height:1.6;">
+            Momentum is a gentle river, not a race. Whenever you return to this sanctuary, remember: one single win honors your biology. Breathe, hydrate, and let the rest wait.
+          </p>
+        </div>
+
+        <!-- Active Tasks Preview -->
+        <div class="tasks-container-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:16px;">🌱</span>
+              <span style="font-weight:800;font-size:13px;color:var(--text-zen);">Mindful Action List</span>
+              <button type="button" class="leo-help-badge" data-leo-help="dechunk.paralysis" title="De-chunker Info">?</button>
+            </div>
+            <button type="button" class="btn-zen-primary" id="btn-open-add-task" style="padding:6px 14px;font-size:12px;">+ Add Task</button>
+          </div>
+          <div id="active-tasks-list"></div>
+        </div>
+
+      </section>
+
+      <!-- 2. SCREEN: TASKS (FULL MANAGER & DE-CHUNKER) -->
+      <section id="screen-tasks" class="screen">
+        <div class="tasks-container-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div>
+              <h2 style="font-size:16px;font-weight:800;color:var(--text-zen);">Executive Task De-chunker</h2>
+              <p style="font-size:12px;color:var(--text-muted);">Split any overwhelming chore into gentle 3-minute micro-actions.</p>
+            </div>
+            <button type="button" class="btn-zen-primary" onclick="ZenApp.openModal('modal-add-task')" style="padding:6px 14px;font-size:12px;">+ Add Task</button>
+          </div>
+          <p style="font-size:12px;color:var(--text-hint);margin-bottom:14px;">
+            Tap the ✂️ icon next to any task to let Leo create gentle 3-minute steps.
+          </p>
+        </div>
+      </section>
+
+      <!-- 3. SCREEN: DOPAMINE (4-QUADRANT SANCTUARY) -->
+      <section id="screen-dopamine" class="screen">
+        <div class="tasks-container-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;">
+                <h2 style="font-size:16px;font-weight:800;color:var(--text-zen);">4-Quadrant Dopamine Sanctuary</h2>
+                <button type="button" class="leo-help-badge" data-leo-help="dopamine.menu" title="Dopamine Menu Science">?</button>
+              </div>
+              <p style="font-size:12px;color:var(--text-muted);">Restorative stimulation to dissolve paralysis and doom-scrolling.</p>
+            </div>
+            <div style="display:flex;gap:6px;">
+              <button type="button" class="btn-zen-primary" id="btn-dopamine-surprise" style="padding:6px 14px;font-size:12px;">✨ Surprise Me</button>
+              <button type="button" class="btn-zen-secondary" id="btn-open-add-dopamine" style="padding:6px 12px;font-size:12px;">+ Add</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="dopamine-grid">
+          <div class="dopamine-quadrant-card">
+            <span style="font-size:13px;font-weight:800;color:var(--accent-mint);margin-bottom:10px;">🥗 Appetizers (2–5 min)</span>
+            <div id="dopamine-list-appetizers"></div>
+          </div>
+          <div class="dopamine-quadrant-card">
+            <span style="font-size:13px;font-weight:800;color:var(--accent-primary);margin-bottom:10px;">🍲 Entrees (Deep Focus)</span>
+            <div id="dopamine-list-entrees"></div>
+          </div>
+          <div class="dopamine-quadrant-card">
+            <span style="font-size:13px;font-weight:800;color:var(--accent-gold);margin-bottom:10px;">🍟 Sides (Sensory Cues)</span>
+            <div id="dopamine-list-sides"></div>
+          </div>
+          <div class="dopamine-quadrant-card">
+            <span style="font-size:13px;font-weight:800;color:var(--accent-rose);margin-bottom:10px;">🍰 Desserts (Rest Rewards)</span>
+            <div id="dopamine-list-desserts"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. SCREEN: ROUTINES (GRACE STREAKS & HABITS) -->
+      <section id="screen-routines" class="screen">
+        <div class="streak-banner-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:18px;">🌿</span>
+              <span style="font-weight:800;font-size:14px;color:var(--text-zen);">Guilt-Free Grace Streaks</span>
+              <button type="button" class="leo-help-badge" data-leo-help="streaks.grace" title="Grace Days Explained">?</button>
+            </div>
+            <span style="font-size:11px;color:var(--accent-gold);font-weight:700;">Zero-Shame Rhythm</span>
+          </div>
+          <div class="streak-metrics-grid">
+            <div class="streak-metric-item">
+              <span class="metric-val" id="streak-count-days">1 Day</span>
+              <span class="metric-lbl">Active Momentum</span>
+            </div>
+            <div class="streak-metric-item">
+              <span class="metric-val" id="streak-grace-left">2 Grace Days</span>
+              <span class="metric-lbl">Safety Pool</span>
+            </div>
+            <div class="streak-metric-item">
+              <span class="metric-val" id="streak-total-days">1 Total Wins</span>
+              <span class="metric-lbl">Lifetime Wins</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tasks-container-card">
+          <div class="routine-slot-header">
+            <span>🌅 Morning Launchpad</span>
+            <span style="font-size:11px;color:var(--text-hint);">Gentle awakening</span>
+          </div>
+          <div id="routines-list-morning"></div>
+        </div>
+
+        <div class="tasks-container-card">
+          <div class="routine-slot-header">
+            <span>☀️ Midday Grounding</span>
+            <span style="font-size:11px;color:var(--text-hint);">Rest & hydrate</span>
+          </div>
+          <div id="routines-list-afternoon"></div>
+        </div>
+
+        <div class="tasks-container-card">
+          <div class="routine-slot-header">
+            <span>🌙 Evening Wind-Down</span>
+            <span style="font-size:11px;color:var(--text-hint);">Peaceful shutdown</span>
+          </div>
+          <div id="routines-list-evening"></div>
+        </div>
+      </section>
+
+      <!-- 5. SCREEN: BRAIN DUMP -->
+      <section id="screen-braindump" class="screen">
+        <div class="tasks-container-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:6px;">
+              <h2 style="font-size:16px;font-weight:800;color:var(--text-zen);">Mind Unburdening</h2>
+              <button type="button" class="leo-help-badge" data-leo-help="braindump.memory" title="Brain Dump Science">?</button>
+            </div>
+            <span style="font-size:11px;color:var(--accent-mint);font-weight:700;">Sandbox Mode</span>
+          </div>
+          <p style="font-size:12px;color:var(--text-muted);margin-bottom:12px;">
+            Release mental clutter, fleeting ideas, and worries here.
+          </p>
+          <textarea id="braindump-textarea" class="zen-textarea" rows="14" placeholder="Unburden your mind here..."></textarea>
+        </div>
+      </section>
+
+      <!-- 6. SCREEN: SETTINGS (CONFIG & DEMO GATES) -->
+      <section id="screen-settings" class="screen">
+        <div class="tasks-container-card">
+          <h2 style="font-size:16px;font-weight:800;color:var(--text-zen);margin-bottom:14px;">Wabi-Sabi Sanctuary Themes</h2>
+          <div>
+            <label style="font-size:12px;font-weight:700;color:var(--text-muted);display:block;margin-bottom:6px;">Palette</label>
+            <select id="setting-theme-select" class="zen-select">
+              <option value="sage-harmony">Sage Harmony (Warm Espresso & Terracotta)</option>
+              <option value="ocean-calm">Ocean Calm (Deep Matcha & Sage)</option>
+              <option value="oled-minimal">OLED Minimal (Dark Charcoal & Amber)</option>
+              <option value="sand-linen">Sand & Linen (Soft Editorial Light)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="tasks-container-card">
+          <h2 style="font-size:16px;font-weight:800;color:var(--text-zen);margin-bottom:14px;">Local Data Backup & Privacy</h2>
+          <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">
+            Sandbox preview mode active. In the full release, you own 100% of your data with 1-click JSON backup export & restore.
+          </p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button type="button" class="btn-zen-primary" onclick="window.openDemoGate('Data Backup Export')">💾 Export Backup (Full App Feature)</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- CURVED FLOATING ZEN ISLAND NAV DOCK -->
+    <nav class="zen-floating-island" id="zen-island-nav" aria-label="Sanctuary Navigation">
+      <button type="button" class="island-tab active" data-tab="today">
+        <span class="island-glyph">⚡</span>
+        <span>Flow</span>
+      </button>
+      <button type="button" class="island-tab" data-tab="tasks">
+        <span class="island-glyph">✂️</span>
+        <span>Tasks</span>
+      </button>
+      
+      <button type="button" class="island-seed-fab" id="btn-island-fab" title="Open Sanctuary Drawer" aria-label="Open Sanctuary Drawer">
+        +
+      </button>
+
+      <button type="button" class="island-tab" data-tab="dopamine">
+        <span class="island-glyph">🍽️</span>
+        <span>Nourish</span>
+      </button>
+      <button type="button" class="island-tab" data-tab="routines">
+        <span class="island-glyph">🌿</span>
+        <span>Habits</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- SLIDE-UP SANCTUARY DRAWER -->
+  <div class="zen-drawer-overlay" id="zen-drawer-overlay">
+    <div class="zen-drawer-sheet">
+      <div class="drawer-handle-bar"></div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+        <h3 style="font-size:15px;font-weight:800;color:var(--text-zen);">Sanctuary Actions</h3>
+        <button type="button" class="zen-modal-close" onclick="ZenApp.switchTab('today')">✕</button>
+      </div>
+      <div class="drawer-links-grid">
+        <button type="button" class="drawer-link-btn" onclick="ZenApp.openModal('modal-add-task'); document.getElementById('zen-drawer-overlay').classList.remove('active');">
+          <span class="drawer-btn-glyph">✂️</span>
+          <div class="drawer-btn-text">
+            <strong>Add & De-chunk Task</strong>
+            <span>Split intimidating projects into 3-min steps</span>
+          </div>
+        </button>
+        <button type="button" class="drawer-link-btn" data-drawer-tab="braindump">
+          <span class="drawer-btn-glyph">📝</span>
+          <div class="drawer-btn-text">
+            <strong>Mind Unburdening</strong>
+            <span>Offload thoughts into the scratchpad</span>
+          </div>
+        </button>
+        <button type="button" class="drawer-link-btn" data-drawer-tab="settings">
+          <span class="drawer-btn-glyph">⚙️</span>
+          <div class="drawer-btn-text">
+            <strong>Themes & Settings</strong>
+            <span>Wabi-sabi palettes & local backup</span>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODALS -->
+  <div id="modal-add-task" class="zen-modal-overlay">
+    <div class="zen-modal-box">
+      <div class="zen-modal-header">
+        <h3 class="zen-modal-title">Add Sanctuary Task</h3>
+        <button type="button" class="zen-modal-close" data-close-modal="modal-add-task">✕</button>
+      </div>
+      <form id="form-add-task">
+        <div class="zen-form-group">
+          <label>Task Title</label>
+          <input type="text" id="input-task-title" class="zen-input" placeholder="e.g. Tidy messy room" required />
+        </div>
+        <div class="zen-form-group">
+          <label>Energy Required</label>
+          <select id="select-task-energy" class="zen-select">
+            <option value="low">🟢 Low Spoons (Survival / 2 min)</option>
+            <option value="normal" selected>🟡 Steady Flow (Standard)</option>
+            <option value="high">🔥 Deep Spark (Willpower required)</option>
+          </select>
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px;">
+          <button type="button" class="btn-zen-secondary" data-close-modal="modal-add-task">Cancel</button>
+          <button type="submit" class="btn-zen-primary">Save Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-add-dopamine" class="zen-modal-overlay">
+    <div class="zen-modal-box">
+      <div class="zen-modal-header">
+        <h3 class="zen-modal-title">Add Dopamine Nourishment</h3>
+        <button type="button" class="zen-modal-close" data-close-modal="modal-add-dopamine">✕</button>
+      </div>
+      <form id="form-add-dopamine">
+        <div class="zen-form-group">
+          <label>Category</label>
+          <select id="select-dopamine-category" class="zen-select">
+            <option value="appetizers">Appetizers (Quick 2–5 min resets)</option>
+            <option value="entrees">Entrees (Deep nourishing focus)</option>
+            <option value="sides">Sides (Sensory backdrop)</option>
+            <option value="desserts">Desserts (Restful guilt-free treats)</option>
+          </select>
+        </div>
+        <div class="zen-form-group">
+          <label>Activity Title</label>
+          <input type="text" id="input-dopamine-title" class="zen-input" placeholder="e.g. Herbal tea & breathe" required />
+        </div>
+        <div class="zen-form-group">
+          <label>Duration / Note</label>
+          <input type="text" id="input-dopamine-duration" class="zen-input" placeholder="e.g. 3 min or Passive" />
+        </div>
+        <div style="display:flex;justify-content:flex-end;gap:8px;margin-top:16px;">
+          <button type="button" class="btn-zen-secondary" data-close-modal="modal-add-dopamine">Cancel</button>
+          <button type="submit" class="btn-zen-primary">Add Item</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="modal-surprise-pick" class="zen-modal-overlay">
+    <div class="zen-modal-box" style="text-align:center;">
+      <div style="font-size:32px;margin-bottom:8px;">✨</div>
+      <h3 style="font-size:16px;font-weight:800;color:var(--text-zen);margin-bottom:4px;">Your Mindful Dopamine Reset</h3>
+      <p style="font-size:12px;color:var(--text-muted);margin-bottom:14px;">Instant stimulation to break task paralysis</p>
+      <div style="background:var(--bg-chip);border:1px solid var(--border-zen);border-radius:14px;padding:16px;margin-bottom:16px;">
+        <div id="surprise-pick-title" style="font-size:15px;font-weight:800;color:var(--accent-primary);margin-bottom:6px;"></div>
+        <div id="surprise-pick-duration" style="font-size:12px;color:var(--accent-gold);font-weight:700;"></div>
+      </div>
+      <button type="button" class="btn-zen-primary" data-close-modal="modal-surprise-pick" style="width:100%;">I'll Do This Right Now</button>
+    </div>
+  </div>
+
+  <!-- ETSY PURCHASE GATE MODAL -->
+  <div class="etsy-demo-modal-overlay" id="etsy-demo-gate-modal">
+    <div class="etsy-demo-modal-card">
+      <h3 id="etsy-gate-modal-title">Unlock Full Offline App</h3>
+      <p>Personal data export, local backup restore, and lifetime offline installation are unlocked in the full release on Etsy.</p>
+      <div style="margin: 20px 0; text-align: center;">
+        <span style="font-size: 26px; font-weight: 800; color: #e07a5f;">$9.00</span>
+        <span style="font-size: 13px; color: #d5c8be; text-decoration: line-through; margin-left: 6px;">$18.00</span>
+        <p style="font-size: 12px; color: #e07a5f; margin-top: 4px;">50% Launch Promo • Lifetime Access • No Subscription</p>
+      </div>
+      <div style="display: flex; gap: 10px;">
+        <button class="btn btn-secondary" onclick="window.closeDemoGate()" style="flex: 1;">Keep Browsing</button>
+        <a href="https://zensanctuarystudio.etsy.com" target="_blank" class="btn btn-primary" style="flex: 1; text-align: center; text-decoration: none;">Get on Etsy 🌿</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JavaScript Modules -->
+  <script>window.__APP_STORE_KEY = 'adhd_life_planner_3_state_v1';</script>
+  <script src="demo-guard.js"></script>
+  <script src="../js/engine.js"></script>
+  <script src="../js/storage.js"></script>
+  <script src="../js/leo-help.js"></script>
+  <script src="../js/leo-tour.js"></script>
+  <script src="../js/zen-controller.js"></script>
+</body>
+</html>
