@@ -36,12 +36,15 @@
 
   function addDays(isoDate, n) {
     if (!isoDate) return '';
+    if (typeof n !== 'number' || isNaN(n) || !isFinite(n)) return '';
     const parts = isoDate.split('-');
     if (parts.length !== 3) return '';
     const y = parseInt(parts[0], 10);
     const m = parseInt(parts[1], 10) - 1;
     const d = parseInt(parts[2], 10);
+    if (isNaN(y) || isNaN(m) || isNaN(d)) return '';
     const date = new Date(Date.UTC(y, m, d + n));
+    if (isNaN(date.getTime())) return '';
     const year = date.getUTCFullYear();
     const month = String(date.getUTCMonth() + 1).padStart(2, '0');
     const day = String(date.getUTCDate()).padStart(2, '0');
@@ -317,8 +320,8 @@
   }
 
   function calculateStreak(lastActiveDate, todayStr, currentStreak, graceTokens) {
-    const cur = Number(currentStreak) || 0;
-    const tokens = Number(graceTokens) || 0;
+    const cur = Math.max(0, Number(currentStreak) || 0);
+    const tokens = Math.max(0, Number(graceTokens) || 0);
 
     if (!lastActiveDate) {
       return { streak: 1, graceTokens: tokens, usedGrace: false, message: 'Welcome to your first study session!' };

@@ -220,13 +220,13 @@
       exams: Array.isArray(data.exams) ? data.exams : defaults.exams
     };
 
-    if (typeof clean.profile.studyStreak !== 'number' || clean.profile.studyStreak < 0) {
+    if (typeof clean.profile.studyStreak !== 'number' || isNaN(clean.profile.studyStreak) || !isFinite(clean.profile.studyStreak) || clean.profile.studyStreak < 0) {
       clean.profile.studyStreak = defaults.profile.studyStreak;
     }
-    if (typeof clean.profile.graceTokens !== 'number' || clean.profile.graceTokens < 0) {
+    if (typeof clean.profile.graceTokens !== 'number' || isNaN(clean.profile.graceTokens) || !isFinite(clean.profile.graceTokens) || clean.profile.graceTokens < 0) {
       clean.profile.graceTokens = defaults.profile.graceTokens;
     }
-    if (typeof clean.profile.totalStudyMinutes !== 'number' || clean.profile.totalStudyMinutes < 0) {
+    if (typeof clean.profile.totalStudyMinutes !== 'number' || isNaN(clean.profile.totalStudyMinutes) || !isFinite(clean.profile.totalStudyMinutes) || clean.profile.totalStudyMinutes < 0) {
       clean.profile.totalStudyMinutes = defaults.profile.totalStudyMinutes;
     }
 
