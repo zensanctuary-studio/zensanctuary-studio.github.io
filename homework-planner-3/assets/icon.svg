@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="zenGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2a221d"/>
+      <stop offset="100%" stop-color="#161311"/>
+    </radialGradient>
+    <linearGradient id="warmSun" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e08a65"/>
+      <stop offset="100%" stop-color="#c27050"/>
+    </linearGradient>
+    <linearGradient id="sandPath" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d4b483"/>
+      <stop offset="100%" stop-color="#a38260"/>
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <rect width="512" height="512" rx="128" fill="url(#zenGlow)"/>
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#332a24" stroke-width="6" stroke-dasharray="8 8"/>
+  
+  <!-- Outer Ensō Ring (Zen Incomplete Circle) -->
+  <path d="M 256 76 A 180 180 0 1 1 110 160" fill="none" stroke="url(#warmSun)" stroke-width="24" stroke-linecap="round"/>
+  
+  <!-- Inner Open Book / Hearth Haven -->
+  <path d="M 160 340 C 200 320 235 320 256 340 C 277 320 312 320 352 340 L 352 220 C 312 200 277 200 256 220 C 235 200 200 200 160 220 Z" fill="none" stroke="url(#sandPath)" stroke-width="18" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="256" y1="220" x2="256" y2="340" stroke="url(#sandPath)" stroke-width="12" stroke-linecap="round"/>
+  
+  <!-- Mindful Hearth Glow / Spark -->
+  <circle cx="256" cy="160" r="18" fill="url(#warmSun)"/>
+  <circle cx="256" cy="160" r="32" fill="none" stroke="#e08a65" stroke-width="4" opacity="0.6"/>
+</svg>

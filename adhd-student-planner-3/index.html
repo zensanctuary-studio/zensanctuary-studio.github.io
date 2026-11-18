@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>ADHD Student Planner 3 — Wabi-Sabi Academic Sanctuary</title>
+  <meta name="description" content="Mindful academic sanctuary OS engineered for neurodivergent focus, calm syllabus de-chunking, and cognitive flow. 100% private offline PWA.">
+  <meta name="theme-color" content="#161311">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+
+  <!-- Zen Sanctuary Stylesheets -->
+  <link rel="stylesheet" href="css/harmony-theme.css">
+  <link rel="stylesheet" href="css/zen-layout.css">
+  <link rel="stylesheet" href="css/leo-tour.css">
+</head>
+<body data-theme="sage-harmony" data-active-tab="dashboard">
+
+  <div class="zen-shell">
+    <!-- Executive Zen Header -->
+    <header class="zen-header">
+      <div class="brand-telemetry">
+        <div class="brand-zen-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/>
+            <circle cx="12" cy="9" r="2.5"/>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-title">ADHD Student Planner 3</h1>
+          <div class="brand-subtitle">Leo’s Sanctuary • Zen Sanctuary Studio</div>
+        </div>
+      </div>
+
+      <div class="header-status-capsules">
+        <span id="badge-grace-tokens" class="zen-badge">🛡️ 3 Shields</span>
+        <span id="badge-study-streak" class="zen-badge" style="border-color: var(--accent-gold); color: var(--accent-gold);">🔥 5d Streak</span>
+        <button id="btn-fog-zen" class="btn-fog-zen" aria-label="Toggle Sensory Rest Mode">
+          🛡️ Sensory Rest
+        </button>
+      </div>
+    </header>
+
+    <!-- Leo Companion Grounding Greeting Banner -->
+    <div class="leo-greeting-card">
+      <div class="leo-avatar-wrap">
+        <div class="leo-avatar-badge">🌿</div>
+        <div>
+          <span class="leo-name-tag">Leo’s Guidance</span>
+          <div class="leo-greeting-text">
+            “One mindful step at a time. The semester is a slow-moving river, not a flood. Breathe, focus on today’s micro-step, and trust the process.”
+          </div>
+        </div>
+      </div>
+      <button id="btn-restart-tour" class="btn-zen btn-zen-sm btn-zen-secondary" style="flex-shrink: 0;">
+        Leo’s Walkthrough 🌿
+      </button>
+    </div>
+
+    <!-- MAIN APP SCREEN SECTIONS -->
+    <main id="zen-main-container">
+
+      <!-- Screen 1: Sanctuary (Dashboard) -->
+      <section id="screen-dashboard" class="zen-screen active">
+        <!-- Concentric Radial Momentum Dial -->
+        <div id="radial-hero-card" class="radial-hero-card">
+          <!-- Populated dynamically by zen-controller.js -->
+        </div>
+
+        <!-- 4-Tile Zen Telemetry Grid -->
+        <div id="zen-telemetry-grid" class="zen-telemetry-grid">
+          <div class="zen-tile">
+            <span class="tile-label">Projected GPA</span>
+            <div id="telemetry-val-gpa" class="tile-value">3.85</div>
+            <span class="tile-sub">Weighted Target</span>
+          </div>
+
+          <div class="zen-tile">
+            <span class="tile-label">Urgent Load</span>
+            <div id="telemetry-val-urgent" class="tile-value" style="color: var(--accent-primary);">1 Urgent</div>
+            <span class="tile-sub">&lt; 48h Horizon</span>
+          </div>
+
+          <div class="zen-tile">
+            <span class="tile-label">Grace Status</span>
+            <div id="telemetry-val-grace" class="tile-value" style="color: var(--accent-mint);">3 Shields</div>
+            <span class="tile-sub">Anti-Guilt Guard</span>
+          </div>
+
+          <div class="zen-tile">
+            <span class="tile-label">Focus Logged</span>
+            <div id="telemetry-val-minutes" class="tile-value">320m</div>
+            <span class="tile-sub">Mindful Flow</span>
+          </div>
+        </div>
+
+        <!-- Single Mindful Focus Card -->
+        <div id="zen-focus-hero" class="zen-focus-card">
+          <!-- Populated dynamically by zen-controller.js -->
+        </div>
+
+        <!-- Restorative Flow Sprint Widget -->
+        <div class="zen-sprint-widget">
+          <div>
+            <div style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.05em;">
+              Restorative Flow Sprint
+            </div>
+            <div style="font-size: 0.82rem; color: var(--text-hint); margin-top: 2px;">
+              Gentle 20-minute immersive study block with zero sensory friction.
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div id="sprint-digits-zen" class="sprint-digits-zen">20:00</div>
+            <div style="display: flex; gap: 6px;">
+              <button id="btn-sprint-toggle" class="btn-zen btn-zen-sm btn-zen-primary">Engage Flow (20m)</button>
+              <button id="btn-sprint-reset" class="btn-zen btn-zen-sm btn-zen-secondary">Reset</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screen 2: Deliverables (Tasks) -->
+      <section id="screen-assignments" class="zen-screen">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-zen);">Academic Deliverables</h2>
+            <p style="font-size: 0.85rem; color: var(--text-hint);">Mindfully decomposed milestones with calibrated urgency horizons.</p>
+          </div>
+          <button class="btn-zen btn-zen-primary" data-open-modal="modal-add-assignment">+ Log Deliverable</button>
+        </div>
+
+        <div id="list-assignments">
+          <!-- Populated dynamically by zen-controller.js -->
+        </div>
+      </section>
+
+      <!-- Screen 3: Curriculum (Courses) -->
+      <section id="screen-courses" class="zen-screen">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-zen);">Curriculum Architecture</h2>
+            <p style="font-size: 0.85rem; color: var(--text-hint);">Weighted grade balance algorithms and academic contact harmony.</p>
+          </div>
+          <button class="btn-zen btn-zen-primary" data-open-modal="modal-add-course">+ Enroll Course</button>
+        </div>
+
+        <div id="grid-courses" class="grid-courses">
+          <!-- Populated dynamically by zen-controller.js -->
+        </div>
+      </section>
+
+      <!-- Screen 4: Exams (Exams) -->
+      <section id="screen-exams" class="zen-screen">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px;">
+          <div>
+            <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-zen);">Exam Radar Horizon</h2>
+            <p style="font-size: 0.85rem; color: var(--text-hint);">Serene countdowns and high-yield preparation checklists.</p>
+          </div>
+          <button class="btn-zen btn-zen-primary" data-open-modal="modal-add-exam">+ Schedule Exam</button>
+        </div>
+
+        <div id="list-exams">
+          <!-- Populated dynamically by zen-controller.js -->
+        </div>
+      </section>
+
+      <!-- Screen 5: Settings / Mindful Space -->
+      <section id="screen-settings" class="zen-screen">
+        <div style="margin-bottom: 18px;">
+          <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-zen);">Sanctuary Space & Data Sovereignty</h2>
+          <p style="font-size: 0.85rem; color: var(--text-hint);">100% browser-local privacy. Zero external servers or tracking.</p>
+        </div>
+
+        <div class="zen-card" style="margin-bottom: 16px;">
+          <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-zen); margin-bottom: 12px;">Visual Harmony Theme</h3>
+          <div class="form-group">
+            <label class="form-label" for="select-theme">Theme Profile</label>
+            <select id="select-theme" class="form-select">
+              <option value="sage-harmony">Sage Harmony (Warm Espresso Cacao & Terracotta Luxe)</option>
+              <option value="ocean-calm">Ocean Calm (Deep Forest Matcha & Sage Sanctuary)</option>
+              <option value="oled-minimal">OLED Minimal (Dark Obsidian with Amber Gold)</option>
+              <option value="sand-linen">Sand & Linen (Gentle Light Warm Editorial)</option>
+            </select>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px; margin-top: 14px;">
+            <input type="checkbox" id="chk-sound-enabled" checked style="width: 18px; height: 18px; accent-color: var(--accent-primary);">
+            <label for="chk-sound-enabled" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">
+              Synthesize gentle singing bowl audio cues upon milestone completion
+            </label>
+          </div>
+        </div>
+
+        <div class="zen-card" style="margin-bottom: 16px;">
+          <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-zen); margin-bottom: 8px;">Guilt-Free Grace Diagnostics</h3>
+          <p style="font-size: 0.85rem; color: var(--text-hint); margin-bottom: 12px;">
+            Academic burnout happens. Grace Shields automatically absorb missed study days to protect your psychological momentum.
+          </p>
+          <div style="display: flex; gap: 20px; font-size: 0.88rem;">
+            <div><span style="color: var(--text-hint);">Streak:</span> <strong id="stats-streak-display">5 Consecutive Days</strong></div>
+            <div><span style="color: var(--text-hint);">Grace Reserve:</span> <strong id="stats-grace-display">3 Shields Online</strong></div>
+          </div>
+        </div>
+
+        <div class="zen-card" style="margin-bottom: 16px;">
+          <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-zen); margin-bottom: 8px;">Data Sovereignty Backups</h3>
+          <p style="font-size: 0.85rem; color: var(--text-hint); margin-bottom: 14px;">
+            Export your complete semester archive as standard JSON anytime.
+          </p>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button id="btn-export-json" class="btn-zen btn-zen-secondary">💾 Export JSON Snapshot</button>
+            <label class="btn-zen btn-zen-secondary" style="cursor: pointer;">
+              📥 Restore Snapshot
+              <input type="file" id="input-import-file" accept=".json" style="display: none;">
+            </label>
+            <button id="btn-reset-data" class="btn-zen btn-zen-secondary" style="color: var(--accent-rose);">Wipe to Default</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- CURVED FLOATING ZEN ISLAND NAV DOCK (Signature Shop 3 Feature - RULE-03, RULE-12, RULE-14) -->
+    <nav class="zen-floating-island" aria-label="Sanctuary Navigation Dock">
+      <button class="island-tab active" data-tab="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span>Sanctuary</span>
+      </button>
+      <button class="island-tab" data-tab="assignments">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+        <span>Tasks</span>
+      </button>
+      <button class="island-tab" data-tab="courses">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <span>Curriculum</span>
+      </button>
+      <button class="island-tab" data-tab="exams">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>Exams</span>
+      </button>
+      <button class="island-tab" data-tab="settings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-2 2 2 2 0 01-2-2v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 01-2-2 2 2 0 012-2h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 012-2 2 2 0 012 2v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 012 2 2 2 0 01-2 2h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+        <span>Space</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- MODAL: ADD ASSIGNMENT -->
+  <div id="modal-add-assignment" class="zen-modal" role="dialog" aria-modal="true" aria-labelledby="title-modal-asg">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="title-modal-asg" style="font-size: 1.2rem; font-weight: 800;">Log Academic Deliverable</h3>
+        <button class="modal-close" data-close-modal="modal-add-assignment" aria-label="Close dialog">&times;</button>
+      </div>
+      <form id="form-add-assignment">
+        <div class="form-group">
+          <label class="form-label" for="input-asg-title">Deliverable Title</label>
+          <input type="text" id="input-asg-title" class="form-input" placeholder="e.g. Graph Algorithms Benchmark" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-asg-course">Curriculum Course</label>
+          <select id="select-asg-course" class="form-select" required></select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="select-asg-category">Category</label>
+          <select id="select-asg-category" class="form-select">
+            <option value="assignments">Paper / Code Project</option>
+            <option value="quizzes">Problem Set / Quiz</option>
+            <option value="midterm">Midterm Examination</option>
+            <option value="final">Final Capstone</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-asg-date">Due Date</label>
+          <input type="date" id="input-asg-date" class="form-input" required>
+        </div>
+
+        <div class="form-group" style="display: flex; gap: 8px; align-items: center;">
+          <input type="checkbox" id="chk-asg-essential" style="width: 18px; height: 18px; accent-color: var(--accent-primary);">
+          <label for="chk-asg-essential" style="font-size: 0.85rem; font-weight: 600; color: var(--accent-gold);">
+            Essential Priority (Survives Sensory Rest Mode)
+          </label>
+        </div>
+
+        <div class="form-group" style="display: flex; gap: 8px; align-items: center; background: var(--bg-chip); padding: 10px; border-radius: var(--radius-zen);">
+          <input type="checkbox" id="chk-asg-dechunk" checked style="width: 18px; height: 18px; accent-color: var(--accent-primary);">
+          <label for="chk-asg-dechunk" style="font-size: 0.85rem; font-weight: 700; color: var(--accent-mint);">
+            🪄 Automatically decompose into 4 micro-milestones
+          </label>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
+          <button type="button" class="btn-zen btn-zen-secondary" data-close-modal="modal-add-assignment">Cancel</button>
+          <button type="submit" class="btn-zen btn-zen-primary">Engage Deliverable</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD COURSE -->
+  <div id="modal-add-course" class="zen-modal" role="dialog" aria-modal="true" aria-labelledby="title-modal-course">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="title-modal-course" style="font-size: 1.2rem; font-weight: 800;">Establish Curriculum Course</h3>
+        <button class="modal-close" data-close-modal="modal-add-course" aria-label="Close dialog">&times;</button>
+      </div>
+      <form id="form-add-course">
+        <div class="form-group">
+          <label class="form-label" for="input-course-code">Course Code</label>
+          <input type="text" id="input-course-code" class="form-input" placeholder="e.g. CS 320" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-course-name">Course Name</label>
+          <input type="text" id="input-course-name" class="form-input" placeholder="e.g. Distributed Systems & Algorithms" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-course-color">Accent Hue</label>
+          <input type="color" id="input-course-color" value="#e07a5f" style="width: 100%; height: 40px; border-radius: 8px; border: none; cursor: pointer;">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-course-target">Target Letter Grade Percentage</label>
+          <input type="number" id="input-course-target" class="form-input" value="90" min="50" max="100" required>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
+          <button type="button" class="btn-zen btn-zen-secondary" data-close-modal="modal-add-course">Cancel</button>
+          <button type="submit" class="btn-zen btn-zen-primary">Enroll Course</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD EXAM -->
+  <div id="modal-add-exam" class="zen-modal" role="dialog" aria-modal="true" aria-labelledby="title-modal-exam">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 id="title-modal-exam" style="font-size: 1.2rem; font-weight: 800;">Schedule Academic Examination</h3>
+        <button class="modal-close" data-close-modal="modal-add-exam" aria-label="Close dialog">&times;</button>
+      </div>
+      <form id="form-add-exam">
+        <div class="form-group">
+          <label class="form-label" for="select-exam-course">Course</label>
+          <select id="select-exam-course" class="form-select" required></select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-exam-title">Exam Title</label>
+          <input type="text" id="input-exam-title" class="form-input" placeholder="e.g. Midterm 1: Dynamic Programming" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-exam-date">Exam Date</label>
+          <input type="date" id="input-exam-date" class="form-input" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-exam-time">Exam Time</label>
+          <input type="text" id="input-exam-time" class="form-input" placeholder="e.g. 10:00 AM - 12:00 PM">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-exam-location">Location / Room</label>
+          <input type="text" id="input-exam-location" class="form-input" placeholder="e.g. Turing Hall Auditorium">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="input-exam-weight">Syllabus Grade Weight (%)</label>
+          <input type="number" id="input-exam-weight" class="form-input" value="25" min="5" max="100">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
+          <button type="button" class="btn-zen btn-zen-secondary" data-close-modal="modal-add-exam">Cancel</button>
+          <button type="submit" class="btn-zen btn-zen-primary">Establish Exam</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- LEO ONBOARDING WALKTHROUGH OVERLAY & GUIDED CARD (Rule-01, Rule-02, Rule-11) -->
+  <div id="tutorial-overlay" class="tutorial-overlay"></div>
+
+  <div id="tutorial-card" class="tutorial-card" style="display: none;" role="dialog" aria-modal="true" aria-labelledby="tutorial-title">
+    <div class="tutorial-header">
+      <div class="tutorial-persona-tag">
+        <div class="tutorial-persona-avatar">🌿</div>
+        <div>
+          <div class="tutorial-persona-name">Leo • Zen Sanctuary</div>
+          <span id="tutorial-section-tag" class="tutorial-section-tag">📍 SECTION: Sanctuary</span>
+        </div>
+      </div>
+      <div id="tutorial-step-count" class="tutorial-step-count">Step 1 of 5</div>
+    </div>
+
+    <h3 id="tutorial-title" class="tutorial-title">Welcome to Your Academic Sanctuary</h3>
+    <p id="tutorial-message" class="tutorial-message">
+      Overwhelming syllabi cause cognitive friction. We isolate your single highest-yield micro-step right now.
+    </p>
+
+    <div id="tutorial-hint" class="tutorial-hint">
+      💡 Leo’s Tip: Notice the immediate micro-step and time allocation.
+    </div>
+
+    <div class="tutorial-actions">
+      <div class="tutorial-actions-left">
+        <button id="tutorial-btn-skip" class="btn-zen btn-zen-sm btn-zen-secondary">Skip Tour</button>
+      </div>
+      <div class="tutorial-actions-right">
+        <button id="tutorial-btn-prev" class="btn-zen btn-zen-sm btn-zen-secondary" style="display: none;">← Previous</button>
+        <button id="tutorial-btn-next" class="btn-zen btn-zen-sm btn-zen-primary">Next Step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Application Logic Scripts -->
+  <script src="js/engine.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/leo-tour.js"></script>
+  <script src="js/zen-controller.js"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(err => {
+          console.warn('SW registration bypassed:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

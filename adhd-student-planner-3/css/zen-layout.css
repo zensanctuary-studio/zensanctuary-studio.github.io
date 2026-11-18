@@ -1,0 +1,743 @@
+/**
+ * ADHD Student Planner 3 — Zen Sanctuary Layout & Components (Edition 3: Shop 3 Brand DNA)
+ * Architecture: Floating Curved Zen Island Dock & Concentric Radial Progress Dial
+ * Follows Rule-03 (Structural Differentiation), Rule-04 (Brand DNA), Rule-05/15 (Mobile Resilience & Edge Hygiene),
+ * Rule-12/14 (Balanced Grid Symmetry & Actionable Empty States).
+ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100%;
+  background-color: var(--bg-zen, #161311);
+  color: var(--text-zen, #faf6ee);
+  font-family: var(--font-zen, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, serif, sans-serif);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+}
+
+img, svg, canvas, video, audio {
+  max-width: 100%;
+  height: auto;
+}
+
+.zen-shell,
+.zen-header,
+.zen-screen,
+.zen-card,
+.radial-hero-card,
+.zen-focus-card,
+.zen-telemetry-grid,
+.zen-tile {
+  box-sizing: border-box;
+  max-width: 100%;
+  min-width: 0;
+}
+
+/* Master Zen Shell Container */
+.zen-shell {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: 16px 18px 120px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Header & Top Status Strip */
+.zen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  background: var(--bg-card, #221c19);
+  border: 1px solid var(--border-zen, rgba(224, 122, 95, 0.22));
+  border-radius: var(--radius-zen, 20px);
+  box-shadow: var(--zen-shadow, 0 14px 34px -8px rgba(224, 122, 95, 0.18));
+}
+
+.brand-telemetry {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.brand-zen-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-chip, #2c2420);
+  border: 1.5px solid var(--accent-primary, #e07a5f);
+  color: var(--accent-primary, #e07a5f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.brand-text {
+  min-width: 0;
+}
+
+.brand-title {
+  font-size: clamp(1.1rem, 3.2vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.2px;
+  color: var(--text-zen, #faf6ee);
+  line-height: 1.2;
+}
+
+.brand-subtitle {
+  font-size: clamp(0.72rem, 2vw, 0.82rem);
+  color: var(--accent-mint, #81b29a);
+  font-weight: 600;
+}
+
+.header-status-capsules {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.zen-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent-badge-bg, rgba(224, 122, 95, 0.16));
+  border: 1px solid var(--accent-badge-border, rgba(224, 122, 95, 0.35));
+  color: var(--accent-badge-text, #e07a5f);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill, 999px);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.btn-fog-zen {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--bg-chip, #2c2420);
+  border: 1px solid var(--border-zen, rgba(224, 122, 95, 0.22));
+  color: var(--text-muted, #d5c8be);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill, 999px);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition-smooth, 0.22s ease);
+}
+
+.btn-fog-zen:hover {
+  background: var(--bg-chip-hover, #3a302a);
+  border-color: var(--border-glow, #e07a5f);
+}
+
+.btn-fog-zen.active {
+  background: var(--accent-gradient, linear-gradient(135deg, #e07a5f, #ba5338));
+  color: #ffffff;
+  border-color: var(--border-glow, #e07a5f);
+  box-shadow: 0 0 14px rgba(224, 122, 95, 0.45);
+}
+
+/* Leo Companion Greeting Banner */
+.leo-greeting-card {
+  background: var(--bg-card, #221c19);
+  border: 1px solid var(--border-zen, rgba(224, 122, 95, 0.22));
+  border-left: 4px solid var(--accent-primary, #e07a5f);
+  border-radius: var(--radius-zen, 20px);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.leo-avatar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.leo-avatar-badge {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--bg-chip, #2c2420);
+  border: 1.5px solid var(--accent-primary, #e07a5f);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.leo-name-tag {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--accent-gold, #f2cc8f);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.leo-greeting-text {
+  font-size: 0.92rem;
+  color: var(--text-muted, #d5c8be);
+  margin-top: 2px;
+  line-height: 1.4;
+}
+
+/* Screens Architecture */
+.zen-screen {
+  display: none;
+  animation: fadeIn 220ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.zen-screen.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Cards & Panels */
+.zen-card {
+  background: var(--bg-card, #221c19);
+  border: 1px solid var(--border-zen, rgba(224, 122, 95, 0.22));
+  border-radius: var(--radius-zen, 20px);
+  padding: 22px;
+  box-shadow: var(--zen-shadow, 0 14px 34px -8px rgba(224, 122, 95, 0.18));
+}
+
+/* Concentric Radial Momentum Dial Hero Card */
+.radial-hero-card {
+  background: var(--bg-card, #221c19);
+  border: 1.5px solid var(--border-zen, rgba(224, 122, 95, 0.25));
+  border-radius: var(--radius-zen, 20px);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.radial-dial-svg-wrap {
+  width: 170px;
+  height: 170px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.radial-dial-center-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none;
+}
+
+.radial-center-val {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: var(--text-zen, #faf6ee);
+  line-height: 1;
+}
+
+.radial-center-sub {
+  font-size: 0.72rem;
+  color: var(--accent-mint, #81b29a);
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.radial-hero-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.radial-hero-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-zen, #faf6ee);
+  line-height: 1.3;
+  margin-bottom: 6px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.radial-hero-desc {
+  font-size: 0.88rem;
+  color: var(--text-muted, #d5c8be);
+  line-height: 1.5;
+  margin-bottom: 14px;
+}
+
+/* 4-Tile Zen Telemetry Grid */
+.zen-telemetry-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.zen-tile {
+  background: var(--bg-chip, #2c2420);
+  border: 1px solid var(--border-zen, rgba(224, 122, 95, 0.22));
+  border-radius: var(--radius-zen, 16px);
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--transition-smooth, 0.22s ease);
+}
+
+.zen-tile:hover {
+  background: var(--bg-chip-hover, #3a302a);
+  border-color: var(--border-glow, #e07a5f);
+}
+
+.tile-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-hint, #a6988d);
+}
+
+.tile-value {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: var(--text-zen, #faf6ee);
+  margin-top: 4px;
+}
+
+.tile-sub {
+  font-size: 0.7rem;
+  color: var(--accent-mint, #81b29a);
+  font-weight: 600;
+}
+
+/* Single Mindful Focus Card */
+.zen-focus-card {
+  background: var(--bg-card, #221c19);
+  border: 1.5px solid var(--accent-primary, #e07a5f);
+  border-radius: var(--radius-zen, 20px);
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 24px rgba(224, 122, 95, 0.16);
+  margin-bottom: 18px;
+}
+
+.zen-focus-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent-gradient, linear-gradient(90deg, #e07a5f, #81b29a, #f2cc8f));
+}
+
+.zen-focus-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent-gold, #f2cc8f);
+  margin-bottom: 8px;
+}
+
+.zen-task-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text-zen, #faf6ee);
+  line-height: 1.3;
+  margin-bottom: 12px;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.zen-step-pill {
+  background: var(--bg-chip, #2c2420);
+  border: 1px dashed var(--border-zen, rgba(224, 122, 95, 0.3));
+  border-radius: var(--radius-zen, 14px);
+  padding: 14px;
+  margin: 14px 0;
+}
+
+.zen-step-text {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-zen, #faf6ee);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+/* Restorative Flow Sprint Widget */
+.zen-sprint-widget {
+  background: var(--bg-chip, #2c2420);
+  border: 1px solid var(--border-zen, rgba(224, 122, 95, 0.22));
+  border-radius: var(--radius-zen, 16px);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  gap: 16px;
+}
+
+.sprint-digits-zen {
+  font-size: 1.85rem;
+  font-family: var(--font-digits, monospace);
+  font-weight: 800;
+  color: var(--accent-gold, #f2cc8f);
+  letter-spacing: 0.05em;
+}
+
+/* Zen Buttons */
+.btn-zen {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius-pill, 999px);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all var(--transition-smooth, 0.22s ease);
+  text-decoration: none;
+}
+
+.btn-zen-primary {
+  background: var(--accent-gradient, linear-gradient(135deg, #e07a5f, #ba5338));
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(224, 122, 95, 0.28);
+}
+
+.btn-zen-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(224, 122, 95, 0.38);
+}
+
+.btn-zen-secondary {
+  background: var(--bg-chip, #2c2420);
+  border-color: var(--border-zen, rgba(224, 122, 95, 0.22));
+  color: var(--text-zen, #faf6ee);
+}
+
+.btn-zen-secondary:hover {
+  background: var(--bg-chip-hover, #3a302a);
+  border-color: var(--border-glow, #e07a5f);
+}
+
+.btn-zen-sm {
+  padding: 6px 14px;
+  font-size: 0.78rem;
+}
+
+/* Curriculum Grid */
+.grid-courses, #grid-courses {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+/* CURVED FLOATING ZEN ISLAND NAV DOCK (Signature Shop 3 Feature - RULE-03, RULE-12, RULE-14) */
+.zen-floating-island {
+  position: fixed;
+  bottom: calc(14px + env(safe-area-inset-bottom, 8px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 28px);
+  max-width: 560px;
+  background: var(--bg-island, rgba(34, 28, 25, 0.95));
+  border: 1.5px solid var(--border-glow, #e07a5f);
+  border-radius: var(--radius-pill, 999px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 20px rgba(224, 122, 95, 0.22);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 4px;
+  padding: 6px;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 100;
+}
+
+.island-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-muted, #d5c8be);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 4px;
+  border-radius: var(--radius-pill, 999px);
+  cursor: pointer;
+  transition: all var(--transition-smooth, 0.22s ease);
+  min-width: 0;
+  text-decoration: none;
+}
+
+.island-tab svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.island-tab span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.island-tab:hover {
+  color: var(--text-zen, #faf6ee);
+  background: var(--bg-chip, #2c2420);
+}
+
+.island-tab.active {
+  background: var(--accent-gradient, linear-gradient(135deg, #e07a5f, #ba5338));
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(224, 122, 95, 0.35);
+}
+
+.island-tab.active svg {
+  stroke: #ffffff;
+}
+
+/* Modals */
+.zen-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(14, 11, 9, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.zen-modal.active {
+  display: flex;
+}
+
+.modal-dialog {
+  background: #221c19;
+  border: 1.5px solid var(--border-glow, #e07a5f);
+  border-radius: var(--radius-zen, 20px);
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+  padding: 24px;
+  color: var(--text-zen, #faf6ee);
+  animation: modalScale 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modalScale {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  border-bottom: 1px solid var(--border-zen, rgba(224, 122, 95, 0.22));
+  padding-bottom: 12px;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--text-hint, #a6988d);
+  cursor: pointer;
+}
+
+.modal-close:hover {
+  color: var(--text-zen, #faf6ee);
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-muted, #d5c8be);
+  margin-bottom: 6px;
+}
+
+.form-input, .form-select {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-zen, 12px);
+  border: 1px solid var(--border-zen, rgba(224, 122, 95, 0.25));
+  background: var(--bg-chip, #2c2420);
+  color: var(--text-zen, #faf6ee);
+  font-family: inherit;
+  font-size: 0.9rem;
+}
+
+.form-input:focus, .form-select:focus {
+  outline: none;
+  border-color: var(--border-glow, #e07a5f);
+  box-shadow: 0 0 0 3px rgba(224, 122, 95, 0.25);
+}
+
+/* =========================================================
+   Mobile Viewport Resilience & Edge Hygiene (RULE-05, RULE-15)
+   ========================================================= */
+@media (max-width: 768px) {
+  .radial-hero-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+    padding: 20px 16px;
+  }
+  .radial-dial-svg-wrap {
+    margin: 0 auto;
+  }
+  .zen-telemetry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .zen-shell {
+    padding: 10px 10px 115px 10px;
+    gap: 12px;
+  }
+
+  .zen-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .brand-telemetry {
+    width: 100%;
+  }
+
+  .brand-title {
+    font-size: 1.15rem;
+  }
+
+  .header-status-capsules {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: flex-start;
+  }
+
+  .header-status-capsules .zen-badge,
+  .header-status-capsules .btn-fog-zen {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: center;
+    padding: 6px 8px;
+    font-size: 0.72rem;
+    white-space: nowrap;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+
+  .leo-greeting-card {
+    padding: 12px 14px;
+    gap: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .zen-telemetry-grid {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .zen-tile {
+    padding: 10px 8px;
+    min-width: 0;
+  }
+
+  .tile-value {
+    font-size: 1.25rem;
+  }
+
+  .tile-label, .tile-sub {
+    font-size: 0.68rem;
+  }
+
+  .zen-focus-card {
+    padding: 16px 12px;
+  }
+
+  .zen-card {
+    padding: 16px 12px;
+  }
+
+  .zen-task-title {
+    font-size: 1.1rem;
+  }
+
+  .zen-sprint-widget {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .grid-courses, #grid-courses {
+    grid-template-columns: 1fr !important;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  .header-status-capsules .zen-badge {
+    flex: 1 1 calc(50% - 4px);
+  }
+
+  .header-status-capsules .btn-fog-zen {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+}

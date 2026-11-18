@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homework Planner 3 — Mindful Evening Homework Sanctuary</title>
+  <meta name="description" content="A peaceful wabi-sabi homework sanctuary for neurodivergent students: single-focus Evening Hearth, organic 14-day River of Work, weekly study rituals, backpack check, and guilt-free catch-up chamber. 100% private, offline-first PWA.">
+  <meta name="theme-color" content="#161311">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body data-theme="wabi-sabi">
+  <div class="sanctuary-glow" aria-hidden="true"></div>
+
+  <div class="shell">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <div class="brand-stone" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3a9 9 0 0 1 9 9"/>
+            <circle cx="12" cy="12" r="3"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">Homework Planner</h1>
+          <div class="brand-subtitle">Leo's Sanctuary · Zen Sanctuary Studio</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span id="badge-streak" class="badge-pill" title="Evenings in a row completing homework">0-day streak</span>
+        <button id="btn-toggle-fog" class="btn btn-sm btn-ghost" type="button" aria-pressed="false" title="Low-Spoons Shield hides everything except tonight's single win">Shield</button>
+      </div>
+    </header>
+
+    <!-- Floating Focus Sprint HUD -->
+    <div id="hud-sprint" class="sprint-hud" style="display:none;" role="status" aria-live="polite">
+      <div class="sprint-info">
+        <div class="sprint-label">Mindful Focus · <span id="sprint-title"></span></div>
+        <div id="sprint-digits" class="sprint-digits">15:00</div>
+        <div class="sprint-track"><div id="sprint-bar" class="sprint-bar"></div></div>
+      </div>
+      <div class="sprint-actions">
+        <button id="btn-pause-sprint" class="btn btn-sm btn-secondary" type="button">Pause</button>
+        <button id="btn-stop-sprint" class="btn btn-sm btn-ghost" type="button">Finish</button>
+      </div>
+    </div>
+
+    <!-- Screen 1: Tonight (Evening Hearth) -->
+    <main id="screen-tonight" class="app-screen active">
+      <!-- Up First Single Focus Card -->
+      <section id="hero-next" class="hero-card" aria-label="Up first tonight"></section>
+
+      <!-- Backpack Zen Check -->
+      <section id="backpack-bar" class="card backpack-card fog-hide" style="display:none;" aria-label="Backpack ready check"></section>
+
+      <!-- Catch-up Nudge -->
+      <section id="rescue-nudge" class="nudge fog-hide" style="display:none;"></section>
+
+      <!-- Quick Capture Anchor -->
+      <section class="card fog-hide" aria-label="Quick capture homework">
+        <div class="card-title">
+          <span>Anchor Homework</span>
+          <button class="btn btn-ghost btn-sm" type="button" data-open-modal="modal-add-assignment">+ Detailed</button>
+        </div>
+        <div class="inline-form" style="margin-bottom:12px;">
+          <input id="qa-title" class="input" type="text" maxlength="120" placeholder="Type homework title..." autocomplete="off">
+          <button id="btn-qa-add" class="btn btn-primary" type="button">Anchor it</button>
+        </div>
+        <div class="chip-label">Due</div>
+        <div id="qa-due" class="chip-row" role="group" aria-label="Due date selection">
+          <button type="button" class="chip" data-due="today">Tonight</button>
+          <button type="button" class="chip selected" data-due="tomorrow">Tomorrow</button>
+          <button type="button" class="chip" data-due="friday">Friday</button>
+          <button type="button" class="chip" data-due="nextweek">Next week</button>
+        </div>
+        <div class="chip-label">Time guess</div>
+        <div id="qa-est" class="chip-row" role="group" aria-label="Estimated time">
+          <button type="button" class="chip" data-est="20">20m</button>
+          <button type="button" class="chip selected" data-est="45">45m</button>
+          <button type="button" class="chip" data-est="90">1.5h</button>
+          <button type="button" class="chip" data-est="180">3h</button>
+        </div>
+      </section>
+
+      <!-- Tonight's Load Ribbon -->
+      <section class="card fog-hide" aria-label="Next 7 evenings load ribbon">
+        <div class="card-title">
+          <span>Evening Load</span>
+          <span id="tonight-load" class="tag ok">0m tonight</span>
+        </div>
+        <div id="week-ribbon" class="ribbon"></div>
+      </section>
+
+      <!-- Upcoming Queue -->
+      <section class="card fog-hide" aria-label="Homework queue">
+        <div class="card-title">Evening Queue</div>
+        <div id="upcoming-list" class="list"></div>
+      </section>
+
+      <!-- Quick Stats -->
+      <section class="stat-grid fog-hide" aria-label="Homework sanctuary statistics">
+        <div class="stat"><div id="stat-open" class="stat-num">0</div><div class="stat-label">In Flight</div></div>
+        <div class="stat"><div id="stat-week" class="stat-num">0</div><div class="stat-label">This Week</div></div>
+        <div class="stat"><div id="stat-done" class="stat-num">0</div><div class="stat-label">Completed</div></div>
+      </section>
+    </main>
+
+    <!-- Screen 2: Timeline (River of Work) -->
+    <section id="screen-timeline" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>River of Work</h2>
+          <p>Organic 14-day flow of homework stones based on Start-By dates.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-assignment">+ Add</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">14-Day Capacity Flow</div>
+        <div id="timeline-river" class="timeline-river"></div>
+        <div class="legend">
+          <span><i class="lv-light"></i>Light</span>
+          <span><i class="lv-ok"></i>Comfortable</span>
+          <span><i class="lv-heavy"></i>Full</span>
+          <span><i class="lv-over"></i>Over budget</span>
+        </div>
+        <p id="timeline-note" class="row-sub" style="margin-top:12px;"></p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>Homework Stones</span>
+          <div id="timeline-filter" class="chip-row" role="group" aria-label="Stone status filter">
+            <button type="button" class="chip selected" data-filter="open">Open</button>
+            <button type="button" class="chip" data-filter="done">Completed</button>
+          </div>
+        </div>
+        <div id="timeline-list" class="list"></div>
+      </div>
+    </section>
+
+    <!-- Screen 3: Rituals (Weekly Homework Rituals & Subjects) -->
+    <section id="screen-rituals" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Weekly Rituals</h2>
+          <p>Repeating weekly assignments and subject colors.</p>
+        </div>
+      </div>
+
+      <!-- Weekly Repeating Rituals -->
+      <div id="routine-card" class="card">
+        <div class="card-title">
+          <span>Repeating Weekly Rituals</span>
+          <button id="btn-apply-rituals" class="btn btn-sm btn-secondary" type="button">Load This Week</button>
+        </div>
+        <p class="row-sub" style="margin-bottom:14px;">Automate sheets that happen every week (e.g. Friday vocab or Monday math).</p>
+        
+        <div class="field">
+          <span>Ritual Title</span>
+          <input id="routine-title" class="input" type="text" placeholder="e.g. Weekly Math Worksheet" maxlength="120">
+        </div>
+        <div class="grid-2">
+          <label class="field">
+            <span>Day Due</span>
+            <select id="routine-weekday" class="input">
+              <option value="1">Every Monday</option>
+              <option value="2">Every Tuesday</option>
+              <option value="3">Every Wednesday</option>
+              <option value="4">Every Thursday</option>
+              <option value="5" selected>Every Friday</option>
+              <option value="6">Every Saturday</option>
+              <option value="0">Every Sunday</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Estimate (min)</span>
+            <input id="routine-est" class="input" type="number" min="5" max="600" step="5" value="30">
+          </label>
+        </div>
+        <div class="grid-2">
+          <label class="field">
+            <span>Subject</span>
+            <select id="routine-course" class="input"></select>
+          </label>
+          <label class="field">
+            <span>Breakdown Template</span>
+            <select id="routine-template" class="input"></select>
+          </label>
+        </div>
+        <button id="btn-add-routine" class="btn btn-primary" type="button" style="margin-top:8px;">Save Weekly Ritual</button>
+        
+        <div id="routine-list" class="list" style="margin-top:20px;"></div>
+      </div>
+
+      <!-- Subjects -->
+      <div class="card">
+        <div class="card-title">Subjects &amp; Classes</div>
+        <div class="inline-form" style="margin-bottom:14px;">
+          <input id="course-name" class="input" type="text" placeholder="New subject name..." maxlength="60">
+          <input id="course-color" type="color" value="#c27050" title="Choose color" style="width:48px;height:44px;border:none;background:transparent;cursor:pointer;">
+          <button id="btn-add-course" class="btn btn-secondary" type="button">Add</button>
+        </div>
+        <div id="course-list" class="list"></div>
+      </div>
+    </section>
+
+    <!-- Screen 4: Peace (Catch-Up Chamber / Rest & Triage) -->
+    <section id="screen-peace" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Catch-Up Chamber</h2>
+          <p>No shame, no flashing red alarms. Just mindful, guilt-free triage.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div id="rescue-list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Leo's Breath Anchor</div>
+        <p class="row-sub">Homework is something you do, not who you are. When overwhelm peaks, breathe in for 4 seconds, hold for 4, and release for 6.</p>
+      </div>
+    </section>
+
+    <!-- Screen 5: Settings (Preferences & Daily Budget) -->
+    <section id="screen-settings" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Sanctuary Settings</h2>
+          <p>Calibrate your honest evening energy and aesthetic.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Evening Capacity Budget</div>
+        <label class="field">
+          <span>Minutes you can comfortably give to homework each night</span>
+          <input id="set-capacity" class="input" type="number" min="15" max="360" step="15" value="90">
+        </label>
+        <p class="row-sub">Your Start-By dates calibrate against this ceiling so evenings never overflow.</p>
+
+        <label class="switch-row" style="margin-top:14px;">
+          <span>Skip weekends when calculating Start-By dates</span>
+          <input id="set-weekends" type="checkbox">
+        </label>
+
+        <label class="switch-row">
+          <span>Play gentle sound chimes on completion</span>
+          <input id="set-sound" type="checkbox" checked>
+        </label>
+
+        <p id="fudge-note" class="row-sub" style="margin-top:12px;"></p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Wabi-Sabi Aesthetics</div>
+        <div id="theme-picker" class="chip-row"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Backup &amp; Privacy</div>
+        <p class="row-sub" style="margin-bottom:14px;">Your data is saved 100% locally in your browser. No accounts or tracking.</p>
+        <div class="chip-row">
+          <button id="btn-export" class="btn btn-secondary btn-sm" type="button">Export JSON</button>
+          <button id="btn-import-trigger" class="btn btn-secondary btn-sm" type="button">Import JSON</button>
+          <input id="file-import" type="file" accept=".json" style="display:none;">
+          <button id="btn-start-tour" class="btn btn-ghost btn-sm" type="button">Restart Tour</button>
+          <button id="btn-reset" class="btn btn-danger-soft btn-sm" type="button">Reset All Data</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curved Floating Zen Island Navigation -->
+    <nav class="zen-island-nav" aria-label="Sanctuary Navigation">
+      <button class="nav-btn active" type="button" data-tab="tonight"><span class="nav-ico">🕯</span><span>Hearth</span></button>
+      <button class="nav-btn" type="button" data-tab="timeline"><span class="nav-ico">〰</span><span>River</span></button>
+      <button class="nav-btn" type="button" data-tab="rituals"><span class="nav-ico">📿</span><span>Rituals</span></button>
+      <button class="nav-btn" type="button" data-tab="peace"><span class="nav-ico">☯</span><span>Peace</span></button>
+      <button class="nav-btn" type="button" data-tab="settings"><span class="nav-ico">⚙</span><span>Settings</span></button>
+    </nav>
+  </div>
+
+  <!-- Modals -->
+  <!-- Modal: Add Assignment (Detailed) -->
+  <div id="modal-add-assignment" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="add-modal-title">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="add-modal-title">Anchor New Homework</h3>
+        <button class="btn-x" type="button" data-close-modal aria-label="Close modal">×</button>
+      </div>
+      <div class="field">
+        <span>Title</span>
+        <input id="add-title" class="input" type="text" maxlength="120" placeholder="e.g. Read chapters 4-6 & take notes">
+      </div>
+      <div class="grid-2">
+        <label class="field">
+          <span>Due Date</span>
+          <input id="add-due" class="input" type="date">
+        </label>
+        <label class="field">
+          <span>Time Guess (min)</span>
+          <input id="add-est" class="input" type="number" min="5" max="600" step="5" value="45">
+        </label>
+      </div>
+      <div class="grid-2">
+        <label class="field">
+          <span>Subject</span>
+          <select id="add-course" class="input"></select>
+        </label>
+        <label class="field">
+          <span>Grade Impact (%)</span>
+          <input id="add-weight" class="input" type="number" min="0" max="100" value="10">
+        </label>
+      </div>
+      <label class="field">
+        <span>Break into 2-minute steps</span>
+        <select id="add-template" class="input"></select>
+      </label>
+      <div id="add-error" class="danger-text" style="font-size:0.85rem;margin-bottom:12px;"></div>
+      <div class="modal-actions" style="display:flex;justify-content:flex-end;gap:10px;">
+        <button class="btn btn-ghost" type="button" data-close-modal>Cancel</button>
+        <button id="btn-submit-add" class="btn btn-primary" type="button">Anchor Homework</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Assignment Detail & Edit -->
+  <div id="modal-assignment-detail" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="detail-title-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="detail-title-h">Homework Details</h3>
+        <button class="btn-x" type="button" data-close-modal aria-label="Close modal">×</button>
+      </div>
+      <div id="detail-body"></div>
+    </div>
+  </div>
+
+  <!-- Modal: Confirm Action -->
+  <div id="modal-confirm" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+    <div class="modal-card small">
+      <div class="modal-head">
+        <h3 id="confirm-title">Are you sure?</h3>
+        <button class="btn-x" type="button" data-close-modal aria-label="Close modal">×</button>
+      </div>
+      <p id="confirm-msg" class="row-sub" style="margin-bottom:18px;"></p>
+      <div style="display:flex;justify-content:flex-end;gap:10px;">
+        <button class="btn btn-ghost" type="button" data-close-modal>Cancel</button>
+        <button id="btn-confirm-yes" class="btn btn-primary" type="button">Proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Scripts -->
+  <script src="js/config.js"></script>
+  <script src="js/engine.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/tutorials.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function () {});
+      });
+    }
+  </script>
+</body>
+</html>

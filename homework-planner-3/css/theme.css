@@ -1,0 +1,108 @@
+/**
+ * Homework Planner 3 (Wabi-Sabi Sanctuary) — Theme Palettes
+ * Authentic Shop 3 Brand DNA: Warm earthy canvas (#161311), terracotta, sand, linen.
+ */
+
+:root,
+body[data-theme="wabi-sabi"] {
+  --bg-primary: #161311;
+  --bg-surface: #201b17;
+  --bg-surface-elevated: #2a231e;
+  --bg-subtle: #2d2621;
+  --border-color: rgba(194, 112, 80, 0.22);
+  --border-focus: #c27050;
+  
+  --text-main: #f5eee8;
+  --text-muted: #ad9e92;
+  --text-dim: #7a6e64;
+  
+  --primary: #c27050;
+  --primary-hover: #d27f5f;
+  --primary-glow: rgba(194, 112, 80, 0.25);
+  
+  --accent-sand: #d4b483;
+  --accent-moss: #789068;
+  --accent-ember: #e08a65;
+  --danger-soft: #b85d53;
+  --danger-soft-bg: rgba(184, 93, 83, 0.15);
+  
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-full: 9999px;
+  
+  --shadow-sm: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.55);
+}
+
+body[data-theme="sand-linen"] {
+  --bg-primary: #1c1917;
+  --bg-surface: #28231f;
+  --bg-surface-elevated: #332d28;
+  --bg-subtle: #3a332d;
+  --border-color: rgba(212, 180, 131, 0.22);
+  --border-focus: #d4b483;
+  --text-main: #f7f2eb;
+  --text-muted: #b8aba0;
+  --text-dim: #85786e;
+  --primary: #d4b483;
+  --primary-hover: #e0c498;
+  --primary-glow: rgba(212, 180, 131, 0.25);
+  --accent-sand: #e6ceaa;
+  --accent-moss: #889e7a;
+  --accent-ember: #c27050;
+}
+
+body[data-theme="forest-moss"] {
+  --bg-primary: #121813;
+  --bg-surface: #1a231c;
+  --bg-surface-elevated: #232f26;
+  --bg-subtle: #29382d;
+  --border-color: rgba(120, 144, 104, 0.25);
+  --border-focus: #789068;
+  --text-main: #edf2eb;
+  --text-muted: #9fae9d;
+  --text-dim: #6d7b6b;
+  --primary: #789068;
+  --primary-hover: #8ba57a;
+  --primary-glow: rgba(120, 144, 104, 0.25);
+  --accent-sand: #cfbe9e;
+  --accent-moss: #9ab389;
+  --accent-ember: #c27050;
+}
+
+body[data-theme="espresso-dark"] {
+  --bg-primary: #0f0d0c;
+  --bg-surface: #181513;
+  --bg-surface-elevated: #221d1b;
+  --bg-subtle: #2b2523;
+  --border-color: rgba(212, 163, 115, 0.20);
+  --border-focus: #d4a373;
+  --text-main: #f8f4f0;
+  --text-muted: #ada199;
+  --text-dim: #756a63;
+  --primary: #d4a373;
+  --primary-hover: #e2b487;
+  --primary-glow: rgba(212, 163, 115, 0.25);
+  --accent-sand: #edd3b6;
+  --accent-moss: #7a8f6d;
+  --accent-ember: #c27050;
+}
+
+body[data-theme="high-contrast"] {
+  --bg-primary: #000000;
+  --bg-surface: #141414;
+  --bg-surface-elevated: #222222;
+  --bg-subtle: #2c2c2c;
+  --border-color: #ffffff;
+  --border-focus: #ffb703;
+  --text-main: #ffffff;
+  --text-muted: #dddddd;
+  --text-dim: #aaaaaa;
+  --primary: #ffb703;
+  --primary-hover: #ffc433;
+  --primary-glow: rgba(255, 183, 3, 0.4);
+  --accent-sand: #ffffff;
+  --accent-moss: #70e000;
+  --accent-ember: #ff5400;
+}

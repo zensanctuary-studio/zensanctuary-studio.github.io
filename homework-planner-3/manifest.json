@@ -1,0 +1,15 @@
+{
+  "name": "Homework Planner 3 — Wabi-Sabi Sanctuary",
+  "short_name": "Homework 3",
+  "description": "A peaceful wabi-sabi homework sanctuary for neurodivergent students: single-focus Evening Hearth, organic 14-day River of Work, weekly study rituals, backpack check, and guilt-free catch-up chamber.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#161311",
+  "theme_color": "#161311",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

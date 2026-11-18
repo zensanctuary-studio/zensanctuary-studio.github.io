@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Assignment Tracker — Sanctuary Edition</title>
+  <meta name="description" content="Wabi-sabi assignment radar & mindful horizon for neurodivergent focus, time-blindness calibration, and zero-shame pacing.">
+  <meta name="theme-color" content="#161311">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Assignment 3">
+  <link rel="manifest" href="./manifest.json">
+  <link rel="icon" type="image/svg+xml" href="./assets/icon.svg">
+  <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png">
+
+  <link rel="stylesheet" href="./css/theme.css">
+  <link rel="stylesheet" href="./css/app.css">
+  <link rel="stylesheet" href="./css/components.css">
+</head>
+<body data-theme="terracotta-sun">
+
+  <div class="zen-shell">
+
+    <!-- Top Sticky Header -->
+    <header class="app-header">
+      <div class="brand-group">
+        <div class="brand-icon">
+          <img src="./assets/icon.svg" alt="Sanctuary Logo">
+        </div>
+        <div class="brand-text">
+          <h1>Assignment Sanctuary</h1>
+          <span class="brand-tagline">Wabi-Sabi Edition • Leo Guide</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="btn-secondary" id="btn-burnout-shield" title="Toggle Low-Spoons Fog Shield">🌿 Fog Shield</button>
+        <button type="button" class="btn-secondary" id="btn-launch-tour" title="Launch Leo's Mindful Tour">📖 Guide</button>
+        <button type="button" class="btn-icon" id="btn-toggle-sound" title="Toggle Harmonic Singing Bowl Chimes">🔔</button>
+      </div>
+    </header>
+
+    <!-- MAIN APP SCREENS -->
+    <main>
+
+      <!-- 1. SCREEN: TODAY (RADIAL HORIZON & DO THIS NEXT) -->
+      <section id="screen-today" class="screen active">
+
+        <!-- Leo Sanctuary Greeting Card -->
+        <div class="leo-greeting-card" id="leo-greeting-card">
+          <div class="leo-avatar">🌿</div>
+          <div style="flex:1;">
+            <div class="leo-meta">
+              <span class="leo-name-tag">Leo • Sanctuary Guide</span>
+            </div>
+            <p class="leo-greeting-text" id="leo-greeting-text">
+              Welcome to your calm sanctuary. One single mindful step moves mountains. No rush, no shame.
+            </p>
+          </div>
+        </div>
+
+        <!-- Concentric Radial Horizon Dial -->
+        <div class="radial-hero-card" id="radial-hero-card">
+          <div class="radial-track-wrap">
+            <svg class="radial-svg" viewBox="0 0 160 160">
+              <circle class="radial-track-bg" cx="80" cy="80" r="70"></circle>
+              <circle class="radial-track-progress" id="radial-progress-ring" cx="80" cy="80" r="70"></circle>
+            </svg>
+            <div class="radial-dial-center">
+              <span class="dial-number" id="dial-number">0%</span>
+              <span class="dial-label">Mindful Flow</span>
+            </div>
+          </div>
+          <span class="dial-status-pill" id="dial-status-pill">Ready for your gentle intention</span>
+        </div>
+
+        <!-- Quick Capture Card -->
+        <div class="quick-capture-card" id="quick-capture-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent-primary);">Capture New Assignment</span>
+            <span style="font-size:11px;color:var(--accent-gold);font-weight:700;">Zero Friction</span>
+          </div>
+          <div class="qa-input-row">
+            <input type="text" id="qa-title" placeholder="Assignment title (e.g. Cognitive Psychology Essay)..." autocomplete="off">
+            <button type="button" class="btn-primary" id="btn-qa-add">Plant Intention</button>
+          </div>
+          <div class="qa-options-row">
+            <select id="qa-course" style="max-width:180px;">
+              <option value="">General Sanctuary</option>
+            </select>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;" id="qa-due-chips">
+              <button type="button" class="chip-select active" data-due="today">Today</button>
+              <button type="button" class="chip-select" data-due="tomorrow">Tomorrow</button>
+              <button type="button" class="chip-select" data-due="3days">In 3 Days</button>
+              <button type="button" class="chip-select" data-due="week">In 1 Week</button>
+            </div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;" id="qa-est-chips">
+              <button type="button" class="chip-select" data-est="30">30m</button>
+              <button type="button" class="chip-select active" data-est="60">60m</button>
+              <button type="button" class="chip-select" data-est="120">2h</button>
+              <button type="button" class="chip-select" data-est="240">4h</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DO THIS NEXT / HERO ASSIGNMENT -->
+        <div class="hero-assignment-card" id="hero-next">
+          <div class="hero-assignment-badge">
+            <span>🎯</span>
+            <span>Focus Right Now • Do This Next</span>
+          </div>
+          <h2 class="hero-title" id="hero-title">No assignments pending</h2>
+          <div class="hero-metrics-grid">
+            <div class="hero-metric-box">
+              <span class="hero-metric-lbl">Due Date</span>
+              <span class="hero-metric-val" id="hero-due">—</span>
+            </div>
+            <div class="hero-metric-box">
+              <span class="hero-metric-lbl">Start-By Target</span>
+              <span class="hero-metric-val" id="hero-startby" style="color:var(--accent-gold);">—</span>
+            </div>
+            <div class="hero-metric-box">
+              <span class="hero-metric-lbl">Estimated Effort</span>
+              <span class="hero-metric-val" id="hero-est">—</span>
+            </div>
+            <div class="hero-metric-box">
+              <span class="hero-metric-lbl">Time Invested</span>
+              <span class="hero-metric-val" id="hero-actual">—</span>
+            </div>
+          </div>
+
+          <!-- De-chunked Steps Checklist -->
+          <div style="display:flex;flex-direction:column;gap:6px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:12px;font-weight:700;color:var(--text-muted);">De-Chunked 5-Minute Micro Steps</span>
+              <span style="font-size:11px;color:var(--accent-gold);cursor:pointer;" id="btn-add-step">+ Add Step</span>
+            </div>
+            <div class="steps-checklist" id="hero-steps-list"></div>
+          </div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:8px;">
+            <button type="button" class="btn-primary" id="btn-hero-sprint">🍵 Step into Teahouse</button>
+            <button type="button" class="btn-secondary" id="btn-hero-complete">✓ Complete Assignment</button>
+            <button type="button" class="btn-secondary" id="btn-hero-edit">✎ Details</button>
+          </div>
+        </div>
+
+        <!-- Secondary Horizon List -->
+        <div class="card" id="card-horizon-list">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13px;font-weight:800;color:var(--text-main);">Upcoming Horizon</span>
+            <span style="font-size:12px;color:var(--text-muted);" id="horizon-count">0 items</span>
+          </div>
+          <div id="secondary-horizon-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+        </div>
+
+      </section>
+
+      <!-- 2. SCREEN: RADAR & KANBAN -->
+      <section id="screen-radar" class="screen">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:13px;font-weight:800;color:var(--text-main);">14-Day Zen Stone Garden • Workload Balance</span>
+            <span style="font-size:11px;color:var(--accent-gold);">Capacity Conscious</span>
+          </div>
+          <div id="capacity-heatmap" style="display:grid;grid-template-columns:repeat(7, 1fr);gap:8px;margin-top:12px;"></div>
+        </div>
+
+        <div class="radar-deck" id="radar-deck">
+          <!-- Column 1: Not Started -->
+          <div class="radar-column">
+            <div class="radar-col-header">
+              <span class="radar-col-title">🌱 Resting (Not Started)</span>
+              <span style="font-size:11px;color:var(--text-muted);" id="count-todo">0</span>
+            </div>
+            <div class="radar-cards-list" id="radar-list-todo"></div>
+          </div>
+
+          <!-- Column 2: In Flow -->
+          <div class="radar-column">
+            <div class="radar-col-header">
+              <span class="radar-col-title">🍵 In Flow (Active)</span>
+              <span style="font-size:11px;color:var(--accent-primary);" id="count-doing">0</span>
+            </div>
+            <div class="radar-cards-list" id="radar-list-doing"></div>
+          </div>
+
+          <!-- Column 3: Completed -->
+          <div class="radar-column">
+            <div class="radar-col-header">
+              <span class="radar-col-title">🌿 Completed (At Peace)</span>
+              <span style="font-size:11px;color:var(--accent-secondary);" id="count-done">0</span>
+            </div>
+            <div class="radar-cards-list" id="radar-list-done"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. SCREEN: THE MINDFUL TEAHOUSE FOCUS TIMER -->
+      <section id="screen-teahouse" class="screen">
+        <div class="teahouse-card" id="teahouse-card">
+          <div class="tea-cup-visual" id="tea-cup-visual">🍵</div>
+          <div>
+            <h2 style="font-size:22px;font-weight:800;">The Mindful Teahouse</h2>
+            <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">Gentle focus sprints with singing bowl soundscapes.</p>
+          </div>
+
+          <div style="width:100%;max-width:360px;">
+            <select id="teahouse-assignment-select" style="margin-bottom:12px;"></select>
+          </div>
+
+          <div class="timer-readout" id="timer-readout">25:00</div>
+
+          <div class="timer-controls">
+            <button type="button" class="btn-primary" id="btn-timer-start" style="padding:0 28px;">Start Steep</button>
+            <button type="button" class="btn-secondary" id="btn-timer-reset">Reset</button>
+          </div>
+
+          <div style="display:flex;gap:8px;margin-top:12px;">
+            <button type="button" class="chip-select" data-timer-min="15">15m Quick Steep</button>
+            <button type="button" class="chip-select active" data-timer-min="25">25m Standard</button>
+            <button type="button" class="chip-select" data-timer-min="45">45m Deep Brew</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. SCREEN: COURSES -->
+      <section id="screen-courses" class="screen">
+        <div class="card">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-size:14px;font-weight:800;color:var(--text-main);">Mindful Academic Paths & Courses</span>
+            <button type="button" class="btn-primary" id="btn-open-course-modal">+ Add Course</button>
+          </div>
+          <div id="courses-list" style="display:flex;flex-direction:column;gap:12px;margin-top:14px;"></div>
+        </div>
+      </section>
+
+      <!-- 5. SCREEN: RESCUE DECK -->
+      <section id="screen-rescue" class="screen">
+        <div class="card" style="border-color:var(--border-strong);">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="font-size:20px;">🌿</span>
+              <div>
+                <h3 style="font-size:15px;font-weight:800;color:var(--text-main);">Zero-Shame Renegotiation Deck</h3>
+                <p style="font-size:12px;color:var(--text-muted);">When life shifts your plans, extend or let go without guilt.</p>
+              </div>
+            </div>
+            <span style="font-size:11px;color:var(--accent-gold);font-weight:700;">Guilt-Free</span>
+          </div>
+        </div>
+
+        <div class="rescue-deck" id="rescue-deck">
+          <div id="rescue-items-list" style="display:flex;flex-direction:column;gap:12px;"></div>
+        </div>
+      </section>
+
+      <!-- 6. SCREEN: SETTINGS -->
+      <section id="screen-settings" class="screen">
+        <div class="card">
+          <h3 style="font-size:15px;font-weight:800;color:var(--text-main);">Wabi-Sabi Sanctuary Themes</h3>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));gap:10px;margin-top:8px;" id="theme-selector-grid">
+            <button type="button" class="btn-secondary" data-set-theme="terracotta-sun">☀️ Terracotta Sun</button>
+            <button type="button" class="btn-secondary" data-set-theme="sand-linen">🌾 Sand & Linen</button>
+            <button type="button" class="btn-secondary" data-set-theme="sage-harmony">🍃 Sage Harmony</button>
+            <button type="button" class="btn-secondary" data-set-theme="espresso-dark">☕ Espresso Dark</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size:15px;font-weight:800;color:var(--text-main);">Daily Sustainable Capacity</h3>
+          <p style="font-size:12px;color:var(--text-muted);">Calibrate the maximum minutes of focused academic work you realistically can sustain per day.</p>
+          <div style="display:flex;align-items:center;gap:14px;margin-top:12px;">
+            <input type="number" id="set-capacity" min="15" max="720" step="15" value="120" style="max-width:140px;">
+            <span style="font-size:13px;font-weight:600;color:var(--text-muted);" id="capacity-hours-label">2 hours per day</span>
+          </div>
+          <div style="margin-top:14px;">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer;">
+              <input type="checkbox" id="set-skip-weekends" style="width:18px;height:18px;accent-color:var(--accent-primary);">
+              <span style="font-size:13px;font-weight:600;">Protect weekends (skip Saturday & Sunday from Start-By dates)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="font-size:15px;font-weight:800;color:var(--text-main);">Data Sovereignty & Local Storage</h3>
+          <p style="font-size:12px;color:var(--text-muted);">100% client-side privacy. Your assignments and course data never leave your browser.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:12px;">
+            <button type="button" class="btn-secondary" id="btn-export-json">💾 Export Sanctuary Backup</button>
+            <button type="button" class="btn-secondary" id="btn-import-json">📂 Import Backup</button>
+            <input type="file" id="import-file-input" accept=".json" style="display:none;">
+            <button type="button" class="btn-secondary" id="btn-clear-data" style="color:var(--accent-danger);">↺ Reset Sanctuary</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- CURVED FLOATING ZEN ISLAND NAVIGATION (G-03, G-05) -->
+    <nav class="zen-island-nav" id="bottom-nav">
+      <button type="button" class="zen-nav-tab active" data-tab="today">
+        <span class="tab-glyph">🌱</span>
+        <span>Horizon</span>
+      </button>
+      <button type="button" class="zen-nav-tab" data-tab="radar">
+        <span class="tab-glyph">📋</span>
+        <span>Radar</span>
+      </button>
+      <button type="button" class="zen-nav-tab" data-tab="teahouse">
+        <span class="tab-glyph">🍵</span>
+        <span>Teahouse</span>
+      </button>
+      <button type="button" class="zen-nav-tab" data-tab="courses">
+        <span class="tab-glyph">🌾</span>
+        <span>Courses</span>
+      </button>
+      <button type="button" class="zen-nav-tab" data-tab="rescue">
+        <span class="tab-glyph">🌿</span>
+        <span>Rescue</span>
+      </button>
+      <button type="button" class="zen-nav-tab" data-tab="settings">
+        <span class="tab-glyph">⚙️</span>
+        <span>Sanctuary</span>
+      </button>
+    </nav>
+
+  </div>
+
+  <!-- MODALS -->
+
+  <!-- Modal: Add Course -->
+  <div class="zen-modal-overlay" id="modal-course">
+    <div class="zen-modal-box">
+      <div class="zen-modal-header">
+        <h3 class="zen-modal-title">Add Academic Course</h3>
+        <button type="button" class="zen-modal-close" data-close-modal="modal-course">✕</button>
+      </div>
+      <form id="form-course" style="display:flex;flex-direction:column;gap:14px;">
+        <div>
+          <label style="font-size:12px;font-weight:700;color:var(--text-muted);">Course Name</label>
+          <input type="text" id="course-input-name" placeholder="e.g. Cognitive Psychology" required>
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:700;color:var(--text-muted);">Color Accent</label>
+          <input type="text" id="course-input-color" value="#e07a5f" placeholder="#e07a5f">
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top:8px;">Save Course</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Edit Assignment Details -->
+  <div class="zen-modal-overlay" id="modal-edit-assignment">
+    <div class="zen-modal-box">
+      <div class="zen-modal-header">
+        <h3 class="zen-modal-title">Assignment Details</h3>
+        <button type="button" class="zen-modal-close" data-close-modal="modal-edit-assignment">✕</button>
+      </div>
+      <form id="form-edit-assignment" style="display:flex;flex-direction:column;gap:14px;">
+        <input type="hidden" id="edit-id">
+        <div>
+          <label style="font-size:12px;font-weight:700;color:var(--text-muted);">Title</label>
+          <input type="text" id="edit-title" required>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label style="font-size:12px;font-weight:700;color:var(--text-muted);">Course</label>
+            <select id="edit-course"></select>
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:700;color:var(--text-muted);">Due Date</label>
+            <input type="date" id="edit-due" required>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <div>
+            <label style="font-size:12px;font-weight:700;color:var(--text-muted);">Estimate (Minutes)</label>
+            <input type="number" id="edit-est" min="0" step="15" required>
+          </div>
+          <div>
+            <label style="font-size:12px;font-weight:700;color:var(--text-muted);">Manual Time Logged (Min)</label>
+            <input type="number" id="edit-manual" min="0" step="5">
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-top:12px;">
+          <button type="button" class="btn-secondary" id="btn-delete-assignment" style="color:var(--accent-danger);">Delete</button>
+          <button type="submit" class="btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal: Rescue Extension Date -->
+  <div class="zen-modal-overlay" id="modal-rescue-extension">
+    <div class="zen-modal-box">
+      <div class="zen-modal-header">
+        <h3 class="zen-modal-title">Renegotiate with Grace</h3>
+        <button type="button" class="zen-modal-close" data-close-modal="modal-rescue-extension">✕</button>
+      </div>
+      <form id="form-rescue-extension" style="display:flex;flex-direction:column;gap:14px;">
+        <input type="hidden" id="rescue-ext-id">
+        <p style="font-size:13px;color:var(--text-muted);">Choose a new gentle due date. The engine will automatically update your Start-By pacing.</p>
+        <div>
+          <label style="font-size:12px;font-weight:700;color:var(--text-muted);">New Due Date</label>
+          <input type="date" id="rescue-ext-due" required>
+        </div>
+        <button type="submit" class="btn-primary" style="margin-top:8px;">Apply Grace Extension</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- GUIDED ONBOARDING TOUR (G-01, G-02, G-11) -->
+  <div class="tutorial-overlay" id="tutorial-overlay"></div>
+  <div class="tutorial-card" id="tutorial-card">
+    <div class="tour-header">
+      <span class="tour-section-tag" id="tutorial-section-tag">Sanctuary · Horizon</span>
+      <div class="tour-avatar">L</div>
+    </div>
+    <h3 class="tour-title" id="tutorial-title">Welcome</h3>
+    <p class="tour-message" id="tutorial-message">Welcome to your sanctuary.</p>
+    <p class="tour-hint" id="tutorial-hint"></p>
+    <div class="tour-actions">
+      <span class="tour-step-count" id="tutorial-step-count">1 / 10</span>
+      <div style="display:flex;gap:8px;">
+        <button type="button" class="btn-secondary" id="tutorial-btn-skip">Skip</button>
+        <button type="button" class="btn-secondary" id="tutorial-btn-prev">Back</button>
+        <button type="button" class="btn-primary" id="tutorial-btn-next">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- APPLICATION SCRIPTS -->
+  <script src="./js/engine.js"></script>
+  <script src="./js/storage.js"></script>
+  <script src="./js/config.js"></script>
+  <script src="./js/tutorials.js"></script>
+  <script src="./js/app.js"></script>
+
+  <!-- Service Worker Registration -->
+  <script>
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('./sw.js').catch(function (err) {
+          console.warn('SW register error:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

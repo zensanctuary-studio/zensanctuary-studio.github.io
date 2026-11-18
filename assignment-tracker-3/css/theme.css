@@ -1,0 +1,112 @@
+/**
+ * Assignment Tracker — Edition 3 (Wabi-Sabi Sanctuary)
+ * Brand DNA: Warm Espresso (#161311), Terracotta, Sand, Linen, and Bamboo Sage.
+ * Shop 3: Zen Sanctuary Studio
+ */
+
+:root,
+body[data-theme="terracotta-sun"] {
+  --bg-primary: #161311;
+  --bg-surface: #211c18;
+  --bg-surface-elevated: #2a241f;
+  --bg-surface-soft: #352d27;
+  --bg-island: rgba(33, 28, 24, 0.88);
+  
+  --border-subtle: rgba(224, 122, 95, 0.22);
+  --border-strong: rgba(224, 122, 95, 0.45);
+  
+  --text-main: #f5ebe0;
+  --text-muted: #b7a89a;
+  --text-dim: #7d7065;
+  
+  --accent-primary: #e07a5f;       /* Warm Terracotta */
+  --accent-primary-hover: #ba5338;
+  --accent-secondary: #81b29a;     /* Matcha Sage */
+  --accent-gold: #f2cc8f;          /* Gentle Sun Gold */
+  --accent-amber: #d4a359;
+  --accent-rose: #d6756b;
+  --accent-danger: #c95d52;
+  --accent-glow: rgba(224, 122, 95, 0.16);
+
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 26px;
+  --radius-pill: 9999px;
+  
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.6);
+  --shadow-island: 0 12px 36px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(224, 122, 95, 0.25);
+}
+
+body[data-theme="sand-linen"] {
+  --bg-primary: #1c1917;
+  --bg-surface: #292524;
+  --bg-surface-elevated: #332e2b;
+  --bg-surface-soft: #3f3935;
+  --bg-island: rgba(41, 37, 36, 0.88);
+  
+  --border-subtle: rgba(214, 196, 178, 0.2);
+  --border-strong: rgba(214, 196, 178, 0.4);
+  
+  --text-main: #fafaf9;
+  --text-muted: #a8a29e;
+  --text-dim: #78716c;
+  
+  --accent-primary: #d4a373;
+  --accent-primary-hover: #b88656;
+  --accent-secondary: #90a955;
+  --accent-gold: #e9d8a6;
+  --accent-amber: #ddb892;
+  --accent-rose: #b56576;
+  --accent-danger: #b56576;
+  --accent-glow: rgba(212, 163, 115, 0.16);
+}
+
+body[data-theme="sage-harmony"] {
+  --bg-primary: #121815;
+  --bg-surface: #1b2420;
+  --bg-surface-elevated: #25312c;
+  --bg-surface-soft: #2e3e37;
+  --bg-island: rgba(27, 36, 32, 0.88);
+  
+  --border-subtle: rgba(129, 178, 154, 0.22);
+  --border-strong: rgba(129, 178, 154, 0.42);
+  
+  --text-main: #e8f1eb;
+  --text-muted: #98aca0;
+  --text-dim: #6d8075;
+  
+  --accent-primary: #81b29a;
+  --accent-primary-hover: #5a8b74;
+  --accent-secondary: #52b788;
+  --accent-gold: #f2cc8f;
+  --accent-amber: #d4a359;
+  --accent-rose: #e07a5f;
+  --accent-danger: #c95d52;
+  --accent-glow: rgba(129, 178, 154, 0.18);
+}
+
+body[data-theme="espresso-dark"] {
+  --bg-primary: #0d0b0a;
+  --bg-surface: #171311;
+  --bg-surface-elevated: #211c19;
+  --bg-surface-soft: #2d2622;
+  --bg-island: rgba(23, 19, 17, 0.92);
+  
+  --border-subtle: rgba(186, 83, 56, 0.22);
+  --border-strong: rgba(186, 83, 56, 0.45);
+  
+  --text-main: #eae5e1;
+  --text-muted: #9a8f88;
+  --text-dim: #6c615a;
+  
+  --accent-primary: #ba5338;
+  --accent-primary-hover: #9c3f27;
+  --accent-secondary: #6b9080;
+  --accent-gold: #d4a359;
+  --accent-amber: #c59b27;
+  --accent-rose: #d6756b;
+  --accent-danger: #c95d52;
+  --accent-glow: rgba(186, 83, 56, 0.18);
+}
