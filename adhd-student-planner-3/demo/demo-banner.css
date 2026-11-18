@@ -1,0 +1,107 @@
+/* Zen Sanctuary Demo Top Banner & Conversion Modal */
+.etsy-demo-banner {
+  background: linear-gradient(90deg, #ba5338 0%, #161311 100%);
+  color: #faf6ee;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+  position: relative;
+  border-bottom: 1px solid rgba(224, 122, 95, 0.35);
+}
+
+.etsy-demo-banner a.etsy-demo-cta {
+  background: linear-gradient(135deg, #e07a5f, #ba5338);
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  transition: transform 0.15s ease;
+  box-shadow: 0 2px 8px rgba(224, 122, 95, 0.35);
+}
+
+.etsy-demo-banner a.etsy-demo-cta:hover {
+  transform: scale(1.05);
+}
+
+/* Modal Conversion Overlay */
+.etsy-demo-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 11, 9, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 10000;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.etsy-demo-modal-overlay.active {
+  display: flex;
+}
+
+.etsy-demo-modal-card {
+  background: #221c19;
+  color: #faf6ee;
+  border: 1.5px solid #e07a5f;
+  border-radius: 20px;
+  max-width: 440px;
+  width: 100%;
+  padding: 28px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(224, 122, 95, 0.25);
+  animation: modalScale 200ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.etsy-demo-modal-card h3 {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #f2cc8f;
+  margin-bottom: 10px;
+}
+
+.etsy-demo-modal-card p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #d5c8be;
+  margin-bottom: 20px;
+}
+
+.etsy-gate-btn-buy {
+  display: inline-block;
+  background: linear-gradient(135deg, #e07a5f, #ba5338);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(224, 122, 95, 0.4);
+  transition: transform 0.15s ease;
+}
+
+.etsy-gate-btn-buy:hover {
+  transform: translateY(-2px);
+}
+
+.etsy-gate-btn-close {
+  margin-top: 14px;
+  background: transparent;
+  border: none;
+  color: #a6988d;
+  font-size: 0.82rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.etsy-gate-btn-close:hover {
+  color: #faf6ee;
+}
