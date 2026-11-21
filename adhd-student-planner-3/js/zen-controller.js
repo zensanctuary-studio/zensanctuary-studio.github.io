@@ -52,9 +52,23 @@
     setupModals();
     renderAll();
 
+    const urlParams = typeof window !== 'undefined' && window.location ? new URLSearchParams(window.location.search) : null;
+    if (urlParams && urlParams.get('clean') === '1') {
+      state = window.StudentStorage.cleanSlate();
+      localStorage.setItem('adhd_student_zen_cleaned_v1', 'true');
+      localStorage.setItem('adhd_student_zen_seen_tour_v1', 'true');
+      renderAll();
+    }
+
+    if (urlParams && urlParams.get('tab')) {
+      switchTab(urlParams.get('tab'));
+    }
+
     if (window.LeoTour) {
       window.LeoTour.initTourHandlers();
-      window.LeoTour.startTour(false);
+      if (!urlParams || urlParams.get('clean') !== '1') {
+        window.LeoTour.startTour(false);
+      }
     }
   }
 
