@@ -21,6 +21,18 @@
   function init() {
     state = window.StudentStorage.load();
 
+    // Auto-clean slate check (RULE-22):
+    // If the onboarding tour was completed, ensure default tutorial mock data does not linger.
+    const hasSeenTour = localStorage.getItem('adhd_student_zen_seen_tour_v1');
+    const hasCleaned = localStorage.getItem('adhd_student_zen_cleaned_v1');
+    if (hasSeenTour && !hasCleaned) {
+      const isDefaultMockData = state.courses && state.courses.some(c => c.id === 'course-1');
+      if (isDefaultMockData) {
+        state = window.StudentStorage.cleanSlate();
+        localStorage.setItem('adhd_student_zen_cleaned_v1', 'true');
+      }
+    }
+
     const today = getTodayISO();
     const streakResult = window.StudentEngine.calculateStreak(
       state.profile.lastActiveDate,
@@ -45,6 +57,17 @@
       window.LeoTour.startTour(false);
     }
   }
+
+  window.setCleanSlateState = function (force) {
+    if (!force) {
+      const isDefaultData = !state.courses || state.courses.length === 0 ||
+        state.courses.every(c => ['course-1', 'course-2', 'course-3'].includes(c.id));
+      if (!isDefaultData) return;
+    }
+    state = window.StudentStorage.cleanSlate();
+    localStorage.setItem('adhd_student_zen_cleaned_v1', 'true');
+    renderAll();
+  };
 
   function applyTheme(theme) {
     document.body.setAttribute('data-theme', theme);
@@ -173,15 +196,36 @@
       });
     }
 
-    // Reset Data
+    // Reset / Clean Slate Data (RULE-22)
+    const btnCleanSlate = document.getElementById('btn-clean-slate');
+    if (btnCleanSlate) {
+      btnCleanSlate.addEventListener('click', function () {
+        if (confirm('Clear all courses, deliverables, and exams to start fresh with a pristine clean slate?')) {
+          window.setCleanSlateState(true);
+          alert('Academic Sanctuary cleared to a clean slate. Ready for your actual curriculum!');
+        }
+      });
+    }
+
+    const btnLoadSample = document.getElementById('btn-load-sample');
+    if (btnLoadSample) {
+      btnLoadSample.addEventListener('click', function () {
+        if (confirm('Load sample academic curriculum and deliverables?')) {
+          state = window.StudentStorage.reset();
+          localStorage.removeItem('adhd_student_zen_cleaned_v1');
+          applyTheme(state.settings.theme);
+          renderAll();
+          alert('Sample academic curriculum loaded.');
+        }
+      });
+    }
+
     const btnReset = document.getElementById('btn-reset-data');
     if (btnReset) {
       btnReset.addEventListener('click', function () {
-        if (confirm('Are you sure you wish to reset all academic data to default sample state?')) {
-          state = window.StudentStorage.reset();
-          applyTheme(state.settings.theme);
-          renderAll();
-          alert('Academic state refreshed to default sample data.');
+        if (confirm('Clear all courses, deliverables, and exams to start fresh with a pristine clean slate?')) {
+          window.setCleanSlateState(true);
+          alert('Academic Sanctuary cleared to a clean slate. Ready for your actual curriculum!');
         }
       });
     }
@@ -391,7 +435,7 @@
 
     const totalAsgs = state.assignments.length;
     const completedAsgs = state.assignments.filter(a => a.completed).length;
-    const pct = totalAsgs > 0 ? Math.round((completedAsgs / totalAsgs) * 100) : 100;
+    const pct = totalAsgs > 0 ? Math.round((completedAsgs / totalAsgs) * 100) : 0;
 
     const radius = 64;
     const circumference = 2 * Math.PI * radius;
@@ -422,7 +466,7 @@
       <div class="radial-hero-info">
         <div class="radial-hero-title">Academic Momentum Harmony</div>
         <p class="radial-hero-desc">
-          ${completedAsgs} of ${totalAsgs} deliverables completed (${pct}% semester throughput).
+          ${totalAsgs === 0 ? 'Fresh Academic Sanctuary active. Log your deliverables or enroll courses below.' : `${completedAsgs} of ${totalAsgs} deliverables completed (${pct}% semester throughput).`}
           ${state.settings.fogMode ? 'Sensory Rest Mode active: distant future deliverables blurred.' : 'All academic horizons active.'}
         </p>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
@@ -774,7 +818,7 @@
               </p>
             </div>
             <div style="text-align: right;">
-              <div style="font-size: 1.45rem; font-weight: 800; color: var(--accent-gold);">${grade.letterGrade}</div>
+              <div style="font-size: 1.45rem; font-weight: 800; color: var(--accent-gold);">${grade.letter || 'In Progress'}</div>
               <div style="font-size: 0.75rem; color: var(--accent-mint); font-weight: 700;">${gradePercent}</div>
             </div>
           </div>
@@ -860,6 +904,10 @@
     selects.forEach(selId => {
       const sel = document.getElementById(selId);
       if (!sel) return;
+      if (state.courses.length === 0) {
+        sel.innerHTML = '<option value="">(Enroll a course in Curriculum first)</option>';
+        return;
+      }
       sel.innerHTML = state.courses.map(c => `
         <option value="${c.id}">${c.code} — ${c.name}</option>
       `).join('');

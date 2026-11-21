@@ -268,6 +268,38 @@
     return fresh;
   }
 
+  function getCleanSlateData() {
+    const today = getTodayISO();
+    return {
+      schema: CURRENT_SCHEMA,
+      profile: {
+        name: 'Scholar',
+        schoolName: '',
+        currentTerm: 'Active Semester',
+        studyStreak: 0,
+        lastActiveDate: today,
+        graceTokens: 3,
+        totalStudyMinutes: 0
+      },
+      settings: {
+        fogMode: false,
+        soundEnabled: true,
+        hapticsEnabled: true,
+        theme: 'sage-harmony',
+        defaultSprintMinutes: 20
+      },
+      courses: [],
+      assignments: [],
+      exams: []
+    };
+  }
+
+  function cleanSlate() {
+    const fresh = getCleanSlateData();
+    save(fresh);
+    return fresh;
+  }
+
   function exportJSON(state) {
     const clean = sanitize(state || load());
     return JSON.stringify(clean, null, 2);
@@ -293,6 +325,8 @@
     load: load,
     save: save,
     reset: reset,
+    getCleanSlateData: getCleanSlateData,
+    cleanSlate: cleanSlate,
     getDefaultData: getDefaultData,
     sanitize: sanitize,
     exportJSON: exportJSON,

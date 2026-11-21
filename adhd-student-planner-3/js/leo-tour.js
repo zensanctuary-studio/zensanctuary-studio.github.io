@@ -369,6 +369,11 @@
 
     localStorage.setItem('adhd_student_zen_seen_tour_v1', 'true');
 
+    // Rule-22: Clean slate transition — wipe tutorial mock data after walkthrough
+    if (typeof window.setCleanSlateState === 'function') {
+      window.setCleanSlateState(false);
+    }
+
     if (window.switchStudentTab) {
       window.switchStudentTab('dashboard');
     }
