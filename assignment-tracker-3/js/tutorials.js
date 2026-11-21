@@ -23,8 +23,87 @@
   var pendingApp = null;
   var domGate = null;
   var advanceTimer = null;
+  var shieldAttached = false;
 
   function el(id) { return document.getElementById(id); }
+
+  function onCapturePointerEvent(e) {
+    if (!active) return;
+    var card = el('tutorial-card');
+    // Allowed if click/interaction occurs inside tutorial card
+    if (card && (card === e.target || card.contains(e.target))) {
+      return;
+    }
+    // Allowed if click/interaction occurs inside active spotlight element
+    if (spotlight && (spotlight === e.target || spotlight.contains(e.target))) {
+      return;
+    }
+    // Lock out all other background page interactions
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+  }
+
+  function onCaptureKeyDown(e) {
+    if (!active) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      end(false);
+      return;
+    }
+    if (e.key === 'Tab') {
+      var card = el('tutorial-card');
+      var focusable = [];
+      if (card) {
+        var cardNodes = card.querySelectorAll('button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        for (var i = 0; i < cardNodes.length; i++) focusable.push(cardNodes[i]);
+      }
+      if (spotlight) {
+        if (spotlight.matches && spotlight.matches('button, input, select, textarea, [href], [tabindex]')) {
+          focusable.push(spotlight);
+        }
+        var spotNodes = spotlight.querySelectorAll('button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        for (var j = 0; j < spotNodes.length; j++) focusable.push(spotNodes[j]);
+      }
+      if (focusable.length > 0) {
+        var first = focusable[0];
+        var last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    }
+  }
+
+  function attachShield() {
+    if (shieldAttached) return;
+    shieldAttached = true;
+    if (typeof document !== 'undefined') {
+      document.body.classList.add('tutorial-active');
+      document.addEventListener('click', onCapturePointerEvent, true);
+      document.addEventListener('mousedown', onCapturePointerEvent, true);
+      document.addEventListener('pointerdown', onCapturePointerEvent, true);
+      document.addEventListener('touchstart', onCapturePointerEvent, true);
+      document.addEventListener('keydown', onCaptureKeyDown, true);
+    }
+  }
+
+  function detachShield() {
+    if (!shieldAttached) return;
+    shieldAttached = false;
+    if (typeof document !== 'undefined') {
+      document.body.classList.remove('tutorial-active');
+      document.removeEventListener('click', onCapturePointerEvent, true);
+      document.removeEventListener('mousedown', onCapturePointerEvent, true);
+      document.removeEventListener('pointerdown', onCapturePointerEvent, true);
+      document.removeEventListener('touchstart', onCapturePointerEvent, true);
+      document.removeEventListener('keydown', onCaptureKeyDown, true);
+    }
+  }
 
   function clearSpotlight() {
     if (spotlight) { spotlight.classList.remove('tutorial-target-active'); spotlight = null; }
@@ -125,6 +204,7 @@
     current = i;
     var step = cfg.tour[i];
     active = true;
+    attachShield();
     hooks.switchTab(step.tabId); // Rule 11: always sync the screen first
     var overlay = el('tutorial-overlay');
     var card = el('tutorial-card');
@@ -162,6 +242,7 @@
 
   function end(completed) {
     active = false;
+    detachShield();
     clearGates();
     clearSpotlight();
     var overlay = el('tutorial-overlay');

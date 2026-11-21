@@ -634,6 +634,32 @@
   pointer-events: none; /* Cannot softlock screen */
 }
 
+/* Rule-16: Strict background interaction lockout while tutorial is active */
+body.tutorial-active .tutorial-overlay {
+  pointer-events: auto !important;
+}
+
+body.tutorial-active .tutorial-target-active {
+  pointer-events: auto !important;
+  position: relative !important;
+  z-index: 10001 !important;
+}
+
+body.tutorial-active .tutorial-card {
+  pointer-events: auto !important;
+  z-index: 10003 !important;
+}
+
+body.tutorial-active .zen-island-nav,
+body.tutorial-active .app-header {
+  pointer-events: none !important;
+}
+
+body.tutorial-active .zen-island-nav .tutorial-target-active,
+body.tutorial-active .app-header .tutorial-target-active {
+  pointer-events: auto !important;
+}
+
 .tutorial-target-active {
   position: relative !important;
   z-index: 10001 !important;
