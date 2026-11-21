@@ -13,11 +13,43 @@
   <script src="demo-guard.js"></script>
 
   <!-- Zen Sanctuary Stylesheets -->
-  <link rel="stylesheet" href="../css/harmony-theme.css">
-  <link rel="stylesheet" href="../css/zen-layout.css">
-  <link rel="stylesheet" href="../css/leo-tour.css">
+  <link rel="stylesheet" href="../css/harmony-theme.css?v=2.0.2">
+  <link rel="stylesheet" href="../css/zen-layout.css?v=2.0.2">
+  <link rel="stylesheet" href="../css/leo-tour.css?v=2.0.2">
+
+  <!-- Mission-Critical Zero-Blur Override (RULE-16 / G-16 / G-19 / G-21) -->
+  <style id="zen-zero-blur-lockout">
+    #tutorial-overlay,
+    .tutorial-overlay {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      filter: none !important;
+    }
+  </style>
 </head>
 <body data-theme="sage-harmony" data-active-tab="dashboard">
+
+  <!-- Immediate Cache-Buster & Legacy Service Worker Purge (G-21) -->
+  <script>
+    (function() {
+      if ('caches' in window) {
+        caches.keys().then(function(keys) {
+          keys.forEach(function(k) {
+            if (k === 'adhd-student-zen-v1' || (k.indexOf('zen') !== -1 && k !== 'adhd-student-zen-v2')) {
+              caches.delete(k);
+              console.log('[Cache Purge] Deleted legacy cache:', k);
+            }
+          });
+        });
+      }
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.getRegistrations().then(function(regs) {
+          regs.forEach(function(r) { r.update(); });
+        });
+      }
+    })();
+  </script>
 
   <div class="zen-shell">
     <!-- Executive Zen Header -->
@@ -422,9 +454,9 @@
   </div>
 
   <!-- Application Logic Scripts -->
-  <script src="../js/engine.js"></script>
-  <script src="../js/storage.js"></script>
-  <script src="../js/leo-tour.js"></script>
-  <script src="../js/zen-controller.js"></script>
+  <script src="../js/engine.js?v=2.0.2"></script>
+  <script src="../js/storage.js?v=2.0.2"></script>
+  <script src="../js/leo-tour.js?v=2.0.2"></script>
+  <script src="../js/zen-controller.js?v=2.0.2"></script>
 </body>
 </html>
