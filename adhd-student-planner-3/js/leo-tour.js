@@ -339,7 +339,16 @@
     window.addEventListener('scroll', onScrollOrResize, { passive: true });
     window.addEventListener('resize', onScrollOrResize, { passive: true });
 
-    renderStep(0);
+    let initialStep = 0;
+    if (typeof window !== 'undefined' && window.location && window.location.search) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const stepParam = parseInt(urlParams.get('step') || '0', 10);
+      if (!isNaN(stepParam) && stepParam >= 0 && stepParam < TOUR_STEPS.length) {
+        initialStep = stepParam;
+      }
+    }
+
+    renderStep(initialStep);
   }
 
   function endTour() {
