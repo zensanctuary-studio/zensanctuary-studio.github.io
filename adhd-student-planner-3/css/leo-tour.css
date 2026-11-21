@@ -3,8 +3,7 @@
    Persona: Leo (Zen Sanctuary Studio) — Mindful, grounding, calm.
    Implements Rule-01 (DOM spotlights & beacons), Rule-02 (Crash-proof display),
    Rule-11 (Screen-Synchronized Navigation & Mobile Bottom Clearance >80px),
-   Rule-15 (Viewport Edge Hygiene), and
-   Rule-16 (Zero-Blur Background & Strict Tutorial Interaction Shield).
+   and Rule-15 (Viewport Edge Hygiene).
    ========================================================= */
 
 .tutorial-overlay {
@@ -13,71 +12,18 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: transparent;
-  /* Zero blur: guarantees background context remains completely readable (FLAG / Rule-16) */
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
+  background: rgba(14, 11, 9, 0.65);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 9990;
   display: none;
   opacity: 0;
   transition: opacity var(--transition-smooth, 0.22s ease);
-  pointer-events: auto;
 }
 
 .tutorial-overlay.active {
   display: block;
   opacity: 1;
-}
-
-.tutorial-cutout-svg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  pointer-events: auto;
-}
-
-/* =========================================================
-   RULE-16: Strict Tutorial Interactivity Shield
-   Lock down all non-tutorial elements while onboarding is active.
-   ========================================================= */
-body.tutorial-active {
-  user-select: none;
-}
-
-/* Prevent screen animations from creating stacking context traps during tutorial */
-body.tutorial-active .zen-screen {
-  animation: none !important;
-  transform: none !important;
-}
-
-body.tutorial-active .zen-screen.active {
-  transform: none !important;
-}
-
-/* Block pointer events on the entire background UI */
-body.tutorial-active .zen-shell,
-body.tutorial-active .zen-header,
-body.tutorial-active .zen-floating-island,
-body.tutorial-active #zen-main-container,
-body.tutorial-active .zen-screen,
-body.tutorial-active .zen-modal {
-  pointer-events: none !important;
-}
-
-/* Strictly re-enable pointer-events ONLY on the active spotlight target and its children */
-body.tutorial-active .leo-target-active,
-body.tutorial-active .leo-target-active * {
-  pointer-events: auto !important;
-  cursor: pointer;
-}
-
-/* The tutorial card is always fully interactive */
-.tutorial-card,
-.tutorial-card * {
-  pointer-events: auto !important;
 }
 
 /* DOM-Anchored Target Spotlight */
@@ -86,14 +32,14 @@ body.tutorial-active .leo-target-active * {
   z-index: 9995 !important;
   outline: 2.5px solid var(--accent-primary, #e07a5f) !important;
   outline-offset: 4px !important;
-  box-shadow: 0 0 0 6px rgba(224, 122, 95, 0.25), 0 12px 32px rgba(0, 0, 0, 0.85) !important;
+  box-shadow: 0 0 0 8px rgba(224, 122, 95, 0.3), 0 10px 30px rgba(0, 0, 0, 0.8) !important;
   animation: leoPulse 2s infinite ease-in-out !important;
   border-radius: var(--radius-zen, 16px) !important;
 }
 
 @keyframes leoPulse {
-  0%, 100% { outline-color: #e07a5f; box-shadow: 0 0 0 6px rgba(224, 122, 95, 0.25), 0 12px 32px rgba(0, 0, 0, 0.85); }
-  50% { outline-color: #f2cc8f; box-shadow: 0 0 0 10px rgba(242, 204, 143, 0.35), 0 14px 38px rgba(0, 0, 0, 0.95); }
+  0%, 100% { outline-color: #e07a5f; box-shadow: 0 0 0 6px rgba(224, 122, 95, 0.3), 0 10px 30px rgba(0, 0, 0, 0.8); }
+  50% { outline-color: #f2cc8f; box-shadow: 0 0 0 10px rgba(242, 204, 143, 0.4), 0 12px 36px rgba(0, 0, 0, 0.9); }
 }
 
 /* Pulsing Beacon Indicator */
