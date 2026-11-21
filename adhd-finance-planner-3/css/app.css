@@ -9,14 +9,19 @@
   padding: 0;
 }
 
-html, body {
+html {
   background-color: var(--bg-primary);
   color: var(--text-main);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   line-height: 1.52;
-  min-height: 100vh;
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: clip;
 }
 
 .sanctuary-shell {
@@ -252,9 +257,24 @@ body.fog .fog-hide {
     padding: 12px 10px 164px;
   }
   .card {
-    padding: 15px;
+    padding: 14px;
   }
-  .hearth-radial-wrap,
+  .hearth-radial-wrap {
+    grid-template-columns: 94px minmax(0, 1fr);
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .radial-dial-box {
+    width: 88px;
+    height: 88px;
+  }
+  .radial-dial-box svg {
+    width: 88px;
+    height: 88px;
+  }
+  .radial-center-pct {
+    font-size: 0.96rem;
+  }
   .grid-2 {
     grid-template-columns: 1fr;
   }
