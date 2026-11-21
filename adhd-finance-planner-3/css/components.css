@@ -421,11 +421,14 @@
 }
 
 body.tutorial-active .sanctuary-shell,
-body.tutorial-active .app-header,
-body.tutorial-active .zen-island-nav {
+body.tutorial-active .app-header {
   pointer-events: none !important;
   animation: none !important;
   transform: none !important;
+}
+
+body.tutorial-active .zen-island-nav {
+  pointer-events: none !important;
 }
 
 .tutorial-target-active,
