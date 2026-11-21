@@ -1,4 +1,4 @@
-﻿const CACHE_NAME = 'adhd-student-zen-v3';
+﻿const CACHE_NAME = 'adhd-student-zen-v4';
 const ASSETS_TO_CACHE = [
   './index.html',
   './manifest.json',
