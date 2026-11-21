@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DEMO — ADHD Finance Planner 3 | Wabi-Sabi Money Sanctuary</title>
+  <meta name="description" content="Interactive live demo of ADHD Finance Planner 3: Radial Abundance Dial, 4-Vessel Payday Tea Ritual, Pulling-the-Weeds Subscription Sanctuary &amp; Clay Sinking Vessels.">
+  <meta name="theme-color" content="#161311">
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon-32.png">
+  <style id="zero-blur-lockout">
+    #tutorial-overlay, .tutorial-overlay {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      filter: none !important;
+    }
+  </style>
+  <link rel="stylesheet" href="demo-banner.css">
+  <script src="demo-guard.js"></script>
+  <link rel="stylesheet" href="../css/theme.css?v=3.0.2">
+  <link rel="stylesheet" href="../css/app.css?v=3.0.2">
+  <link rel="stylesheet" href="../css/components.css?v=3.0.2">
+</head>
+<body data-theme="wabi-sabi" data-active-tab="hearth">
+
+  <div class="sanctuary-shell">
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <div class="brand-stone" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div>
+          <h1 class="brand-title">ADHD Finance Planner</h1>
+          <div class="brand-subtitle">Leo's Sanctuary · Live Interactive Demo</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span id="badge-tax-saved" class="badge-pill" title="Annual energy reclaimed from pulled subscription weeds">$0.00/yr reclaimed</span>
+        <button id="btn-launch-tour" class="btn btn-sm btn-secondary" type="button">Leo's Guide</button>
+        <button id="btn-toggle-fog" class="btn btn-sm btn-ghost" type="button" aria-pressed="false">Stillness Shield</button>
+      </div>
+    </header>
+
+    <main id="screen-hearth" class="app-screen active">
+      <section id="hero-pulse" class="card hero-card" aria-label="Abundance Hearth &amp; Radial Dial">
+        <div id="radial-abundance-dial"></div>
+      </section>
+
+      <section class="card fog-hide" aria-label="Mindful daily exchange">
+        <div class="card-title">
+          <span>Mindful Daily Exchange</span>
+          <span class="muted">· anchor a spend in 5 seconds</span>
+        </div>
+        <div class="inline-form">
+          <input id="qa-spend-title" class="input" type="text" maxlength="120" placeholder="e.g. Matcha &amp; Pastry, Market Groceries, Book" autocomplete="off">
+          <input id="qa-spend-amount" class="input" type="number" min="0.01" max="100000" step="0.01" value="6.50" style="max-width:125px;" aria-label="Exchange amount">
+          <button id="btn-qa-spend" class="btn btn-primary" type="button">Anchor Exchange</button>
+        </div>
+        <div class="chip-label">Grounding Preset Stones</div>
+        <div id="qa-amount-chips" class="chip-row" role="group" aria-label="Exchange presets">
+          <button type="button" class="chip selected" data-cents="650" data-label="Warm Tea / Coffee">$6.50 Tea</button>
+          <button type="button" class="chip" data-cents="1450" data-label="Nourishing Bowl">$14.50 Meal</button>
+          <button type="button" class="chip" data-cents="3500" data-label="Market Provisions">$35.00 Market</button>
+          <button type="button" class="chip" data-cents="2000" data-label="Small Joy Gift">$20.00 Joy</button>
+        </div>
+      </section>
+
+      <section class="card fog-hide" aria-label="14-day river of cashflow">
+        <div class="card-title">
+          <span>14-Day River of Flow</span>
+          <span id="weather-status-tag" class="tag ok">Gentle Current</span>
+        </div>
+        <div id="weather-ribbon" class="weather-grid"></div>
+      </section>
+
+      <section class="card fog-hide" aria-label="Shelter and sacred commitments">
+        <div class="card-title">
+          <span>Shelter &amp; Sacred Commitments Before Payday</span>
+          <button class="btn btn-secondary btn-sm" type="button" data-open-modal="modal-add-bill">+ Anchor Bill</button>
+        </div>
+        <div id="pulse-bills-list" class="list"></div>
+      </section>
+
+      <section class="card fog-hide" aria-label="Recent mindful exchanges">
+        <div class="card-title">Recent Mindful Exchanges</div>
+        <div id="recent-tx-list" class="list"></div>
+      </section>
+
+      <section id="teahouse-breath-card" class="card fog-hide" aria-label="Leo's Grounding Breath">
+        <div class="card-title">Leo's Teahouse Breath Anchor</div>
+        <p class="muted">Your worth is never measured by a bank ledger. Before checking numbers on a tired evening, inhale slowly for 4 seconds, hold for 4, and release for 6.</p>
+      </section>
+
+      <section class="stat-grid fog-hide" aria-label="Sanctuary harmony metrics">
+        <div class="stat"><div id="stat-checking" class="stat-num">$0.00</div><div class="stat-label">In Vessel</div></div>
+        <div class="stat"><div id="stat-promised" class="stat-num">$0.00</div><div class="stat-label">Protected Holds</div></div>
+        <div class="stat"><div id="stat-runway" class="stat-num">0 days</div><div class="stat-label">Days of Peace</div></div>
+      </section>
+    </main>
+
+    <section id="screen-flow" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Mindful Payday Tea Ritual</h2>
+          <p class="muted">When abundance arrives, pour every penny calmly across 4 clay vessels.</p>
+        </div>
+      </div>
+
+      <div id="autopilot-card" class="card">
+        <div class="card-title">1. Prepare Your Incoming Harvest</div>
+        <div class="grid-2">
+          <label class="field">
+            <span>Harvest Label</span>
+            <input id="pay-label" class="input" type="text" maxlength="80" value="Bi-Weekly Harvest" autocomplete="off">
+          </label>
+          <label class="field">
+            <span>Net Harvest Amount ($)</span>
+            <input id="pay-amount" class="input" type="number" min="1" max="1000000" step="0.01" value="2400.00">
+          </label>
+        </div>
+        <div class="chip-label">Choose Your 4-Vessel Pour Harmony</div>
+        <div id="pay-preset-chips" class="chip-row" role="group" aria-label="Payday pour presets">
+          <button type="button" class="chip selected" data-preset="balanced">Balanced Harmony 50 / 20 / 10 / 20</button>
+          <button type="button" class="chip" data-preset="catchup">Shelter Grounding 60 / 15 / 15 / 10</button>
+          <button type="button" class="chip" data-preset="freelance">Artisan Tax Cushion 45 / 25 / 15 / 15</button>
+          <button type="button" class="chip" data-preset="gentle">Restorative Joy 50 / 15 / 10 / 25</button>
+        </div>
+
+        <div id="autopilot-preview" class="split-grid"></div>
+
+        <div class="row-actions">
+          <button id="btn-run-autopilot" class="btn btn-primary" type="button">Pour Paycheck Ritual</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Past Payday Tea Rituals</div>
+        <div id="paycheck-history-list" class="list"></div>
+      </div>
+    </section>
+
+    <section id="screen-weeds" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Pulling the Weeds · Subscription Sanctuary</h2>
+          <p class="muted">Spot free trials before they take root and turn pulled weeds into Reclaimed Yearly Energy.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-sub">+ Note Sub / Trial</button>
+      </div>
+
+      <div id="radar-trophy-card" class="card"></div>
+
+      <div class="card">
+        <div class="card-title">
+          <span>Garden Beds (Active Drains vs. Pulled Weeds)</span>
+          <div id="radar-filter" class="chip-row" role="group" aria-label="Garden filter">
+            <button type="button" class="chip selected" data-sub-filter="active">Growing &amp; Trials</button>
+            <button type="button" class="chip" data-sub-filter="cancelled">Pulled Weeds (Reclaimed)</button>
+          </div>
+        </div>
+        <div id="subs-list" class="list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Shame-Free Catch-Up Chamber</div>
+        <p class="muted" style="margin-bottom:10px;">No flashing alarms. Choose one gentle path for any overdue stone or ending trial:</p>
+        <div id="triage-list" class="list"></div>
+      </div>
+    </section>
+
+    <section id="screen-vessels" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Clay Sinking Vessels</h2>
+          <p class="muted">Fill quiet vessels drop by drop for seasonal renewals, car care, and future rest.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-bucket">+ Shape Vessel</button>
+      </div>
+
+      <div id="buckets-card" class="card">
+        <div id="buckets-list" class="list"></div>
+      </div>
+    </section>
+
+    <section id="screen-horizon" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Grounded Horizon &amp; Net Worth</h2>
+          <p class="muted">Your complete offline sanctuary balance sheet with anti-double-counting sync.</p>
+        </div>
+      </div>
+
+      <div id="wealth-summary-card" class="card"></div>
+
+      <div class="card">
+        <div class="card-title">Grounding Checking Sync (Anti-Double-Counting)</div>
+        <p class="muted" style="margin-bottom:10px;">Enter your current checking balance anytime. Today's earlier logged exchanges are never deducted twice.</p>
+        <div class="inline-form">
+          <input id="sync-balance-input" class="input" type="number" step="0.01" placeholder="Current checking balance ($)">
+          <button id="btn-sync-balance" class="btn btn-primary" type="button">Ground Balance</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">All Sanctuary Vessels &amp; Debts</div>
+        <div id="accounts-list" class="list"></div>
+        <div class="inline-form" style="margin-top:12px;">
+          <input id="new-acct-name" class="input" type="text" maxlength="60" placeholder="Vessel name (e.g. Peace Reserve)">
+          <select id="new-acct-type" class="input" style="max-width:155px;" aria-label="Account type">
+            <option value="checking">Checking</option>
+            <option value="savings">Savings / Cushion</option>
+            <option value="debt">Card / Loan</option>
+          </select>
+          <input id="new-acct-bal" class="input" type="number" step="0.01" value="0" style="max-width:120px;" aria-label="Balance">
+          <button id="btn-add-account" class="btn btn-secondary" type="button">Add Vessel</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="screen-settings" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Sanctuary Calibration</h2>
+          <p class="muted">Your thoughts and numbers never leave this device. Zero cloud tracking.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Wabi-Sabi Sanctuary Aesthetics</div>
+        <div id="theme-picker" class="chip-row"></div>
+        <label class="switch-row">
+          <span>Soft wooden chime on completion</span>
+          <input id="set-sound" type="checkbox" checked>
+        </label>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Payday Rhythm &amp; Bare-Bones Peace Floor</div>
+        <div class="grid-2">
+          <label class="field">
+            <span>Next Payday Date</span>
+            <input id="set-next-payday" class="input" type="date">
+          </label>
+          <label class="field">
+            <span>Monthly Bare-Bones Peace Floor ($)</span>
+            <input id="set-survival" class="input" type="number" min="100" max="100000" step="50" value="2200">
+          </label>
+        </div>
+        <div class="grid-2">
+          <label class="field">
+            <span>Forgiveness "Oops Cushion" ($)</span>
+            <input id="set-oops" class="input" type="number" min="0" max="10000" step="5" value="50">
+          </label>
+          <label class="field">
+            <span>Currency Symbol</span>
+            <select id="set-currency" class="input">
+              <option value="USD">USD ($)</option>
+              <option value="CAD">CAD (CA$)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="AUD">AUD (A$)</option>
+            </select>
+          </label>
+        </div>
+        <button id="btn-save-settings" class="btn btn-primary btn-sm" type="button">Save Sanctuary Rhythm</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Clean Slate, Sample Stones &amp; Local Backups</div>
+        <div class="row-actions">
+          <button id="btn-clean-slate" class="btn btn-secondary" type="button">🧹 Start Clean Slate</button>
+          <button id="btn-load-sample" class="btn btn-secondary" type="button">🌱 Load Sample Data</button>
+          <button id="btn-restart-tour" class="btn btn-ghost" type="button">Replay Leo's Tour</button>
+        </div>
+        <div class="row-actions" style="margin-top:10px;">
+          <button id="btn-export-json" class="btn btn-secondary" type="button">Export JSON Backup</button>
+          <button id="btn-import-json" class="btn btn-secondary" type="button">Import JSON Backup</button>
+          <input id="file-import" type="file" accept="application/json,.json" style="display:none;">
+          <button id="btn-reset-data" class="btn btn-danger-soft" type="button">Clear All Stones</button>
+        </div>
+      </div>
+    </section>
+
+    <nav id="bottom-nav" class="zen-island-nav" aria-label="Sanctuary Navigation">
+      <button class="nav-btn active" type="button" data-tab="hearth"><span class="nav-ico">🕯</span><span>Hearth</span></button>
+      <button class="nav-btn" type="button" data-tab="flow"><span class="nav-ico">🍵</span><span>Pay Ritual</span></button>
+      <button class="nav-btn" type="button" data-tab="weeds"><span class="nav-ico">🌿</span><span>Weeds</span></button>
+      <button class="nav-btn" type="button" data-tab="vessels"><span class="nav-ico">🏺</span><span>Vessels</span></button>
+      <button class="nav-btn" type="button" data-tab="horizon"><span class="nav-ico">☯</span><span>Horizon</span></button>
+      <button class="nav-btn" type="button" data-tab="settings"><span class="nav-ico">⚙</span><span>Sanctuary</span></button>
+    </nav>
+  </div>
+
+  <!-- Modal 1: Add Bill -->
+  <div id="modal-add-bill" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="add-bill-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="add-bill-h">Anchor Sacred Commitment / Bill</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-add-bill" aria-label="Close">×</button>
+      </div>
+      <label class="field"><span>Commitment Title</span><input id="bill-title" class="input" type="text" maxlength="120" placeholder="e.g. Sanctuary Rent, Warmth &amp; Light"></label>
+      <div class="grid-2">
+        <label class="field"><span>Amount ($)</span><input id="bill-amount" class="input" type="number" min="0.01" step="0.01" value="85.00"></label>
+        <label class="field"><span>Due Date</span><input id="bill-due" class="input" type="date"></label>
+      </div>
+      <label class="switch-row"><span>Shift weekend due dates to Friday early</span><input id="bill-weekend" type="checkbox" checked></label>
+      <p id="bill-error" class="form-error" role="alert"></p>
+      <div class="row-actions">
+        <button id="btn-save-bill" class="btn btn-primary" type="button">Anchor Bill</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-add-bill">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Add Subscription -->
+  <div id="modal-add-sub" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="add-sub-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="add-sub-h">Note Subscription or Free Trial</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-add-sub" aria-label="Close">×</button>
+      </div>
+      <label class="field"><span>Service Name</span><input id="sub-name" class="input" type="text" maxlength="120" placeholder="e.g. Meditation App Trial, Streaming"></label>
+      <div class="grid-2">
+        <label class="field"><span>Cost ($)</span><input id="sub-amount" class="input" type="number" min="0.01" step="0.01" value="14.99"></label>
+        <label class="field"><span>Billing Cycle</span><select id="sub-cycle" class="input">
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="weekly">Weekly</option>
+        </select></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Next Renewal / Trial End</span><input id="sub-next-date" class="input" type="date"></label>
+        <label class="field"><span>Cancel-By Alert Lead (Days)</span><input id="sub-lead-days" class="input" type="number" min="1" max="30" value="3"></label>
+      </div>
+      <label class="switch-row"><span>Mark as Free Trial Weed (High Alert)</span><input id="sub-is-trial" type="checkbox"></label>
+      <p id="sub-error" class="form-error" role="alert"></p>
+      <div class="row-actions">
+        <button id="btn-save-sub" class="btn btn-primary" type="button">Plant Note</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-add-sub">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Add Clay Vessel -->
+  <div id="modal-add-bucket" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="add-bucket-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="add-bucket-h">Shape Clay Sinking Vessel</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-add-bucket" aria-label="Close">×</button>
+      </div>
+      <label class="field"><span>Vessel Name</span><input id="bucket-name" class="input" type="text" maxlength="80" placeholder="e.g. Car Care, Annual Renewals, Retreat"></label>
+      <div class="grid-2">
+        <label class="field"><span>Full Vessel Target ($)</span><input id="bucket-target" class="input" type="number" min="1" step="1" value="600"></label>
+        <label class="field"><span>Already Stored ($)</span><input id="bucket-saved" class="input" type="number" min="0" step="1" value="100"></label>
+      </div>
+      <label class="field"><span>Per-Payday Gentle Pour ($)</span><input id="bucket-hold" class="input" type="number" min="0" step="1" value="50"></label>
+      <label class="switch-row"><span>Protect this pour from daily Mindful Flow</span><input id="bucket-autohold" type="checkbox" checked></label>
+      <p id="bucket-error" class="form-error" role="alert"></p>
+      <div class="row-actions">
+        <button id="btn-save-bucket" class="btn btn-primary" type="button">Shape Vessel</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-add-bucket">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Confirm -->
+  <div id="modal-confirm" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="confirm-h">Gentle Confirmation</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-confirm" aria-label="Close">×</button>
+      </div>
+      <p id="confirm-text" class="muted" style="margin-bottom:14px;"></p>
+      <div class="row-actions">
+        <button id="btn-confirm-yes" class="btn btn-danger-soft" type="button">Yes, release</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-confirm">Keep as is</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <div id="tutorial-overlay" class="tutorial-overlay" style="display:none;">
+    <div id="tutorial-card" class="tutorial-card" style="display:none;" role="dialog" aria-live="polite" aria-labelledby="tutorial-title">
+      <div class="tour-head">
+        <div class="tour-avatar" aria-hidden="true">L</div>
+        <div>
+          <div id="tutorial-section-tag" class="tour-tag"></div>
+          <div id="tutorial-title" class="tour-title"></div>
+        </div>
+        <div id="tutorial-step-count" class="tour-count"></div>
+      </div>
+      <p id="tutorial-message" class="tour-msg"></p>
+      <p id="tutorial-hint" class="tour-hint"></p>
+      <div class="tour-actions">
+        <button id="tutorial-btn-skip" class="btn btn-ghost btn-sm" type="button">Skip tour</button>
+        <span class="spacer"></span>
+        <button id="tutorial-btn-prev" class="btn btn-secondary btn-sm" type="button">Back</button>
+        <button id="tutorial-btn-next" class="btn btn-primary btn-sm" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if ('caches' in window) {
+      caches.keys().then(function (keys) {
+        keys.forEach(function (k) {
+          if (k.indexOf('adhd-finance-planner-3-v1') !== -1) caches.delete(k);
+        });
+      }).catch(function () {});
+    }
+  </script>
+  <script src="../js/engine.js?v=3.0.2"></script>
+  <script src="../js/storage.js?v=3.0.2"></script>
+  <script src="../js/config.js?v=3.0.2"></script>
+  <script src="../js/tutorials.js?v=3.0.2"></script>
+  <script src="../js/app.js?v=3.0.2"></script>
+</body>
+</html>
