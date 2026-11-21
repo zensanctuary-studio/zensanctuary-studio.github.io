@@ -58,6 +58,11 @@
       localStorage.setItem('adhd_student_zen_cleaned_v1', 'true');
       localStorage.setItem('adhd_student_zen_seen_tour_v1', 'true');
       renderAll();
+    } else if (urlParams && urlParams.get('sample') === '1') {
+      state = window.StudentStorage.reset();
+      localStorage.setItem('adhd_student_zen_seen_tour_v1', 'true');
+      localStorage.removeItem('adhd_student_zen_cleaned_v1');
+      renderAll();
     }
 
     if (urlParams && urlParams.get('tab')) {
@@ -66,7 +71,7 @@
 
     if (window.LeoTour) {
       window.LeoTour.initTourHandlers();
-      if (!urlParams || urlParams.get('clean') !== '1') {
+      if (!urlParams || (urlParams.get('clean') !== '1' && urlParams.get('sample') !== '1')) {
         window.LeoTour.startTour(false);
       }
     }
