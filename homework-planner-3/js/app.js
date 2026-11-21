@@ -1035,25 +1035,27 @@
   if (tourBtn) {
     tourBtn.addEventListener('click', function () {
       switchTab('tonight');
-      T.start(CFG.tour);
+      T.start();
     });
   }
 
   // ---------- Initial Setup ----------
   T.init({
+    config: CFG,
     switchTab: switchTab,
     onEnd: function () {
-      data.settings.tourDone = true;
+      data.settings.onboarded = true;
       commit();
+      switchTab('tonight');
     }
   });
 
   renderAll();
 
   // Auto-launch tour on first visit
-  if (!data.settings.tourDone) {
+  if (!data.settings.onboarded) {
     setTimeout(function () {
-      T.start(CFG.tour);
+      T.start();
     }, 400);
   }
 })();
