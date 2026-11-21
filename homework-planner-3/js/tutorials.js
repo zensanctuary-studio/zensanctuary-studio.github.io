@@ -118,6 +118,72 @@
     }, 450);
   }
 
+  var SHIELD_EVENTS = ['click', 'mousedown', 'mouseup', 'pointerdown', 'pointerup', 'touchstart', 'touchend'];
+  var shieldBound = false;
+
+  function isAllowedTourTarget(node) {
+    if (!node) return false;
+    var card = el('tutorial-card');
+    if (card && (card === node || card.contains(node))) return true;
+    if (spotlight && (spotlight === node || spotlight.contains(node))) return true;
+    return false;
+  }
+
+  function onCapturePointerEvent(e) {
+    if (!active) return;
+    if (isAllowedTourTarget(e.target)) return;
+
+    // Rule-18 Lockout: prevent any interaction outside tutorial card and spotlight element
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+  }
+
+  function onCaptureFocus(e) {
+    if (!active) return;
+    if (isAllowedTourTarget(e.target)) return;
+    e.preventDefault();
+    var nextBtn = el('tutorial-btn-next');
+    if (nextBtn && typeof nextBtn.focus === 'function') {
+      nextBtn.focus();
+    }
+  }
+
+  function onCaptureKeyDown(e) {
+    if (!active) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      end(false);
+      return;
+    }
+    if (isAllowedTourTarget(e.target)) return;
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+  }
+
+  function bindShield() {
+    if (shieldBound) return;
+    shieldBound = true;
+    SHIELD_EVENTS.forEach(function (ev) {
+      document.addEventListener(ev, onCapturePointerEvent, true);
+    });
+    document.addEventListener('focusin', onCaptureFocus, true);
+    document.addEventListener('keydown', onCaptureKeyDown, true);
+    if (document.body) document.body.classList.add('tutorial-active');
+  }
+
+  function unbindShield() {
+    if (!shieldBound) return;
+    shieldBound = false;
+    SHIELD_EVENTS.forEach(function (ev) {
+      document.removeEventListener(ev, onCapturePointerEvent, true);
+    });
+    document.removeEventListener('focusin', onCaptureFocus, true);
+    document.removeEventListener('keydown', onCaptureKeyDown, true);
+    if (document.body) document.body.classList.remove('tutorial-active');
+  }
+
   function render(i) {
     if (!cfg) return;
     if (i < 0) i = 0;
@@ -125,6 +191,7 @@
     current = i;
     var step = cfg.tour[i];
     active = true;
+    bindShield(); // Rule-18: enforce interaction shield
     hooks.switchTab(step.tabId); // Rule 11: always sync the screen first
     var overlay = el('tutorial-overlay');
     var card = el('tutorial-card');
@@ -162,6 +229,7 @@
 
   function end(completed) {
     active = false;
+    unbindShield(); // Rule-18: restore normal page interactivity
     clearGates();
     clearSpotlight();
     var overlay = el('tutorial-overlay');
