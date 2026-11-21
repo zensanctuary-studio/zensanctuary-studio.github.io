@@ -82,6 +82,45 @@
     };
   }
 
+  function ensureOverlayMask(overlay) {
+    if (!overlay) return null;
+    let svg = overlay.querySelector('#tutorial-cutout-svg');
+    if (!svg) {
+      overlay.innerHTML = `
+        <svg id="tutorial-cutout-svg" class="tutorial-cutout-svg" width="100%" height="100%">
+          <defs>
+            <mask id="tutorial-spotlight-mask">
+              <rect x="0" y="0" width="100%" height="100%" fill="#ffffff" />
+              <rect id="tutorial-cutout-rect" x="0" y="0" width="0" height="0" rx="16" ry="16" fill="#000000" />
+            </mask>
+          </defs>
+          <rect x="0" y="0" width="100%" height="100%" fill="rgba(14, 11, 9, 0.62)" mask="url(#tutorial-spotlight-mask)" />
+        </svg>
+      `;
+    }
+    return document.getElementById('tutorial-cutout-rect');
+  }
+
+  function updateSpotlightCutout(target) {
+    const cutout = document.getElementById('tutorial-cutout-rect');
+    if (!cutout) return;
+    if (!target) {
+      cutout.setAttribute('width', '0');
+      cutout.setAttribute('height', '0');
+      return;
+    }
+
+    const rect = target.getBoundingClientRect();
+    const pad = 6;
+    const rx = Math.min(16, Math.max(6, rect.height / 2));
+    cutout.setAttribute('x', String(Math.max(0, rect.left - pad)));
+    cutout.setAttribute('y', String(Math.max(0, rect.top - pad)));
+    cutout.setAttribute('width', String(Math.min(window.innerWidth, rect.width + pad * 2)));
+    cutout.setAttribute('height', String(rect.height + pad * 2));
+    cutout.setAttribute('rx', String(rx));
+    cutout.setAttribute('ry', String(rx));
+  }
+
   function clearSpotlight() {
     if (activeSpotlightElement) {
       activeSpotlightElement.classList.remove('leo-target-active');
@@ -89,74 +128,7 @@
     }
     const beacons = document.querySelectorAll('.leo-beacon');
     beacons.forEach(b => b.remove());
-  }
-
-  function renderStep(index) {
-    const els = getTourElements();
-    if (!els.overlay || !els.card) return;
-
-    if (index < 0 || index >= TOUR_STEPS.length) {
-      endTour();
-      return;
-    }
-
-    currentStep = index;
-    const step = TOUR_STEPS[index];
-
-    // Rule-11: Screen Synchronization
-    if (window.switchStudentTab && step.tabId) {
-      window.switchStudentTab(step.tabId);
-    }
-
-    setTimeout(() => {
-      clearSpotlight();
-
-      // Spotlight Target
-      const target = document.getElementById(step.targetId);
-      if (target) {
-        target.classList.add('leo-target-active');
-        activeSpotlightElement = target;
-
-        // Pulsing Beacon
-        const beacon = document.createElement('div');
-        beacon.className = 'leo-beacon';
-        const rect = target.getBoundingClientRect();
-        target.style.position = (window.getComputedStyle(target).position === 'static') ? 'relative' : target.style.position;
-
-        if (step.beaconPosition === 'top-right') {
-          beacon.style.top = '10px';
-          beacon.style.right = '10px';
-        } else if (step.beaconPosition === 'top-left') {
-          beacon.style.top = '10px';
-          beacon.style.left = '10px';
-        } else if (step.beaconPosition === 'bottom-right') {
-          beacon.style.bottom = '10px';
-          beacon.style.right = '10px';
-        } else {
-          beacon.style.top = '10px';
-          beacon.style.right = '10px';
-        }
-        target.appendChild(beacon);
-
-        // Position Card with Mobile Collision Avoidance (Rule-11)
-        positionGuideCard(target, els.card);
-      }
-
-      // Update Card Content
-      if (els.title) els.title.textContent = step.title;
-      if (els.message) els.message.textContent = step.message;
-      if (els.hint) els.hint.textContent = `💡 Leo’s Tip: ${step.actionHint}`;
-      if (els.sectionTag) els.sectionTag.textContent = `📍 SECTION: ${step.sectionName}`;
-      if (els.stepCount) els.stepCount.textContent = `Step ${index + 1} of ${TOUR_STEPS.length}`;
-
-      if (els.btnPrev) {
-        els.btnPrev.style.display = index === 0 ? 'none' : 'inline-flex';
-      }
-
-      if (els.btnNext) {
-        els.btnNext.textContent = index === TOUR_STEPS.length - 1 ? 'Engage Sanctuary 🌿' : 'Next Step →';
-      }
-    }, 60);
+    updateSpotlightCutout(null);
   }
 
   function positionGuideCard(targetEl, cardEl) {
@@ -196,6 +168,156 @@
     }
   }
 
+  function onCapturePointerEvent(e) {
+    if (!isActive) return;
+    const els = getTourElements();
+
+    // Allowed if click occurs inside tutorial card
+    if (els.card && els.card.contains(e.target)) {
+      return;
+    }
+
+    // Allowed if click occurs inside active spotlight element
+    if (activeSpotlightElement && activeSpotlightElement.contains(e.target)) {
+      return;
+    }
+
+    // Block all non-tutorial background interactions (Rule-16)
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+  }
+
+  function onCaptureKeyDown(e) {
+    if (!isActive) return;
+
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      endTour();
+      return;
+    }
+
+    if (e.key === 'ArrowRight' && currentStep < TOUR_STEPS.length - 1) {
+      e.preventDefault();
+      renderStep(currentStep + 1);
+      return;
+    }
+
+    if (e.key === 'ArrowLeft' && currentStep > 0) {
+      e.preventDefault();
+      renderStep(currentStep - 1);
+      return;
+    }
+
+    if (e.key === 'Tab') {
+      const els = getTourElements();
+      const focusable = [];
+      if (els.card) {
+        focusable.push(...els.card.querySelectorAll('button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+      }
+      if (activeSpotlightElement) {
+        focusable.push(...activeSpotlightElement.querySelectorAll('button:not([disabled]), [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+      }
+
+      if (focusable.length > 0) {
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      } else {
+        e.preventDefault();
+      }
+    }
+  }
+
+  function onScrollOrResize() {
+    if (isActive && activeSpotlightElement) {
+      updateSpotlightCutout(activeSpotlightElement);
+      const els = getTourElements();
+      if (els.card) {
+        positionGuideCard(activeSpotlightElement, els.card);
+      }
+    }
+  }
+
+  function renderStep(index) {
+    const els = getTourElements();
+    if (!els.overlay || !els.card) return;
+
+    if (index < 0 || index >= TOUR_STEPS.length) {
+      endTour();
+      return;
+    }
+
+    currentStep = index;
+    const step = TOUR_STEPS[index];
+
+    // Rule-11: Screen Synchronization
+    if (window.switchStudentTab && step.tabId) {
+      window.switchStudentTab(step.tabId);
+    }
+
+    setTimeout(() => {
+      clearSpotlight();
+
+      // Spotlight Target
+      const target = document.getElementById(step.targetId);
+      if (target) {
+        // Bring into view without jumpiness
+        if (typeof target.scrollIntoView === 'function') {
+          target.scrollIntoView({ behavior: 'auto', block: 'nearest' });
+        }
+
+        target.classList.add('leo-target-active');
+        activeSpotlightElement = target;
+
+        // Pulsing Beacon
+        const beacon = document.createElement('div');
+        beacon.className = 'leo-beacon';
+        target.style.position = (window.getComputedStyle(target).position === 'static') ? 'relative' : target.style.position;
+
+        if (step.beaconPosition === 'top-right') {
+          beacon.style.top = '10px';
+          beacon.style.right = '10px';
+        } else if (step.beaconPosition === 'top-left') {
+          beacon.style.top = '10px';
+          beacon.style.left = '10px';
+        } else if (step.beaconPosition === 'bottom-right') {
+          beacon.style.bottom = '10px';
+          beacon.style.right = '10px';
+        } else {
+          beacon.style.top = '10px';
+          beacon.style.right = '10px';
+        }
+        target.appendChild(beacon);
+
+        // Update SVG cutout & position Card
+        updateSpotlightCutout(target);
+        positionGuideCard(target, els.card);
+      }
+
+      // Update Card Content
+      if (els.title) els.title.textContent = step.title;
+      if (els.message) els.message.textContent = step.message;
+      if (els.hint) els.hint.textContent = `💡 Leo’s Tip: ${step.actionHint}`;
+      if (els.sectionTag) els.sectionTag.textContent = `📍 SECTION: ${step.sectionName}`;
+      if (els.stepCount) els.stepCount.textContent = `Step ${index + 1} of ${TOUR_STEPS.length}`;
+
+      if (els.btnPrev) {
+        els.btnPrev.style.display = index === 0 ? 'none' : 'inline-flex';
+      }
+
+      if (els.btnNext) {
+        els.btnNext.textContent = index === TOUR_STEPS.length - 1 ? 'Engage Sanctuary 🌿' : 'Next Step →';
+      }
+    }, 60);
+  }
+
   function startTour(forceRestart) {
     const hasSeen = localStorage.getItem('adhd_student_zen_seen_tour_v1');
     if (hasSeen && !forceRestart) return;
@@ -204,8 +326,19 @@
     if (!els.overlay || !els.card) return;
 
     isActive = true;
+    document.body.classList.add('tutorial-active');
+    ensureOverlayMask(els.overlay);
     els.overlay.classList.add('active');
     els.card.style.display = 'flex';
+
+    // Rule-16: Attach interaction shield listeners
+    document.addEventListener('click', onCapturePointerEvent, true);
+    document.addEventListener('mousedown', onCapturePointerEvent, true);
+    document.addEventListener('touchstart', onCapturePointerEvent, true);
+    document.addEventListener('keydown', onCaptureKeyDown, true);
+    window.addEventListener('scroll', onScrollOrResize, { passive: true });
+    window.addEventListener('resize', onScrollOrResize, { passive: true });
+
     renderStep(0);
   }
 
@@ -215,6 +348,16 @@
     const els = getTourElements();
     if (els.overlay) els.overlay.classList.remove('active');
     if (els.card) els.card.style.display = 'none';
+    document.body.classList.remove('tutorial-active');
+
+    // Rule-16: Detach interaction shield listeners
+    document.removeEventListener('click', onCapturePointerEvent, true);
+    document.removeEventListener('mousedown', onCapturePointerEvent, true);
+    document.removeEventListener('touchstart', onCapturePointerEvent, true);
+    document.removeEventListener('keydown', onCaptureKeyDown, true);
+    window.removeEventListener('scroll', onScrollOrResize);
+    window.removeEventListener('resize', onScrollOrResize);
+
     localStorage.setItem('adhd_student_zen_seen_tour_v1', 'true');
 
     if (window.switchStudentTab) {
@@ -251,13 +394,6 @@
         endTour();
       });
     }
-
-    // Self-healing window resize handler
-    window.addEventListener('resize', () => {
-      if (isActive && activeSpotlightElement && els.card) {
-        positionGuideCard(activeSpotlightElement, els.card);
-      }
-    });
   }
 
   return {

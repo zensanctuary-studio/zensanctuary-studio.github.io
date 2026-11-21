@@ -179,7 +179,12 @@
     }
   }
 
-  function start() { render(0); }
+  function start() {
+    if (!cfg && typeof window !== 'undefined' && window.ATConfig) {
+      cfg = window.ATConfig;
+    }
+    render(0);
+  }
 
   function init(options) {
     cfg = options.config;

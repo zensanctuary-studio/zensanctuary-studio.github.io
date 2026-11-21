@@ -70,7 +70,7 @@
      2. Save & State Persistence
      ---------------------------------------------------- */
   function persist() {
-    S.save(C.storageKey, data);
+    S.save(window.localStorage, C.storageKey, data);
   }
 
   /* ----------------------------------------------------
@@ -177,16 +177,7 @@
     el('dial-status-pill').textContent = statusMsg;
 
     // Do This Next / Hero Item
-    var fudge = E.fudgeFactor(data.assignments);
-    var cap = data.settings.dailyCapacityMin;
-    var skipWeekends = data.settings.skipWeekends;
-
-    var sorted = activeList.slice().sort(function (a, b) {
-      var sa = E.priorityScore(a, data.assignments, data.courses, data.sprints, cap, fudge, today, skipWeekends);
-      var sb = E.priorityScore(b, data.assignments, data.courses, data.sprints, cap, fudge, today, skipWeekends);
-      return sb - sa;
-    });
-
+    var sorted = E.rankOpen(data, today);
     var hero = sorted[0];
     currentHeroId = hero ? hero.id : null;
 
@@ -195,10 +186,11 @@
       el('hero-title').textContent = hero.title;
       el('hero-due').textContent = E.dueLabel(hero.due, today);
 
-      var start = E.startBy(hero.due, hero.estMin, hero.manualMin, data.sprints, hero.id, cap, fudge, skipWeekends);
+      var ctx = E.buildCtx(data, today);
+      var start = E.startBy(hero, ctx);
       el('hero-startby').textContent = E.prettyDate(start);
 
-      var actual = E.actualMinutes(hero.manualMin, data.sprints, hero.id);
+      var actual = E.actualMinutes(hero, data.sprints);
       el('hero-est').textContent = E.fmtMin(hero.estMin);
       el('hero-actual').textContent = E.fmtMin(actual);
 
@@ -280,7 +272,7 @@
     var fudge = E.fudgeFactor(data.assignments);
 
     // Render 14-day capacity heatmap stone garden
-    var heatmap = E.capacityHeatmap(data.assignments, data.sprints, cap, fudge, today, 14, data.settings.skipWeekends);
+    var heatmap = E.capacityHeatmap(data, today, 14);
     var hmContainer = el('capacity-heatmap');
     hmContainer.innerHTML = '';
 
@@ -294,9 +286,9 @@
 
       tile.style.cssText = 'background:' + bg + ';border:1px solid var(--border-subtle);border-radius:var(--radius-md);padding:8px 4px;display:flex;flex-direction:column;align-items:center;text-align:center;font-size:10px;color:' + color + ';';
       tile.innerHTML = 
-        '<span style="font-weight:700;">' + cell.dayName + '</span>' +
-        '<span style="font-size:11px;font-weight:800;margin-top:2px;">' + cell.dateStr.slice(8) + '</span>' +
-        '<span style="margin-top:2px;">' + (cell.totalEstimatedMin > 0 ? E.fmtMin(cell.totalEstimatedMin) : '—') + '</span>';
+        '<span style="font-weight:700;">' + E.weekdayShort(cell.date) + '</span>' +
+        '<span style="font-size:11px;font-weight:800;margin-top:2px;">' + cell.date.slice(8) + '</span>' +
+        '<span style="margin-top:2px;">' + (cell.minutes > 0 ? E.fmtMin(cell.minutes) : '—') + '</span>';
       hmContainer.appendChild(tile);
     });
 
@@ -462,9 +454,7 @@
      ---------------------------------------------------- */
   function renderRescue() {
     var today = E.todayStr();
-    var cap = data.settings.dailyCapacityMin;
-    var fudge = E.fudgeFactor(data.assignments);
-    var rescueList = E.rescueFilter(data.assignments, data.sprints, cap, fudge, today, data.settings.skipWeekends);
+    var rescueList = E.rescueCandidates(data, today);
 
     var container = el('rescue-items-list');
     container.innerHTML = '';
@@ -861,33 +851,37 @@
      15. Bootstrap
      ---------------------------------------------------- */
   function init() {
-    data = S.load(C.storageKey);
-    if (!data.courses || data.courses.length === 0) {
-      seedInitialData();
-    }
-
-    if (data.settings.theme) {
-      document.body.setAttribute('data-theme', data.settings.theme);
-    }
-    applyFogMode();
-    el('btn-toggle-sound').textContent = data.settings.sound ? '🔔' : '🔕';
-
-    initDOM();
-    switchTab('today');
-
-    T.init({
-      config: C,
-      switchTab: switchTab,
-      onEnd: function (completed) {
-        data.settings.onboarded = true;
-        persist();
+    try {
+      data = S.load(window.localStorage, C.storageKey);
+      if (!data.courses || data.courses.length === 0) {
+        seedInitialData();
       }
-    });
 
-    if (!data.settings.onboarded) {
-      setTimeout(function () {
-        T.start();
-      }, 350);
+      if (data.settings.theme) {
+        document.body.setAttribute('data-theme', data.settings.theme);
+      }
+      applyFogMode();
+      if (el('btn-toggle-sound')) el('btn-toggle-sound').textContent = data.settings.sound ? '🔔' : '🔕';
+
+      initDOM();
+      switchTab('today');
+
+      T.init({
+        config: C,
+        switchTab: switchTab,
+        onEnd: function (completed) {
+          data.settings.onboarded = true;
+          persist();
+        }
+      });
+
+      if (!data.settings.onboarded) {
+        setTimeout(function () {
+          T.start();
+        }, 350);
+      }
+    } catch (err) {
+      console.error('Initialization error:', err);
     }
   }
 

@@ -36,7 +36,7 @@
     var today = new Date().toISOString().slice(0, 10);
     var demoData = {
       version: 1,
-      settings: { theme: 'terracotta-sun', dailyCapacityMin: 120, skipWeekends: true, sound: true, onboarded: true, fog: false },
+      settings: { theme: 'terracotta-sun', dailyCapacityMin: 120, skipWeekends: true, sound: true, onboarded: false, fog: false },
       courses: [
         { id: 'c1', name: 'Cognitive Ecology', color: '#e07a5f' },
         { id: 'c2', name: 'Mindful Architecture', color: '#81b29a' },
