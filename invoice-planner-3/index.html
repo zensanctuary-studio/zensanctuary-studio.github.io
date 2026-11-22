@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice Planner 3 — Wabi-Sabi Artisan Billing Sanctuary, Radial Harvest Dial &amp; Kind Letters</title>
+  <meta name="description" content="A peaceful wabi-sabi client billing sanctuary for creative founders: Radial SVG Harvest Dial, Unbilled Craft Bowl, 4-Vessel Tax &amp; Profit Pour, Kind Follow-Up Letters &amp; Seasonal Retainers. 100% private offline PWA.">
+  <meta name="theme-color" content="#161311">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <style id="zero-blur-lockout">
+    #tutorial-overlay, .tutorial-overlay {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      filter: none !important;
+    }
+  </style>
+  <link rel="stylesheet" href="css/theme.css?v=3.0.3">
+  <link rel="stylesheet" href="css/app.css?v=3.0.3">
+  <link rel="stylesheet" href="css/components.css?v=3.0.3">
+</head>
+<body data-theme="wabi-sabi" data-active-tab="hearth">
+
+  <div class="sanctuary-shell">
+    <header class="app-header">
+      <div class="brand-wrapper">
+        <div class="brand-stone" aria-hidden="true">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 9 9"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div>
+          <h1 class="brand-title">Invoice Planner</h1>
+          <div class="brand-subtitle">Leo's Sanctuary · Zen Sanctuary Studio</div>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span id="badge-collected" class="badge-pill" title="Total honored client harvest collected">$0.00 harvested</span>
+        <button id="btn-launch-tour" class="btn btn-sm btn-secondary" type="button">Leo's Guide</button>
+        <button id="btn-toggle-fog" class="btn btn-sm btn-ghost" type="button" aria-pressed="false">Stillness Shield</button>
+      </div>
+    </header>
+
+    <!-- Screen 1: Hearth (Radial Harvest Dial, Unbilled Craft Bowl & 14-Day River) -->
+    <main id="screen-hearth" class="app-screen active">
+      <section id="hero-pulse" class="card hero-card" aria-label="Artisan Harvest Hearth &amp; Radial Dial">
+        <div id="radial-harvest-dial"></div>
+      </section>
+
+      <section class="card fog-hide" aria-label="Mindful unbilled craft capture">
+        <div class="card-title">
+          <span>Mindful Unbilled Craft Note</span>
+          <span class="muted">· anchor your work in 5 seconds</span>
+        </div>
+        <div class="inline-form">
+          <input id="qa-work-client" class="input" type="text" maxlength="100" placeholder="Patron / Client (e.g. Lumen Botanicals)" autocomplete="off">
+          <input id="qa-work-title" class="input" type="text" maxlength="120" placeholder="Craft offering (e.g. Ceramic Identity, Web Polish)" autocomplete="off">
+          <input id="qa-work-amount" class="input" type="number" min="0.01" max="1000000" step="0.01" value="150.00" style="max-width:125px;" aria-label="Exchange amount">
+          <button id="btn-qa-work" class="btn btn-primary" type="button">Anchor Craft Work</button>
+        </div>
+        <div class="chip-label">Grounding Preset Stones</div>
+        <div id="qa-amount-chips" class="chip-row" role="group" aria-label="Craft rate presets">
+          <button type="button" class="chip selected" data-cents="15000" data-label="Guidance / Tea Session">$150 Session</button>
+          <button type="button" class="chip" data-cents="45000" data-label="Artisan Craft Day">$450 Craft Day</button>
+          <button type="button" class="chip" data-cents="85000" data-label="Chapter Milestone">$850 Milestone</button>
+          <button type="button" class="chip" data-cents="120000" data-label="Seasonal Retainer">$1,200 Season</button>
+        </div>
+      </section>
+
+      <section class="card fog-hide" aria-label="Unbilled craft bowl">
+        <div class="card-title">
+          <span>Unbilled Craft Bowl (1-Tap Shape into Scroll)</span>
+          <button class="btn btn-secondary btn-sm" type="button" data-open-modal="modal-add-invoice">+ Shape Scroll</button>
+        </div>
+        <div id="unbilled-work-list" class="list"></div>
+      </section>
+
+      <section class="card fog-hide" aria-label="14-day river of incoming harvest">
+        <div class="card-title">
+          <span>14-Day River of Incoming Harvest</span>
+          <span id="weather-status-tag" class="tag ok">Gentle Current</span>
+        </div>
+        <div id="weather-ribbon" class="weather-grid"></div>
+      </section>
+
+      <section id="artisan-breath-card" class="card fog-hide" aria-label="Leo's Artisan Worth Anchor">
+        <div class="card-title">Leo's Artisan Worth &amp; Grounding Breath</div>
+        <p class="muted">Receiving clear, timely compensation for your craft is not greed — it is the water that sustains your garden. Before sending an invoice or kind reminder, inhale slowly for 4 seconds, hold for 4, and release for 6.</p>
+      </section>
+
+      <section class="stat-grid fog-hide" aria-label="Sanctuary harmony metrics">
+        <div class="stat"><div id="stat-awaiting" class="stat-num">$0.00</div><div class="stat-label">Awaiting Harvest</div></div>
+        <div class="stat"><div id="stat-tax-vault" class="stat-num">$0.00</div><div class="stat-label">Tax Clay Vessel</div></div>
+        <div class="stat"><div id="stat-owner-safe" class="stat-num">$0.00</div><div class="stat-label">Peaceful Owner Flow</div></div>
+      </section>
+    </main>
+
+    <!-- Screen 2: Scrolls (Artisan Invoice Scrolls & Printable Summary) -->
+    <section id="screen-scrolls" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Artisan Invoice Scrolls</h2>
+          <p class="muted">Shape clean client invoice scrolls with exact integer-cent math and Friday Early weekend shift.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-invoice">+ Shape Scroll</button>
+      </div>
+
+      <div id="invoices-card" class="card">
+        <div class="card-title">
+          <span>All Sanctuary Invoice Scrolls</span>
+          <div id="invoice-filter" class="chip-row" role="group" aria-label="Scroll status filter">
+            <button type="button" class="chip selected" data-inv-filter="all">All Scrolls</button>
+            <button type="button" class="chip" data-inv-filter="open">Awaiting &amp; Past Due</button>
+            <button type="button" class="chip" data-inv-filter="draft">Unsealed Drafts</button>
+            <button type="button" class="chip" data-inv-filter="paid">Honored (Paid)</button>
+          </div>
+        </div>
+        <div id="invoices-list" class="list"></div>
+      </div>
+    </section>
+
+    <!-- Screen 3: Harvest (4-Vessel Tax & Profit Pour Ritual) -->
+    <section id="screen-harvest" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>4-Vessel Harvest Pour Ritual</h2>
+          <p class="muted">When a client honors an invoice, pour every penny calmly across 4 clay vessels.</p>
+        </div>
+      </div>
+
+      <div id="payout-card" class="card">
+        <div class="card-title">1. Prepare Your Incoming Client Harvest</div>
+        <div class="grid-2">
+          <label class="field">
+            <span>Harvest Source Label</span>
+            <input id="pay-label" class="input" type="text" maxlength="80" value="Honored Client Invoice" autocomplete="off">
+          </label>
+          <label class="field">
+            <span>Collected Harvest Amount ($)</span>
+            <input id="pay-amount" class="input" type="number" min="1" max="1000000" step="0.01" value="1600.00">
+          </label>
+        </div>
+        <div class="chip-label">Choose Your 4-Vessel Pour Harmony</div>
+        <div id="pay-preset-chips" class="chip-row" role="group" aria-label="Harvest pour presets">
+          <button type="button" class="chip selected" data-preset="standard">Balanced Artisan 25 / 15 / 10 / 50</button>
+          <button type="button" class="chip" data-preset="taxheavy">Deep Tax Cushion 30 / 15 / 15 / 40</button>
+          <button type="button" class="chip" data-preset="lean">Solo Maker 20 / 10 / 15 / 55</button>
+          <button type="button" class="chip" data-preset="growth">Workshop Expansion 25 / 25 / 15 / 35</button>
+        </div>
+
+        <div id="payout-preview" class="split-grid"></div>
+
+        <div class="row-actions">
+          <button id="btn-run-payout" class="btn btn-primary" type="button">Pour Harvest Split</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Past Harvest Pour Rituals</div>
+        <div id="payout-history-list" class="list"></div>
+      </div>
+    </section>
+
+    <!-- Screen 4: Letters (Kind Follow-Up Letters & Gentle Triage Chamber) -->
+    <section id="screen-letters" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Kind Follow-Up Letters</h2>
+          <p class="muted">Invite overdue or upcoming payments with warmth and dignity. Copy a pre-filled note in one tap.</p>
+        </div>
+      </div>
+
+      <div id="followup-card" class="card">
+        <div class="card-title">1. Choose Scroll &amp; Letter Voice</div>
+        <div class="grid-2">
+          <label class="field">
+            <span>Select Open Invoice Scroll</span>
+            <select id="followup-invoice-select" class="input" aria-label="Select invoice scroll"></select>
+          </label>
+          <div>
+            <div class="chip-label" style="margin-top:0;">Choose Letter Voice</div>
+            <div id="followup-tone-chips" class="chip-row" role="group" aria-label="Letter voice">
+              <button type="button" class="chip selected" data-tone="warm">Warm Tea Reminder</button>
+              <button type="button" class="chip" data-tone="gentle">Gentle Past-Due Note</button>
+              <button type="button" class="chip" data-tone="firm">Clear Boundary Notice</button>
+            </div>
+          </div>
+        </div>
+        <label class="field">
+          <span>Kind Client Letter (Editable)</span>
+          <textarea id="followup-script-box" class="input" rows="6"></textarea>
+        </label>
+        <div class="row-actions">
+          <button id="btn-copy-script" class="btn btn-primary" type="button">📋 Copy Kind Letter</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Shame-Free Catch-Up Chamber</div>
+        <p class="muted" style="margin-bottom:10px;">No harsh red alarms. Choose one peaceful path for any overdue or upcoming scroll:</p>
+        <div id="triage-list" class="list"></div>
+      </div>
+    </section>
+
+    <!-- Screen 5: Seasons (Seasonal Client Retainers & Grounded Balance Sync) -->
+    <section id="screen-seasons" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Seasonal Retainers &amp; Sanctuary Vessels</h2>
+          <p class="muted">Nurture recurring client rhythms and ground your business checking without double-counting.</p>
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" data-open-modal="modal-add-retainer">+ Plant Retainer</button>
+      </div>
+
+      <div id="retainers-summary-card" class="card"></div>
+
+      <div id="retainers-card" class="card">
+        <div class="card-title">Active &amp; Resting Client Retainers</div>
+        <div id="retainers-list" class="list"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Grounding Business Checking Sync (Anti-Double-Counting)</div>
+        <p class="muted" style="margin-bottom:10px;">Enter your current business checking balance anytime. Invoices honored earlier today are never added twice.</p>
+        <div class="inline-form">
+          <input id="sync-balance-input" class="input" type="number" step="0.01" placeholder="Current business checking balance ($)">
+          <button id="btn-sync-balance" class="btn btn-primary" type="button">Ground Balance</button>
+        </div>
+        <div id="accounts-list" class="list" style="margin-top:12px;"></div>
+      </div>
+    </section>
+
+    <!-- Screen 6: Settings -->
+    <section id="screen-settings" class="app-screen">
+      <div class="screen-head">
+        <div>
+          <h2>Sanctuary Calibration</h2>
+          <p class="muted">Your client scrolls and numbers never leave this device. Zero cloud tracking.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Wabi-Sabi Sanctuary Aesthetics</div>
+        <div id="theme-picker" class="chip-row"></div>
+        <label class="switch-row">
+          <span>Soft wooden chime on completion</span>
+          <input id="set-sound" type="checkbox" checked>
+        </label>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Artisan Identity, Net Rhythm &amp; Monthly Harvest Horizon</div>
+        <div class="grid-2">
+          <label class="field">
+            <span>Your Artisan Studio Name</span>
+            <input id="set-business-name" class="input" type="text" maxlength="80" value="Zen Sanctuary Studio">
+          </label>
+          <label class="field">
+            <span>Default Payment Rhythm</span>
+            <select id="set-default-terms" class="input">
+              <option value="receipt">Due on Receipt</option>
+              <option value="net7">Net 7 Days</option>
+              <option value="net14">Net 14 Days</option>
+              <option value="net30">Net 30 Days</option>
+            </select>
+          </label>
+        </div>
+        <div class="grid-2">
+          <label class="field">
+            <span>Monthly Harvest Goal ($)</span>
+            <input id="set-monthly-target" class="input" type="number" min="100" max="1000000" step="100" value="5000">
+          </label>
+          <label class="field">
+            <span>Currency Symbol</span>
+            <select id="set-currency" class="input">
+              <option value="USD">USD ($)</option>
+              <option value="CAD">CAD (CA$)</option>
+              <option value="GBP">GBP (£)</option>
+              <option value="EUR">EUR (€)</option>
+              <option value="AUD">AUD (A$)</option>
+            </select>
+          </label>
+        </div>
+        <button id="btn-save-settings" class="btn btn-primary btn-sm" type="button">Save Sanctuary Rhythm</button>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Clean Slate, Sample Stones &amp; Local Backups</div>
+        <div class="row-actions">
+          <button id="btn-clean-slate" class="btn btn-secondary" type="button">🧹 Start Clean Slate</button>
+          <button id="btn-load-sample" class="btn btn-secondary" type="button">🌱 Load Sample Data</button>
+          <button id="btn-restart-tour" class="btn btn-ghost" type="button">Replay Leo's Tour</button>
+        </div>
+        <div class="row-actions" style="margin-top:10px;">
+          <button id="btn-export-json" class="btn btn-secondary" type="button">Export JSON Backup</button>
+          <button id="btn-import-json" class="btn btn-secondary" type="button">Import JSON Backup</button>
+          <input id="file-import" type="file" accept="application/json,.json" style="display:none;">
+          <button id="btn-reset-data" class="btn btn-danger-soft" type="button">Clear All Stones</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curved Floating Zen Island Navigation (6 % 6 === 0 desktop, 6 % 3 === 0 mobile) -->
+    <nav id="bottom-nav" class="zen-island-nav" aria-label="Sanctuary Navigation">
+      <button class="nav-btn active" type="button" data-tab="hearth"><span class="nav-ico">🕯</span><span>Hearth</span></button>
+      <button class="nav-btn" type="button" data-tab="scrolls"><span class="nav-ico">📜</span><span>Scrolls</span></button>
+      <button class="nav-btn" type="button" data-tab="harvest"><span class="nav-ico">🍵</span><span>Harvest Split</span></button>
+      <button class="nav-btn" type="button" data-tab="letters"><span class="nav-ico">✉</span><span>Kind Letters</span></button>
+      <button class="nav-btn" type="button" data-tab="seasons"><span class="nav-ico">🌿</span><span>Retainers</span></button>
+      <button class="nav-btn" type="button" data-tab="settings"><span class="nav-ico">⚙</span><span>Sanctuary</span></button>
+    </nav>
+  </div>
+
+  <!-- Modal 1: Shape Client Invoice Scroll -->
+  <div id="modal-add-invoice" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="add-inv-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="add-inv-h">Shape Client Invoice Scroll</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-add-invoice" aria-label="Close">×</button>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Patron / Client Name</span><input id="inv-client" class="input" type="text" maxlength="100" placeholder="e.g. Northstar Wellness Co."></label>
+        <label class="field"><span>Craft / Project Title</span><input id="inv-title" class="input" type="text" maxlength="120" placeholder="e.g. Brand Sanctuary &amp; Packaging"></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Subtotal Offering ($)</span><input id="inv-amount" class="input" type="number" min="0.01" step="0.01" value="850.00"></label>
+        <label class="field"><span>Payment Rhythm</span><select id="inv-terms" class="input">
+          <option value="net14">Net 14 Days</option>
+          <option value="net7">Net 7 Days</option>
+          <option value="net30">Net 30 Days</option>
+          <option value="receipt">Due on Receipt</option>
+        </select></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Tax (%)</span><input id="inv-tax" class="input" type="number" min="0" max="100" step="1" value="0"></label>
+        <label class="field"><span>Courtesy Discount (%)</span><input id="inv-discount" class="input" type="number" min="0" max="100" step="1" value="0"></label>
+      </div>
+      <div class="grid-2">
+        <label class="field"><span>Deposit Already Received ($)</span><input id="inv-deposit" class="input" type="number" min="0" step="0.01" value="0"></label>
+        <label class="field"><span>Scroll Status</span><select id="inv-status" class="input">
+          <option value="sent">Sent (Awaiting Harvest)</option>
+          <option value="draft">Unsealed Draft</option>
+        </select></label>
+      </div>
+      <label class="switch-row"><span>Shift weekend due dates to Friday early</span><input id="inv-weekend" type="checkbox" checked></label>
+      <p id="inv-error" class="form-error" role="alert"></p>
+      <div class="row-actions">
+        <button id="btn-save-invoice" class="btn btn-primary" type="button">Save Scroll</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-add-invoice">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 2: Plant Seasonal Retainer -->
+  <div id="modal-add-retainer" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="add-ret-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="add-ret-h">Plant Recurring Client Retainer</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-add-retainer" aria-label="Close">×</button>
+      </div>
+      <label class="field"><span>Patron / Client Name</span><input id="ret-client" class="input" type="text" maxlength="100" placeholder="e.g. Kindred Coffee Roasters"></label>
+      <label class="field"><span>Seasonal Scope Title</span><input id="ret-title" class="input" type="text" maxlength="120" placeholder="e.g. Monthly Creative Direction &amp; Care"></label>
+      <div class="grid-2">
+        <label class="field"><span>Exchange per Cycle ($)</span><input id="ret-amount" class="input" type="number" min="1" step="0.01" value="950.00"></label>
+        <label class="field"><span>Billing Rhythm</span><select id="ret-cycle" class="input">
+          <option value="monthly">Monthly</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="weekly">Weekly</option>
+          <option value="yearly">Yearly</option>
+        </select></label>
+      </div>
+      <label class="field"><span>Next Harvest Date</span><input id="ret-next-date" class="input" type="date"></label>
+      <p id="ret-error" class="form-error" role="alert"></p>
+      <div class="row-actions">
+        <button id="btn-save-retainer" class="btn btn-primary" type="button">Plant Retainer</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-add-retainer">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 3: Printable Invoice Preview Sheet -->
+  <div id="modal-preview-invoice" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="prev-inv-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="prev-inv-h">Artisan Invoice Summary Scroll</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-preview-invoice" aria-label="Close">×</button>
+      </div>
+      <div id="invoice-preview-body" class="invoice-preview-sheet"></div>
+      <div class="row-actions">
+        <button id="btn-print-invoice" class="btn btn-primary" type="button">🖨 Print / Save PDF</button>
+        <button id="btn-copy-invoice" class="btn btn-secondary" type="button">📋 Copy Scroll Summary</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-preview-invoice">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal 4: Confirm -->
+  <div id="modal-confirm" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="confirm-h">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3 id="confirm-h">Gentle Confirmation</h3>
+        <button class="btn-x" type="button" data-close-modal="modal-confirm" aria-label="Close">×</button>
+      </div>
+      <p id="confirm-text" class="muted" style="margin-bottom:14px;"></p>
+      <div class="row-actions">
+        <button id="btn-confirm-yes" class="btn btn-danger-soft" type="button">Yes, release</button>
+        <button class="btn btn-ghost" type="button" data-close-modal="modal-confirm">Keep as is</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <!-- Guided Tour Overlay (Rules 16, 17, 18, 20, 23) -->
+  <div id="tutorial-overlay" class="tutorial-overlay" style="display:none;">
+    <div id="tutorial-card" class="tutorial-card" style="display:none;" role="dialog" aria-live="polite" aria-labelledby="tutorial-title">
+      <div class="tour-head">
+        <div class="tour-avatar" aria-hidden="true">L</div>
+        <div>
+          <div id="tutorial-section-tag" class="tour-tag"></div>
+          <div id="tutorial-title" class="tour-title"></div>
+        </div>
+        <div id="tutorial-step-count" class="tour-count"></div>
+      </div>
+      <p id="tutorial-message" class="tour-msg"></p>
+      <p id="tutorial-hint" class="tour-hint"></p>
+      <div class="tour-actions">
+        <button id="tutorial-btn-skip" class="btn btn-ghost btn-sm" type="button">Skip tour</button>
+        <span class="spacer"></span>
+        <button id="tutorial-btn-prev" class="btn btn-secondary btn-sm" type="button">Back</button>
+        <button id="tutorial-btn-next" class="btn btn-primary btn-sm" type="button">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    if ('caches' in window) {
+      caches.keys().then(function (keys) {
+        keys.forEach(function (k) {
+          if (k !== 'invoice-planner-3-v1') caches.delete(k);
+        });
+      }).catch(function () {});
+    }
+  </script>
+  <script src="js/engine.js?v=3.0.3"></script>
+  <script src="js/storage.js?v=3.0.3"></script>
+  <script src="js/config.js?v=3.0.3"></script>
+  <script src="js/tutorials.js?v=3.0.3"></script>
+  <script src="js/app.js?v=3.0.3"></script>
+</body>
+</html>

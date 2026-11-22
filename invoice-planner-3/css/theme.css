@@ -1,0 +1,71 @@
+/**
+ * Invoice Planner 3 — Edition 3 (Zen Sanctuary Studio / Leo) Theme Tokens
+ * Shop 3 Brand DNA: Warm Linen/Espresso Canvas (#161311), Earthy Sand Surfaces (#211c18), Warm Amber Accents (#fbbf24 / #d97706).
+ */
+:root,
+body[data-theme="wabi-sabi"] {
+  --bg-primary: #161311;
+  --bg-elevated: #1c1815;
+  --surface: #211c18;
+  --surface-muted: #2a241f;
+  --text-main: #f5efe8;
+  --text-muted: #b8a99a;
+  --border: rgba(251, 191, 36, 0.22);
+  --accent: #fbbf24;
+  --accent-strong: #d97706;
+  --accent-soft: rgba(217, 119, 6, 0.18);
+  --terracotta: #e07a5f;
+  --ok: #81b29a;
+  --ok-soft: rgba(129, 178, 154, 0.18);
+  --shadow: 0 14px 34px rgba(0, 0, 0, 0.52);
+  --radius: 22px;
+  --radius-sm: 14px;
+}
+
+body[data-theme="terracotta-dawn"] {
+  --bg-primary: #1c1412;
+  --bg-elevated: #241917;
+  --surface: #2b1e1b;
+  --surface-muted: #362622;
+  --text-main: #fbf0ec;
+  --text-muted: #cfa99e;
+  --border: rgba(224, 122, 95, 0.28);
+  --accent: #e07a5f;
+  --accent-strong: #c85d41;
+  --accent-soft: rgba(224, 122, 95, 0.18);
+  --terracotta: #f4a261;
+  --ok: #81b29a;
+  --ok-soft: rgba(129, 178, 154, 0.18);
+}
+
+body[data-theme="moss-garden"] {
+  --bg-primary: #131714;
+  --bg-elevated: #19201b;
+  --surface: #1f2721;
+  --surface-muted: #28332b;
+  --text-main: #eef3ef;
+  --text-muted: #a3b5a7;
+  --border: rgba(129, 178, 154, 0.26);
+  --accent: #81b29a;
+  --accent-strong: #5f947a;
+  --accent-soft: rgba(129, 178, 154, 0.18);
+  --terracotta: #d4a373;
+  --ok: #81b29a;
+  --ok-soft: rgba(129, 178, 154, 0.18);
+}
+
+body[data-theme="espresso-zen"] {
+  --bg-primary: #0e0c0a;
+  --bg-elevated: #15120f;
+  --surface: #1c1814;
+  --surface-muted: #25201b;
+  --text-main: #f7f3ee;
+  --text-muted: #b0a293;
+  --border: rgba(217, 119, 6, 0.26);
+  --accent: #d97706;
+  --accent-strong: #b45309;
+  --accent-soft: rgba(217, 119, 6, 0.18);
+  --terracotta: #fbbf24;
+  --ok: #81b29a;
+  --ok-soft: rgba(129, 178, 154, 0.18);
+}
