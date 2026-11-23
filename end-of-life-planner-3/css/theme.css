@@ -1,0 +1,88 @@
+/**
+ * End of Life Planner 3 — Edition 3 (Zen Sanctuary Studio / Leo) Theme Tokens
+ * Shop 3 Brand DNA: Warm Espresso/Sand Canvas (#161311), Earthy Surface (#211c18), Warm Amber (#fbbf24 / #d97706).
+ */
+:root,
+body[data-theme="wabi-sabi"] {
+  --bg-primary: #161311;
+  --bg-elevated: #1c1815;
+  --surface: #211c18;
+  --surface-muted: #29231e;
+  --border: #3a3129;
+  --text-main: #f5efe6;
+  --text-muted: #b8aa99;
+  --accent: #fbbf24;
+  --accent-strong: #d97706;
+  --accent-soft: rgba(251, 191, 36, 0.14);
+  --gold: #fbbf24;
+  --gold-soft: rgba(251, 191, 36, 0.14);
+  --ok: #81b29a;
+  --ok-soft: rgba(129, 178, 154, 0.16);
+  --danger: #e07a5f;
+  --danger-soft: rgba(224, 122, 95, 0.16);
+  --shadow: 0 14px 36px rgba(0, 0, 0, 0.42);
+  --radius: 24px;
+}
+
+body[data-theme="terracotta-hearth"] {
+  --bg-primary: #1b1311;
+  --bg-elevated: #231815;
+  --surface: #2a1d19;
+  --surface-muted: #34241f;
+  --border: #48332c;
+  --text-main: #faf0ea;
+  --text-muted: #c8aba0;
+  --accent: #e07a5f;
+  --accent-strong: #c85d41;
+  --accent-soft: rgba(224, 122, 95, 0.18);
+  --gold: #f2cc8f;
+  --gold-soft: rgba(242, 204, 143, 0.16);
+  --ok: #81b29a;
+  --ok-soft: rgba(129, 178, 154, 0.16);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.16);
+  --shadow: 0 14px 36px rgba(0, 0, 0, 0.44);
+  --radius: 24px;
+}
+
+body[data-theme="moss-stone"] {
+  --bg-primary: #131815;
+  --bg-elevated: #19201c;
+  --surface: #1f2823;
+  --surface-muted: #26322b;
+  --border: #36473d;
+  --text-main: #eef3ef;
+  --text-muted: #a2b5a9;
+  --accent: #a3c9a8;
+  --accent-strong: #699c72;
+  --accent-soft: rgba(163, 201, 168, 0.16);
+  --gold: #eab308;
+  --gold-soft: rgba(234, 179, 8, 0.15);
+  --ok: #84cc16;
+  --ok-soft: rgba(132, 204, 22, 0.15);
+  --danger: #f87171;
+  --danger-soft: rgba(248, 113, 113, 0.15);
+  --shadow: 0 14px 36px rgba(0, 0, 0, 0.44);
+  --radius: 24px;
+}
+
+body[data-theme="warm-parchment"] {
+  --bg-primary: #f5efe6;
+  --bg-elevated: #ede4d6;
+  --surface: #fdfaf5;
+  --surface-muted: #f4ece0;
+  --border: #dcccb8;
+  --text-main: #2b2118;
+  --text-muted: #6e5c4c;
+  --accent: #b45309;
+  --accent-strong: #92400e;
+  --accent-soft: rgba(180, 83, 9, 0.12);
+  --gold: #b45309;
+  --gold-soft: rgba(180, 83, 9, 0.14);
+  --ok: #2f6b4b;
+  --ok-soft: rgba(47, 107, 75, 0.14);
+  --danger: #b42318;
+  --danger-soft: rgba(180, 35, 24, 0.14);
+  --shadow: 0 10px 26px rgba(43, 33, 24, 0.08);
+  --radius: 24px;
+}

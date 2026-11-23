@@ -1,0 +1,309 @@
+/**
+ * End of Life Planner 3 — Edition 3 (Wabi-Sabi Sanctuary / Leo) Components, Radial Dial & Zero-Blur Tour Shield
+ */
+.btn {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--surface-muted);
+  color: var(--text-main);
+  font-weight: 700;
+  font-size: 0.84rem;
+  padding: 10px 15px;
+  min-height: 44px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.btn-sm { padding: 7px 13px; font-size: 0.78rem; min-height: 44px; }
+.btn-primary { background: var(--accent); color: #161311; border-color: var(--accent); }
+.btn-primary:hover { background: var(--accent-strong); color: #ffffff; }
+.btn-secondary { background: var(--accent-soft); color: var(--accent); border-color: rgba(251, 191, 36, 0.35); }
+.btn-ghost { background: transparent; color: var(--text-muted); border-color: var(--border); }
+.btn-danger-soft { background: var(--danger-soft); color: var(--danger); border-color: rgba(224, 122, 95, 0.35); }
+
+.badge-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: var(--accent-soft); color: var(--accent); border: 1px solid rgba(251, 191, 36, 0.32);
+  font-size: 0.74rem; font-weight: 800; padding: 6px 12px; border-radius: 999px;
+}
+
+.tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 0.72rem; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+  background: var(--surface-muted); border: 1px solid var(--border); color: var(--text-muted);
+}
+.tag.ok { background: var(--ok-soft); color: var(--ok); border-color: rgba(129, 178, 154, 0.32); }
+.tag.warn { background: var(--gold-soft); color: var(--gold); border-color: rgba(251, 191, 36, 0.32); }
+.tag.danger { background: var(--danger-soft); color: var(--danger); border-color: rgba(224, 122, 95, 0.35); }
+
+/* Wabi-Sabi Radial SVG Readiness Hero */
+.hero-card {
+  background: linear-gradient(150deg, var(--surface) 0%, var(--bg-elevated) 100%);
+  border: 1.5px solid rgba(251, 191, 36, 0.48);
+  position: relative;
+}
+
+.zen-hero-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.zen-dial-wrap {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+}
+
+.zen-dial {
+  width: 96px;
+  height: 96px;
+  transform: rotate(-90deg);
+}
+
+.zen-dial-bg {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 8;
+}
+
+.zen-dial-fg {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.35s ease;
+}
+
+.zen-dial-center {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.zen-dial-num {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--text-main);
+  line-height: 1;
+}
+
+.zen-dial-lbl {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.zen-hero-copy { min-width: 0; flex: 1; }
+.hero-eyebrow { display: flex; align-items: center; justify-content: space-between; gap: 6px; flex-wrap: wrap; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--accent); margin-bottom: 4px; }
+.hero-sub { font-size: 0.83rem; color: var(--text-muted); }
+
+.hero-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 9px 11px;
+  margin-bottom: 11px;
+}
+.meta-cell { min-width: 0; }
+.meta-label { font-size: 0.66rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.meta-val { font-size: 0.88rem; font-weight: 800; color: var(--text-main); word-break: break-word; }
+
+.next-move-box {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  background: var(--accent-soft);
+  border: 1px dashed rgba(251, 191, 36, 0.45);
+  border-radius: 16px;
+  padding: 11px 13px;
+}
+.next-move-text { min-width: 0; flex: 1 1 190px; }
+.next-move-title { font-size: 0.87rem; font-weight: 800; color: var(--text-main); word-break: break-word; }
+.next-move-sub { font-size: 0.77rem; color: var(--text-muted); }
+
+.inline-form { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.input, .select, .textarea {
+  width: 100%; min-height: 44px; padding: 10px 13px; border-radius: 14px;
+  border: 1px solid var(--border); background: var(--bg-elevated); color: var(--text-main);
+  font-family: inherit; font-size: 0.89rem; min-width: 0;
+}
+.inline-form .input { flex: 1 1 180px; }
+.textarea { min-height: 84px; resize: vertical; }
+.field { display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px; min-width: 0; }
+.field span { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); }
+.chip-label { font-size: 0.73rem; font-weight: 700; color: var(--text-muted); margin-bottom: 6px; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 7px; }
+.chip {
+  appearance: none; border: 1px solid var(--border); background: var(--surface-muted); color: var(--text-main);
+  border-radius: 999px; padding: 7px 12px; min-height: 36px; font-size: 0.77rem; font-weight: 700; cursor: pointer;
+}
+.chip.selected { background: var(--accent); color: #161311; border-color: var(--accent); }
+
+.list { display: flex; flex-direction: column; gap: 9px; }
+.row-item {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  background: var(--surface-muted); border: 1px solid var(--border); border-radius: 16px; padding: 12px 13px; min-width: 0;
+}
+.row-main { min-width: 0; flex: 1 1 190px; }
+.row-title { font-size: 0.89rem; font-weight: 800; color: var(--text-main); word-break: break-word; overflow-wrap: break-word; }
+.row-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 2px; word-break: break-word; overflow-wrap: break-word; }
+.row-actions { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+/* Mindful Stepping Stones */
+.stepping-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.stone-pill {
+  background: var(--surface-muted); border: 1px solid var(--border); border-radius: 18px;
+  padding: 12px 14px; cursor: pointer; text-align: left; min-width: 0;
+}
+.stone-head { display: flex; justify-content: space-between; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 800; color: var(--text-main); margin-bottom: 7px; }
+.progress-track { width: 100%; height: 7px; background: var(--bg-primary); border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--accent); border-radius: 999px; }
+
+.stat-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.stat { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 12px; text-align: center; min-width: 0; }
+.stat-num { font-size: clamp(0.98rem, 2.7vw, 1.24rem); font-weight: 900; color: var(--text-main); word-break: break-word; }
+.stat-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+
+.empty-state {
+  background: var(--bg-elevated); border: 1.5px dashed var(--border); border-radius: 18px;
+  padding: 18px 14px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px;
+}
+.empty-state p { font-size: 0.83rem; color: var(--text-muted); max-width: 420px; }
+.empty-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+
+.check-row {
+  display: flex; align-items: flex-start; gap: 10px;
+  background: var(--surface-muted); border: 1px solid var(--border); border-radius: 15px; padding: 11px 12px; cursor: pointer;
+}
+.check-row input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--accent); margin-top: 2px; flex-shrink: 0; }
+.check-row.done .row-title { text-decoration: line-through; color: var(--text-muted); }
+
+.theme-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.theme-btn {
+  display: flex; align-items: center; gap: 9px; padding: 10px 12px; min-height: 44px;
+  border-radius: 14px; border: 1.5px solid var(--border); background: var(--surface-muted);
+  color: var(--text-main); font-weight: 700; font-size: 0.81rem; cursor: pointer;
+}
+.theme-btn.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.swatch { width: 17px; height: 17px; border-radius: 50%; flex-shrink: 0; }
+
+.app-modal { display: none; position: fixed; inset: 0; background: rgba(10, 8, 6, 0.72); z-index: 500; padding: 16px; align-items: center; justify-content: center; overflow-y: auto; }
+.app-modal.open { display: flex; }
+.modal-card { width: min(96vw, 480px); background: var(--surface); border: 1px solid var(--border); border-radius: 22px; padding: 20px; box-shadow: 0 24px 54px rgba(0, 0, 0, 0.55); max-height: 90vh; overflow-y: auto; }
+.modal-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 14px; }
+.modal-head h3 { font-size: 1rem; font-weight: 800; }
+.modal-foot { display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px; }
+
+.toast { position: fixed; left: 50%; bottom: 96px; transform: translateX(-50%); background: var(--accent); color: #161311; font-size: 0.82rem; font-weight: 800; padding: 10px 16px; border-radius: 999px; box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45); z-index: 600; display: none; }
+.toast.show { display: block; }
+
+/* ---------- Zero-Blur Guided Tour Overlay & Capture-Phase Shield (Rules 16, 20, 23) ---------- */
+#tutorial-overlay,
+.tutorial-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: auto;
+  background: transparent;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  filter: none !important;
+}
+
+body.tutorial-active .app-header,
+body.tutorial-active .zen-island-nav,
+body.tutorial-active .app-screen,
+body.tutorial-active .stone-card {
+  pointer-events: none !important;
+  animation: none !important;
+  transform: none !important;
+}
+
+body.tutorial-active .tutorial-target-active,
+body.tutorial-active .tutorial-target-active * {
+  pointer-events: auto !important;
+}
+
+.tutorial-target-active {
+  position: relative !important;
+  z-index: 10000 !important;
+  pointer-events: auto !important;
+  box-shadow: 0 0 0 3px var(--accent), 0 12px 34px rgba(251, 191, 36, 0.24) !important;
+  border-radius: 22px;
+}
+
+.tutorial-beacon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 5px rgba(251, 191, 36, 0.32);
+  pointer-events: none;
+}
+
+#tutorial-card,
+.tutorial-card {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 24px;
+  width: min(94vw, 460px);
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  z-index: 10020 !important;
+  pointer-events: auto !important;
+  background: #211c18;
+  color: #f5efe6;
+  border: 2px solid var(--accent);
+  border-radius: 22px;
+  padding: 16px 18px;
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.58);
+  display: none;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.tour-head { display: flex; align-items: center; gap: 10px; }
+.tour-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--accent); color: #161311; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.tour-tag { font-size: 0.69rem; font-weight: 800; color: var(--accent); text-transform: uppercase; }
+.tour-title { font-size: 0.94rem; font-weight: 800; color: #f5efe6; }
+.tour-count { margin-left: auto; font-size: 0.74rem; font-weight: 700; color: var(--text-muted); }
+.tour-msg { font-size: 0.85rem; color: #e7ddd0; }
+.tour-hint { font-size: 0.77rem; color: var(--accent); font-weight: 700; }
+.tour-actions { display: flex; align-items: center; gap: 8px; }
+.spacer { flex: 1; }
+
+@media (max-width: 700px) {
+  body.tutorial-active .zen-island-nav,
+  body.tutorial-active .app-header:not(:has(.tutorial-target-active)) {
+    display: none !important;
+  }
+  .zen-dial-wrap, .zen-dial { width: 78px; height: 78px; }
+  .zen-dial-num { font-size: 1.15rem; }
+  .hero-meta-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 7px 9px; gap: 6px; margin-bottom: 8px; }
+  .meta-label { font-size: 0.63rem; }
+  .meta-val { font-size: 0.78rem; }
+  .stepping-grid { grid-template-columns: 1fr; }
+  #tutorial-card, .tutorial-card { padding: 12px 14px; gap: 6px; border-radius: 18px; }
+  .tour-title { font-size: 0.85rem; }
+  .tour-msg { font-size: 0.78rem; line-height: 1.36; }
+  .tour-hint { font-size: 0.72rem; }
+}
